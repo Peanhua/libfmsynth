@@ -1,0 +1,2231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>734</width>
+    <height>628</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FMSEdit</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/Logo.png</normaloff>images/Logo.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QScrollArea" name="scrollArea_Tools">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="_addnodes">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-250</y>
+         <width>164</width>
+         <height>802</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QWidget" name="_category_inputs_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_5" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_inputs">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>Inputs</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_inputs">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_inputs" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_inputs_Constant">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Constant</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeConstant.png</normaloff>images/NodeConstant.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Constant</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_oscillators_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_3" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_oscillators">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="text">
+                 <string>Oscillators</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_oscillators">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_oscillators" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Sine">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Sine</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorSine.png</normaloff>images/NodeOscillatorSine.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Sine</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Triangle">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Triangle</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorTriangle.png</normaloff>images/NodeOscillatorTriangle.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Triangle</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Sawtooth">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Sawtooth</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorSawtooth.png</normaloff>images/NodeOscillatorSawtooth.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Sawtooth</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Pulse">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Pulse</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorPulse.png</normaloff>images/NodeOscillatorPulse.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Pulse</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Noise">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Noise</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorNoise.png</normaloff>images/NodeOscillatorNoise.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Noise</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_envelopes_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_2" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_envelopes">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string>Envelopes</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_envelopes">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_envelopes" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_envelopes_ADHSR">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>ADHSR</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeADSR.png</normaloff>images/NodeADSR.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">ADHSR</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_filters_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_filters">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="text">
+                 <string>Filters</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_filters">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_filters" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_filters_HighPass">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>High pass</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeFilterHighPass.png</normaloff>images/NodeFilterHighPass.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">HighPass</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_filters_LowPass">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Low pass</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeFilterLowPass.png</normaloff>images/NodeFilterLowPass.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">LowPass</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_math_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="_category_math_label" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_math">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_5">
+                <property name="text">
+                 <string>Math</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_math">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_math" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Add">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Add</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeAdd.png</normaloff>images/NodeAdd.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Multiply">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Multiply</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeMultiply.png</normaloff>images/NodeMultiply.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Multiply</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Average">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Average</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeAverage.png</normaloff>images/NodeAverage.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Average</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_RangeConvert">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Range convert</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeRangeConvert.png</normaloff>images/NodeRangeConvert.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">RangeConvert</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Clamp">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Clamp</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeClamp.png</normaloff>images/NodeClamp.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Clamp</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Reciprocal">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Reciprocal</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeReciprocal.png</normaloff>images/NodeReciprocal.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Reciprocal</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Inverse">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Inverse</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeInverse.png</normaloff>images/NodeInverse.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Inverse</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_miscellaneous_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_4" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_miscellaneous">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_7">
+                <property name="text">
+                 <string>Misc.</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_miscellaneous">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_miscellaneous" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_15">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_misc_Comment">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Comment</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="dialog-information">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Comment</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_misc_Delay">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Delay</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeDelay.png</normaloff>images/NodeDelay.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Delay</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_category_outputs_container" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_7" native="true">
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>246</red>
+                   <green>245</green>
+                   <blue>244</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>190</red>
+                   <green>190</green>
+                   <blue>190</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>173</red>
+                   <green>135</green>
+                   <blue>173</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="_category_expand_outputs">
+                <property name="toolTip">
+                 <string>Expand/collapse group</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonExpanded.png</normaloff>images/ButtonExpanded.png</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="text">
+                 <string>Outputs</string>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignBottom">
+               <widget class="QPushButton" name="_category_layout_outputs">
+                <property name="toolTip">
+                 <string>Change layout</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/ButtonLayoutVertical.png</normaloff>images/ButtonLayoutVertical.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="_category_outputs" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_13">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="WidgetAddNode" name="_outputs_ViewWaveform">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>View waveform</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeViewWaveform.png</normaloff>images/NodeViewWaveform.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">ViewWaveform</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_outputs_FileOutput">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>File</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-floppy">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">FileOutput</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_outputs_AudioDeviceOutput">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Audio device</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="audio-card">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">AudioDeviceOutput</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="_scrollArea_Blueprint">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="WidgetBlueprint" name="_blueprint">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>4096</width>
+         <height>4096</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>4096</width>
+         <height>4096</height>
+        </size>
+       </property>
+       <property name="acceptDrops">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="_blueprint_comment_border" native="true">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1</width>
+          <height>1</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="_menu">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>734</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuRecentFiles">
+     <property name="title">
+      <string>Recent files</string>
+     </property>
+     <property name="icon">
+      <iconset theme="document-open-recent">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <addaction name="actionMenuClearHistory"/>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="actionMenuNew"/>
+    <addaction name="actionMenuOpen"/>
+    <addaction name="actionMenuRevert"/>
+    <addaction name="menuRecentFiles"/>
+    <addaction name="separator"/>
+    <addaction name="actionMenuSave"/>
+    <addaction name="actionMenuSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionMenuQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuPlayer">
+    <property name="title">
+     <string>Player</string>
+    </property>
+    <addaction name="actionMenuPlay"/>
+    <addaction name="actionMenuStop"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <widget class="QMenu" name="menuTheme">
+     <property name="title">
+      <string>Theme</string>
+     </property>
+     <property name="icon">
+      <iconset theme="preferences-desktop-theme">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <addaction name="actionMenuThemeDefault"/>
+     <addaction name="actionMenuThemeDark"/>
+    </widget>
+    <addaction name="menuTheme"/>
+    <addaction name="actionSnapToGrid"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionMenuHelpAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelectAll"/>
+    <addaction name="actionSelectNone"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuPlayer"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="_toolbar_file">
+   <property name="windowTitle">
+    <string>File toolbar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionMenuNew"/>
+   <addaction name="actionMenuOpen"/>
+   <addaction name="actionMenuSave"/>
+  </widget>
+  <widget class="QToolBar" name="_toolbar_edit">
+   <property name="windowTitle">
+    <string>Edit toolbar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionDelete"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionSnapToGrid"/>
+  </widget>
+  <widget class="QToolBar" name="_toolbar_player">
+   <property name="windowTitle">
+    <string>Player toolbar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionMenuPlay"/>
+   <addaction name="actionMenuStop"/>
+  </widget>
+  <action name="actionMenuQuit">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionMenuPlay">
+   <property name="icon">
+    <iconset theme="media-playback-start">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Play</string>
+   </property>
+   <property name="toolTip">
+    <string>Play</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionMenuStop">
+   <property name="icon">
+    <iconset theme="media-playback-stop">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
+  </action>
+  <action name="actionMenuNew">
+   <property name="icon">
+    <iconset theme="document-new">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionMenuThemeDefault">
+   <property name="icon">
+    <iconset theme="preferences-desktop-theme">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionMenuThemeDark">
+   <property name="icon">
+    <iconset theme="preferences-desktop-theme">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="actionMenuSave">
+   <property name="icon">
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionMenuOpen">
+   <property name="icon">
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Open...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionMenuSaveAs">
+   <property name="icon">
+    <iconset theme="document-save-as">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="actionMenuClearHistory">
+   <property name="icon">
+    <iconset theme="edit-clear">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Clear history</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear recent files history</string>
+   </property>
+  </action>
+  <action name="actionMenuRevert">
+   <property name="icon">
+    <iconset theme="document-revert">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Revert</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert from file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionMenuHelpAbout">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>About FMSEdit</string>
+   </property>
+   <property name="toolTip">
+    <string>About FMSEdit</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset theme="edit-undo">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo edit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset theme="edit-redo">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo edit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset theme="edit-delete">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionSnapToGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/ButtonSnapToGridOff.png</normaloff>
+     <normalon>images/ButtonSnapToGrid.png</normalon>images/ButtonSnapToGridOff.png</iconset>
+   </property>
+   <property name="text">
+    <string>Snap to grid</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="icon">
+    <iconset theme="edit-select-all"/>
+   </property>
+   <property name="text">
+    <string>Select all</string>
+   </property>
+   <property name="toolTip">
+    <string>Select all nodes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionSelectNone">
+   <property name="icon">
+    <iconset theme="edit-clear"/>
+   </property>
+   <property name="text">
+    <string>Select none</string>
+   </property>
+   <property name="toolTip">
+    <string>De-select all</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WidgetAddNode</class>
+   <extends>QPushButton</extends>
+   <header>WidgetAddNode.hh</header>
+  </customwidget>
+  <customwidget>
+   <class>WidgetBlueprint</class>
+   <extends>QWidget</extends>
+   <header>WidgetBlueprint.hh</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
