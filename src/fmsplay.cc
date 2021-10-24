@@ -11,6 +11,7 @@
 */
 
 #include "Blueprint.hh"
+#include "NodeAudioDeviceOutput.hh"
 #include "Player.hh"
 #include <cassert>
 #include <fstream>
@@ -83,6 +84,25 @@ int main(int argc, char * argv[])
   player.Start();
   player.SetNextProgram(&blueprint);
 
+  auto ados = blueprint.GetNodesByType("AudioDeviceOutput");
+  if(ados.size() > 0)
+    {
+      auto n = dynamic_cast<NodeAudioDeviceOutput *>(ados[0]);
+      if(n)
+        n->SetCallbacks(
+                        [&player](NodeAudioDeviceOutput * node, double sample)
+                        { 
+                          player.FillBackbufferValue(node->SampleToInt(sample));
+                        },
+                        [&player]([[maybe_unused]] NodeAudioDeviceOutput * node)
+                        {
+                          player.Continue();
+                        }
+                        );
+    }
+  else
+    std::cout << argv[0] << ": Warning: No AudioDeviceOutput node present, nothing will be output.\n";
+  
   bool done = false;
   while(!done)
     {

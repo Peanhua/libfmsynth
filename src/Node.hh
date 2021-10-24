@@ -28,7 +28,8 @@ public:
 
   static Node * Create(const json11::Json & json);
 
-  const std::string & GetId() const;
+  const std::string & GetType() const;
+  const std::string & GetId()   const;
   void                SetId(const std::string & id);
   
   void    AddAmplitudeInputNode(Node * node);

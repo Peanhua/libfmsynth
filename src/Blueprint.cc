@@ -80,6 +80,18 @@ Node * Blueprint::GetRoot() const
 }
 
 
+std::vector<Node *> Blueprint::GetNodesByType(const std::string & type) const
+{
+  std::vector<Node *> nodes;
+
+  for(auto n : _nodes)
+    if(n && n->GetType() == type)
+      nodes.push_back(n);
+  
+  return nodes;
+}
+
+
 void Blueprint::SetIsFinished()
 {
   _root->SetIsFinished();

@@ -45,6 +45,12 @@ Node::~Node()
 }
 
 
+const std::string & Node::GetType() const
+{
+  return _type;
+}
+
+
 const std::string & Node::GetId() const
 {
   return _id;
