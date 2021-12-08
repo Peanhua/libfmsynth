@@ -123,8 +123,12 @@ void Blueprint::Tick(long samples)
 
 bool Blueprint::Load(const json11::Json & json)
 {
-  assert(json["links"].is_array());
-  assert(json["nodes"].is_array());
+  if(!json["links"].is_array())
+    return false;
+
+  if(!json["nodes"].is_array())
+    return false;
+
   auto links = json["links"].array_items();
   auto nodes = json["nodes"].array_items();
 
