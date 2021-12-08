@@ -45,14 +45,14 @@ BUILT_SOURCES = 			\
 	UiNodeReciprocal.hh		\
 	UiNodeViewWaveform.hh		
 
-AM_CXXFLAGS =			\
-	-DDATADIR='"$(datadir)/synth"' \
-	$(ALUT_CFLAGS)		\
-	$(FMT_CFLAGS)		\
-	$(JSON_CFLAGS)		\
-	$(OPENAL_CFLAGS)	\
-	$(PTHREAD_CFLAGS)	\
-	$(QT_CFLAGS)		\
+AM_CXXFLAGS =				\
+	-DDATADIR='"$(pkgdatadir)"'	\
+	$(ALUT_CFLAGS)			\
+	$(FMT_CFLAGS)			\
+	$(JSON_CFLAGS)			\
+	$(OPENAL_CFLAGS)		\
+	$(PTHREAD_CFLAGS)		\
+	$(QT_CFLAGS)			\
 	$(VALGRIND_CFLAGS)
 
 lib_LTLIBRARIES = libfmsynth.la

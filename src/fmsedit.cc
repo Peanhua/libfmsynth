@@ -21,11 +21,19 @@
 #include <QtWidgets/QApplication>
 #include "QtIncludeEnd.hh"
 #include <alut.h>
+#include <filesystem>
 #include <iostream>
 
 
 int main(int argc, char *argv[])
 {
+  try {
+    std::filesystem::current_path(DATADIR);
+  } catch([[maybe_unused]] const std::exception & e)
+    {
+      std::cout << argv[0] << ": Warning, installation directory " << DATADIR << " is not accessible, running from current directory." << std::endl;
+    }
+  
   Settings settings;
   UserSettings = &settings;
   settings.Load();
