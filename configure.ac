@@ -1,5 +1,6 @@
 AC_INIT([libfmsynth], [0.1])
 AC_PREREQ([2.69])
+AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([foreign dist-xz subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_MACRO_DIRS([m4])
@@ -18,7 +19,7 @@ AC_CHECK_HEADER([format], [], [
 AC_CHECK_HEADER([AudioFile.h], [], [AC_MSG_ERROR([Unable to find header for AudioFile library (https://github.com/adamstark/AudioFile).])])
 AC_LANG_POP
 
-PKG_CHECK_MODULES([JSON],   [json11 nlohmann_json >= 3])
+PKG_CHECK_MODULES([JSON],   [json11])
 PKG_CHECK_MODULES([ALUT],   [freealut])
 PKG_CHECK_MODULES([OPENAL], [openal])
 
