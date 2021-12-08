@@ -7,7 +7,7 @@
 # Where the optional [profile] is one of the following: dev, optimized, valgrind
 #
 
-if [ ${0} != "bash" ]; then
+if [ ${0:(-4)} != "bash" ]; then
     echo "Error, this script must be run using 'source' in a bash shell. For example: . project.sh"
     exit 1
 fi
