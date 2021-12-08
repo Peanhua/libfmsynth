@@ -24,6 +24,14 @@ PKG_CHECK_MODULES([ALUT],   [freealut])
 PKG_CHECK_MODULES([OPENAL], [openal])
 
 PKG_CHECK_MODULES([QT], [Qt5Core Qt5Widgets])
+
+PKG_CHECK_VAR([QT_CONFIG], [Qt5Core], [qt_config])
+QT_REDUCE_RELOCATIONS=m4_bmatch(QT_CONFIG, [reduce_relocations])
+AS_IF([test "x$QT_REDUCE_RELOCATIONS" = "xreduce_relocations"], [
+  AC_MSG_RESULT([Qt is configured with 'reduce_relocations' and requires to compile with PIC, forcing PIC on for fmsedit.])
+  AC_SUBST([EXTRA_FMSEDIT_QT_CXXFLAGS], $lt_prog_compiler_pic)
+])
+
 AC_CHECK_PROGS([QT_UIC], [uic-qt5 uic])
 
 AC_ARG_WITH([valgrind], AS_HELP_STRING([--with-valgrind], [Build with support for Valgrind.]))

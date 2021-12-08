@@ -14,6 +14,7 @@
 
 #include <al.h>
 #include <array>
+#include <mutex>
 #include <optional>
 #include <random>
 #include <string>

@@ -13,6 +13,7 @@
 #include "NodeConstant.hh"
 #include <cassert>
 #include <cmath>
+#include <numbers>
 
 
 NodeConstant::NodeConstant()

@@ -126,6 +126,8 @@ bin_PROGRAMS = fmsedit fmsplay
 
 #test-compare-with-orig.sh : synth
 
+fmsedit_CXXFLAGS = $(AM_CXXFLAGS) $(EXTRA_FMSEDIT_QT_CXXFLAGS)
+
 fmsedit_LDADD =		\
 	libfmsynth.la	\
 	$(ALUT_LIBS)	\
