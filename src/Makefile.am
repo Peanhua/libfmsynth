@@ -114,7 +114,8 @@ pkginclude_HEADERS =			\
 	NodeMultiply.hh			\
 	NodeOscillator.hh		\
 	NodeRangeConvert.hh		\
-	NodeReciprocal.hh		
+	NodeReciprocal.hh		\
+	Types.hh			
 
 
 bin_PROGRAMS = fmsedit fmsplay
