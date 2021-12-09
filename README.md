@@ -2,7 +2,7 @@
 This is a C++ library to generate audio using frequency modulation synthesis (https://en.wikipedia.org/wiki/Frequency_modulation_synthesis). Node based architecture is used, where each node presents some operation performed. Each node can have zero or more input signals, and zero or one output signal. Some nodes are editor-only, for example the comment node.
 
 In addition to the library, some supporting executable programs are provided:
-* fmsedit - Editor, uses QT.
+* fmsedit - Editor, uses QT. <img align="right" src="images/screenshot1.png" width="200px">
 * fmsplay - Plays a single file.
 
 The files used are named "*.sbp" (short from SynthBluePrint), and their contents are in JSON.
