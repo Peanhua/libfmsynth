@@ -5,6 +5,9 @@ AM_INIT_AUTOMAKE([foreign dist-xz subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_MACRO_DIRS([m4])
 
+AC_PROG_SED
+AC_PROG_GREP
+
 AC_PROG_CXX
 AX_CXX_COMPILE_STDCXX([20], [noext], [mandatory])
 
@@ -23,11 +26,16 @@ PKG_CHECK_MODULES([JSON],   [json11])
 PKG_CHECK_MODULES([ALUT],   [freealut])
 PKG_CHECK_MODULES([OPENAL], [openal])
 
-PKG_CHECK_MODULES([QT], [Qt5Core Qt5Widgets])
+PRE512QT=0
+PKG_CHECK_MODULES([QT], [Qt5Core >= 5.12 Qt5Widgets], [], [
+  PKG_CHECK_MODULES([QT], [Qt5Core Qt5Widgets])
+  PRE512QT=1
+])
+AC_SUBST(PRE512QT)
 
 PKG_CHECK_VAR([QT_CONFIG], [Qt5Core], [qt_config])
-QT_REDUCE_RELOCATIONS=m4_bmatch(QT_CONFIG, [reduce_relocations])
-AS_IF([test "x$QT_REDUCE_RELOCATIONS" = "xreduce_relocations"], [
+QT_REDUCE_RELOCATIONS=`[echo "x $QT_CONFIG" | $GREP reduce_relocations]`
+AS_IF([test "x$QT_REDUCE_RELOCATIONS" != "x"], [
   AC_MSG_RESULT([Qt is configured with 'reduce_relocations' and requires to compile with PIC, forcing PIC on for fmsedit.])
   AC_SUBST([EXTRA_FMSEDIT_QT_CXXFLAGS], $lt_prog_compiler_pic)
 ])

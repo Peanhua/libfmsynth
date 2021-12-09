@@ -12,6 +12,7 @@
 
 #include "WidgetNodeOscillator.hh"
 #include "NodeOscillator.hh"
+#include <cassert>
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"
 #include "UiNodeOscillator.hh"

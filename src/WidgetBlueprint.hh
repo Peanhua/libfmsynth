@@ -12,9 +12,9 @@
   Complete license can be found in the LICENSE file.
 */
 
-#include "Types.hh"
 #include <set>
 #include <vector>
+#include <json11.hpp>
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QWidget>
 #include "QtIncludeEnd.hh"

@@ -32,6 +32,7 @@
 #include "WidgetNodeRangeConvert.hh"
 #include "WidgetNodeReciprocal.hh"
 #include "WidgetNodeViewWaveform.hh"
+#include <cassert>
 #include <filesystem>
 #include <fstream>
 #include <iostream>

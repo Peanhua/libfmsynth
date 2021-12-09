@@ -1,5 +1,8 @@
 .ui.hh:
 	$(AM_V_GEN) $(QT_UIC) --output $@ $<
+	if [ $(PRE512QT) -ne 0 ]; then \
+		$(SED) -i '/PlaceholderText/d' $@ ; \
+	fi
 
 UiHelpAbout.hh			: UiHelpAbout.ui
 UiMainWindow.hh			: UiMainWindow.ui
@@ -47,6 +50,7 @@ BUILT_SOURCES = 			\
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
+	-DPRE512QT=$(PRE512QT)		\
 	$(ALUT_CFLAGS)			\
 	$(FMT_CFLAGS)			\
 	$(JSON_CFLAGS)			\
@@ -93,8 +97,7 @@ libfmsynth_la_SOURCES =			\
 	NodeRangeConvert.cc		\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.cc		\
-	NodeReciprocal.hh		\
-	Types.hh			
+	NodeReciprocal.hh		
 
 pkginclude_HEADERS =			\
 	Blueprint.hh			\
@@ -114,8 +117,7 @@ pkginclude_HEADERS =			\
 	NodeMultiply.hh			\
 	NodeOscillator.hh		\
 	NodeRangeConvert.hh		\
-	NodeReciprocal.hh		\
-	Types.hh			
+	NodeReciprocal.hh		
 
 
 bin_PROGRAMS = fmsedit fmsplay
@@ -153,7 +155,6 @@ fmsedit_SOURCES =			\
 	Player.hh			\
 	Settings.cc			\
 	Settings.hh			\
-	Types.hh			\
 	QtIncludeBegin.hh		\
 	QtIncludeEnd.hh			\
 	Ui.hh				\
@@ -245,3 +246,6 @@ fmsplay_SOURCES =			\
 nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
 
 CLEANFILES = $(nodist_fmsedit_SOURCES)
+
+uninstall-hook:
+	-rmdir $(pkgincludedir)

@@ -12,10 +12,10 @@
   Complete license can be found in the LICENSE file.
 */
 
-#include "Types.hh"
 #include <mutex>
 #include <string>
 #include <vector>
+#include <json11.hpp>
 
 class Node;
 class NodeConstant;

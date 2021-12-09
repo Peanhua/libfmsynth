@@ -11,9 +11,10 @@
 */
 
 #include "Settings.hh"
-#include "Types.hh"
+#include <cassert>
 #include <fstream>
 #include <iostream>
+#include <json11.hpp>
 #include "QtIncludeBegin.hh"
 #include <QtCore/QStandardPaths>
 #include "QtIncludeEnd.hh"

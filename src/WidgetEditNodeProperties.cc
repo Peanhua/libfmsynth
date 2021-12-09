@@ -15,6 +15,7 @@
 #include "Node.hh"
 #include "WidgetBlueprint.hh"
 #include "WidgetNode.hh"
+#include <cassert>
 #include "QtIncludeBegin.hh"
 #include "UiEditNodeProperties.hh"
 #include "QtIncludeEnd.hh"

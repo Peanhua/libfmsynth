@@ -20,7 +20,7 @@
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QApplication>
 #include "QtIncludeEnd.hh"
-#include <alut.h>
+#include <AL/alut.h>
 #include <filesystem>
 #include <iostream>
 

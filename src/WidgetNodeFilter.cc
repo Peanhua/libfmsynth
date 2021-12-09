@@ -12,6 +12,7 @@
 
 #include "WidgetNodeFilter.hh"
 #include "NodeFilter.hh"
+#include <cassert>
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"
 #include "UiNodeFilter.hh"

@@ -19,6 +19,7 @@
 #include "WidgetRectangle.hh"
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"
+#include <cassert>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>

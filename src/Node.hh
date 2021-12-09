@@ -13,11 +13,11 @@
 */
 
 #include "Input.hh"
-#include "Types.hh"
 #include <map>
 #include <memory>
 #include <set>
 #include <string>
+#include <json11.hpp>
 
 
 class Node

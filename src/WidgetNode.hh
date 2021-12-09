@@ -13,7 +13,7 @@
 */
 
 #include "Ui.hh"
-#include "Types.hh"
+#include <json11.hpp>
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QWidget>
 #include <QtCore/QPoint>

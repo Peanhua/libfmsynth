@@ -12,6 +12,7 @@
 
 #include "WidgetNodeRangeConvert.hh"
 #include "NodeRangeConvert.hh"
+#include <cassert>
 #include <cmath>
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"

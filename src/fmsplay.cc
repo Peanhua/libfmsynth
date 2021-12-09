@@ -16,7 +16,7 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
-#include <alut.h>
+#include <AL/alut.h>
 
 
 static std::string LoadText(const std::string & filename)

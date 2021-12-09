@@ -10,10 +10,22 @@
   Complete license can be found in the LICENSE file.
 */
 
+#ifdef HAVE_CONFIG_H
+# include "../config.h"
+#endif
+
+#ifdef HAVE_FMT
+# include <fmt/format.h>
+using fmt::format;
+#else
+# include <format>
+using std::format;
+#endif
+
 #include "WidgetNodeViewWaveform.hh"
 #include "NodeMemoryBuffer.hh"
+#include <cassert>
 #include "QtIncludeBegin.hh"
-#include "Types.hh"
 #include "UiNode.hh"
 #include "UiNodeViewWaveform.hh"
 #include <QtWidgets/QColorDialog>

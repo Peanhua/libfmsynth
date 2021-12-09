@@ -34,7 +34,15 @@ if [ -f Makefile ]; then
     make distclean
 fi
 
-export MAKEFLAGS="-s -j7"
+if [ -z "${MAKEFLAGS}" ]; then
+    if [ -f /proc/cpuinfo ]; then
+        JOBCOUNT=$(grep -E '^processor' /proc/cpuinfo | tail -1 | awk '{print $3 + 2}')
+    else
+        JOBCOUNT=2
+    fi
+    export MAKEFLAGS="-s -j${JOBCOUNT}"
+fi
+
 profileok=1
 CONFIGUREFLAGS=""
 case ${PROFILE} in
@@ -76,5 +84,6 @@ if [ ${profileok} -ne 0 ]; then
     
 
     autoreconf --include=m4 --install
-    ./configure --prefix=$(pwd) --disable-shared ${CONFIGUREFLAGS}
+    #./configure --prefix=$(pwd) --disable-shared ${CONFIGUREFLAGS}
+    ./configure ${CONFIGUREFLAGS}
 fi

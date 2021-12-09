@@ -16,6 +16,7 @@
 #include "WidgetConnector.hh"
 #include "WidgetLine.hh"
 #include "WidgetNode.hh"
+#include <cassert>
 
 
 Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel)

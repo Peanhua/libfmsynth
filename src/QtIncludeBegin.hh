@@ -15,6 +15,10 @@
 # pragma GCC diagnostic ignored "-Wuseless-cast"
 # pragma GCC diagnostic ignored "-Wsign-conversion"
 # pragma GCC diagnostic ignored "-Wconversion"
+# pragma GCC diagnostic ignored "-Wcast-align"
+# pragma GCC diagnostic ignored "-Wfloat-conversion"
+# pragma GCC diagnostic ignored "-Wclass-memaccess"
+# pragma GCC diagnostic ignored "-Wdeprecated-copy"
 # if __GNUC__ >= 11
 #  pragma GCC diagnostic ignored "-Wdeprecated-enum-enum-conversion"
 # endif

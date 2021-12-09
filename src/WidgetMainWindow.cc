@@ -21,6 +21,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
 #include "QtIncludeEnd.hh"
+#include <cassert>
 #include <iostream>
 
 

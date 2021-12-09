@@ -12,7 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
-#include "Types.hh"
+#include <json11.hpp>
 #include "QtIncludeBegin.hh"
 #include <QtCore/QPoint>
 #include "QtIncludeEnd.hh"

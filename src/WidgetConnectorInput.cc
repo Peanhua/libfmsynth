@@ -14,6 +14,7 @@
 #include "WidgetBlueprint.hh"
 #include "WidgetConnectorOutput.hh"
 #include "WidgetNode.hh"
+#include <cassert>
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
