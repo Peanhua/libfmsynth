@@ -14,12 +14,14 @@
 # include "../config.h"
 #endif
 
-#ifdef HAVE_FMT
+#if __has_cpp_attribute(_cpp_lib_format)
+# include <format>
+using std::format;
+#elif defined(HAVE_FMT)
 # include <fmt/format.h>
 using fmt::format;
 #else
-# include <format>
-using std::format;
+# error "Unable to find format library."
 #endif
 
 #include "WidgetNodeViewWaveform.hh"
