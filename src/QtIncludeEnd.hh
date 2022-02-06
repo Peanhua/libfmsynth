@@ -9,4 +9,7 @@
 
   Complete license can be found in the LICENSE file.
 */
-#pragma GCC diagnostic pop
+#ifdef __GNUC__
+# pragma GCC diagnostic pop
+#endif
+
