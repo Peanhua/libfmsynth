@@ -39,10 +39,10 @@ void WidgetGraphADHSR::SetEnvelope(double attack, double decay, double hold, dou
   double height = size().height();
   double totaltime = attack + decay + hold + release;
 
-#if PRE512QT
-  _path = QPainterPath();
-#else
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
   _path.clear();
+#else
+  _path = QPainterPath();
 #endif
   _path.moveTo(QPoint(0,                                                             static_cast<int>(height - 1)));
   _path.lineTo(QPoint(static_cast<int>(width * attack / totaltime),                  0));

@@ -47,10 +47,10 @@ void WidgetGraphWaveform::Update(NodeMemoryBuffer * buffer, double length)
           {
             _force_redraw    = false;
             _last_draw_index = 0;
-#if PRE512QT
-            _path = QPainterPath();
-#else
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
             _path.clear();
+#else
+            _path = QPainterPath();
 #endif
             _path.moveTo(QPoint(-1, static_cast<int>(centery + wav[0] * height)));
           }

@@ -50,16 +50,40 @@ BUILT_SOURCES = 			\
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
-	-DPRE512QT=$(PRE512QT)		\
-	$(ALUT_CFLAGS)			\
 	$(FMT_CFLAGS)			\
 	$(JSON_CFLAGS)			\
-	$(OPENAL_CFLAGS)		\
 	$(PTHREAD_CFLAGS)		\
-	$(QT_CFLAGS)			\
 	$(VALGRIND_CFLAGS)
 
+
+pkginclude_HEADERS =			\
+	Blueprint.hh			\
+	Input.hh			\
+	Node.hh				\
+	NodeADHSR.hh			\
+	NodeAdd.hh			\
+	NodeAudioDeviceOutput.hh	\
+	NodeAverage.hh			\
+	NodeClamp.hh			\
+	NodeConstant.hh			\
+	NodeDelay.hh			\
+	NodeFileOutput.hh		\
+	NodeFilter.hh			\
+	NodeMemoryBuffer.hh		\
+	NodeInverse.hh			\
+	NodeMultiply.hh			\
+	NodeOscillator.hh		\
+	NodeRangeConvert.hh		\
+	NodeReciprocal.hh		
+
+
+
 lib_LTLIBRARIES = libfmsynth.la
+
+bin_PROGRAMS = fmsedit fmsplay
+
+
+# libfmsynth:
 libfmsynth_la_SOURCES =			\
 	Blueprint.cc			\
 	Blueprint.hh			\
@@ -99,36 +123,16 @@ libfmsynth_la_SOURCES =			\
 	NodeReciprocal.cc		\
 	NodeReciprocal.hh		
 
-pkginclude_HEADERS =			\
-	Blueprint.hh			\
-	Input.hh			\
-	Node.hh				\
-	NodeADHSR.hh			\
-	NodeAdd.hh			\
-	NodeAudioDeviceOutput.hh	\
-	NodeAverage.hh			\
-	NodeClamp.hh			\
-	NodeConstant.hh			\
-	NodeDelay.hh			\
-	NodeFileOutput.hh		\
-	NodeFilter.hh			\
-	NodeMemoryBuffer.hh		\
-	NodeInverse.hh			\
-	NodeMultiply.hh			\
-	NodeOscillator.hh		\
-	NodeRangeConvert.hh		\
-	NodeReciprocal.hh		
 
 
-bin_PROGRAMS = fmsedit fmsplay
+# fmsedit:
 
-#check_PROGRAMS = synth
-
-#TESTS = $(check_PROGRAMS) test-compare-with-orig.sh
-
-#test-compare-with-orig.sh : synth
-
-fmsedit_CXXFLAGS = $(AM_CXXFLAGS) $(EXTRA_FMSEDIT_QT_CXXFLAGS)
+fmsedit_CXXFLAGS = 			\
+	$(AM_CXXFLAGS)			\
+	$(EXTRA_FMSEDIT_QT_CXXFLAGS)	\
+	$(ALUT_CFLAGS)			\
+	$(OPENAL_CFLAGS)		\
+	$(QT_CFLAGS)			
 
 fmsedit_LDADD =		\
 	libfmsynth.la	\
@@ -138,15 +142,6 @@ fmsedit_LDADD =		\
 	$(OPENAL_LIBS)	\
 	$(PTHREAD_LIBS)	\
 	$(QT_LIBS)
-
-fmsplay_LDADD =		\
-	libfmsynth.la	\
-	$(ALUT_LIBS)	\
-	$(FMT_LIBS)	\
-	$(JSON_LIBS)	\
-	$(OPENAL_LIBS)	\
-	$(PTHREAD_LIBS)	
-
 
 fmsedit_SOURCES =			\
 	Link.cc				\
@@ -238,12 +233,30 @@ fmsedit_SOURCES =			\
 	WidgetRectangle.hh		\
 	fmsedit.cc				
 
+nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
+
+
+# fmsplay:
+fmsplay_CXXFLAGS = 			\
+	$(AM_CXXFLAGS)			\
+	$(ALUT_CFLAGS)			\
+	$(OPENAL_CFLAGS)		
+
+fmsplay_LDADD =		\
+	libfmsynth.la	\
+	$(ALUT_LIBS)	\
+	$(FMT_LIBS)	\
+	$(JSON_LIBS)	\
+	$(OPENAL_LIBS)	\
+	$(PTHREAD_LIBS)	
+
 fmsplay_SOURCES =			\
 	Player.cc			\
 	Player.hh			\
 	fmsplay.cc			
 
-nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
+
+# Clean & uninstall:
 
 CLEANFILES = $(nodist_fmsedit_SOURCES)
 
