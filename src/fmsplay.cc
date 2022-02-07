@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iostream>
 #include <latch>
+#include <optional>
 #include <thread>
 #include <utility>
 #ifdef __GNUC__
@@ -28,22 +29,74 @@
 #ifdef __GNUC__
 # pragma GCC diagnostic pop
 #endif
+#include <cxxopts.hpp>
 
 
-static std::string LoadText(const std::string & filename)
+struct Configuration
+{
+  bool        verbose  = false;
+  std::string filename;
+};
+
+std::optional<Configuration> ParseCommandline(int argc, char * argv[])
+{
+  Configuration rv;
+  
+  cxxopts::Options options(argv[0], "Play .sbp files.");
+  options.custom_help("[OPTION...] <filename>");
+  options.add_options()
+    ("v,verbose", "Verbose mode", cxxopts::value<bool>()->default_value("false"))
+    ("h,help",    "Print help (this text)")
+    ;
+  
+  auto cmdline = options.parse(argc, argv);
+  
+  rv.verbose = cmdline["verbose"].as<bool>();
+  
+  if(cmdline.count("help"))
+    {
+      std::cerr << options.help() << std::endl;
+      return std::nullopt;
+    }
+  
+  if(cmdline.count("file") > 0)
+    rv.filename = cmdline["file"].as<std::string>();
+  
+  if(argc == 2)
+    rv.filename = argv[1];
+  
+  if(rv.filename.length() == 0)
+    {
+      std::cerr << argv[0] << ": Error, missing filename.\n";
+      std::cerr << options.help() << std::endl;
+      return std::nullopt;
+    }
+  
+  return rv;
+}
+
+
+static std::optional<std::string> LoadText(const std::string & filename)
 {
   std::string text;
   std::ifstream fp(filename);
-  if(fp)
+  if(!fp)
     {
-      std::string tmp;
-      while(std::getline(fp, tmp))
-        text += tmp + '\n';
-      
-      // todo: Add proper error message.
-      if(!fp.eof())
-        std::cerr << "Error loading '" + filename + "': something went wrong\n";
+      std::cerr << "Failed to open '" + filename + "' for reading.\n";
+      return std::nullopt;
     }
+  
+  std::string tmp;
+  while(std::getline(fp, tmp))
+    text += tmp + '\n';
+      
+  // todo: Add proper error message.
+  if(!fp.eof())
+    {
+      std::cerr << "Error loading '" + filename + "': something went wrong\n";
+      return std::nullopt;
+    }
+  
   return text;
 }
 
@@ -176,18 +229,16 @@ static unsigned int GetSampleRate(const RtAudio::DeviceInfo & deviceinfo)
 
 int main(int argc, char * argv[])
 {
-  if(argc != 2)
-    {
-      std::cerr << argv[0] << ": Incorrect number of arguments.\n";
-      std::cerr << "Usage: " << argv[0] << " <file.sbp>\n";
-      return EXIT_FAILURE;
-    }
+  auto cmdconf = ParseCommandline(argc, argv);
+  if(!cmdconf.has_value())
+    return EXIT_FAILURE;
+  auto config = cmdconf.value();
   
-  auto text = LoadText(argv[1]);
-  if(text.empty())
+  auto text = LoadText(config.filename);
+  if(!text.has_value())
     return EXIT_FAILURE;
 
-  auto json = LoadJson(text);
+  auto json = LoadJson(text.value());
   if(!json)
     return EXIT_FAILURE;
 
@@ -235,7 +286,7 @@ int main(int argc, char * argv[])
   auto callbackdata = std::make_pair(&blueprint, n);
 
 
-  // if(verbose) std::cout << argv[0] << ": Using device " << deviceinfo.name << ", sample rate " << sample_rate << std::endl;
+  if(config.verbose) std::cout << argv[0] << ": Using device " << deviceinfo.name << ", sample rate " << sample_rate << std::endl;
   
   int rv = EXIT_SUCCESS;
   try
