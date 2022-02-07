@@ -239,20 +239,16 @@ nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
 # fmsplay:
 fmsplay_CXXFLAGS = 			\
 	$(AM_CXXFLAGS)			\
-	$(ALUT_CFLAGS)			\
-	$(OPENAL_CFLAGS)		
+	$(RTAUDIO_CFLAGS)		
 
 fmsplay_LDADD =		\
 	libfmsynth.la	\
-	$(ALUT_LIBS)	\
 	$(FMT_LIBS)	\
 	$(JSON_LIBS)	\
-	$(OPENAL_LIBS)	\
-	$(PTHREAD_LIBS)	
+	$(PTHREAD_LIBS)	\
+	$(RTAUDIO_LIBS)	
 
 fmsplay_SOURCES =			\
-	Player.cc			\
-	Player.hh			\
 	fmsplay.cc			
 
 

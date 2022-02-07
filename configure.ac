@@ -22,9 +22,10 @@ AC_CHECK_HEADER([format], [], [
 AC_CHECK_HEADER([AudioFile.h], [], [AC_MSG_ERROR([Unable to find header for AudioFile library (https://github.com/adamstark/AudioFile).])])
 AC_LANG_POP
 
-PKG_CHECK_MODULES([JSON],   [json11])
-PKG_CHECK_MODULES([ALUT],   [freealut])
-PKG_CHECK_MODULES([OPENAL], [openal])
+PKG_CHECK_MODULES([JSON],    [json11])
+PKG_CHECK_MODULES([ALUT],    [freealut])
+PKG_CHECK_MODULES([OPENAL],  [openal])
+PKG_CHECK_MODULES([RTAUDIO], [rtaudio])
 
 PRE512QT=0
 PKG_CHECK_MODULES([QT], [Qt5Core >= 5.12 Qt5Widgets], [], [
