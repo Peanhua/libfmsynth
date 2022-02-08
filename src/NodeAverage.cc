@@ -12,6 +12,8 @@
 
 #include "NodeAverage.hh"
 
+using namespace fmsynth;
+
 
 NodeAverage::NodeAverage()
   : Node("Average")

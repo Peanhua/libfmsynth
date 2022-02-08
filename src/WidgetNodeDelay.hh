@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeDelay;
+namespace fmsynth
+{
+  class NodeDelay;
+}
 
 
 class WidgetNodeDelay : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
   
 private:
-  NodeDelay *     _node_delay;
-  Ui::NodeDelay * _ui_node_delay;
+  fmsynth::NodeDelay * _node_delay;
+  Ui::NodeDelay *      _ui_node_delay;
 };
 
 

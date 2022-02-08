@@ -15,27 +15,30 @@
 #include "Node.hh"
 
 
-class NodeConstant : public Node
+namespace fmsynth
 {
-public:
-  NodeConstant();
+  class NodeConstant : public Node
+  {
+  public:
+    NodeConstant();
 
-  double GetConstant() const;
-  void   SetConstant(double constant);
-  bool   IsFrequency() const;
-  void   SetIsFrequency(bool is_frequency);
+    double GetConstant() const;
+    void   SetConstant(double constant);
+    bool   IsFrequency() const;
+    void   SetIsFrequency(bool is_frequency);
 
-  Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const override;
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  double _constant;
-  bool   _is_frequency;
-};
+  private:
+    double _constant;
+    bool   _is_frequency;
+  };
+}
 
 #endif

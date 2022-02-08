@@ -17,42 +17,45 @@
 #include <vector>
 #include <json11.hpp>
 
-class Node;
-class NodeConstant;
-
-
-class Blueprint
+namespace fmsynth
 {
-public:
-  Blueprint();
-  ~Blueprint();
+  class Node;
+  class NodeConstant;
 
-  void Clear();
-  bool Load(const json11::Json & json);
 
-  void AddNode(Node * node);
-  void RemoveNode(Node * node);
-  void AddLink(Node * from, Node * to, const std::string & channel);
-
-  void ResetTime();
-  void Tick(long samples);
-  void SetIsFinished();
-  bool IsFinished() const;
-
-  void         SetSamplesPerSecond(unsigned int samples_per_second);
-  unsigned int GetSamplesPerSecond() const;
-
-  std::mutex & GetLockMutex();
-  Node *       GetRoot() const;
-  Node *       GetNode(const std::string & id) const;
-  std::vector<Node *> GetNodesByType(const std::string & type) const;
-
-private:
-  NodeConstant *      _root;
-  std::vector<Node *> _nodes;
-  std::mutex          _lock_mutex;
-  long                _time_index;
-  unsigned int        _samples_per_second;
-};
+  class Blueprint
+  {
+  public:
+    Blueprint();
+    ~Blueprint();
+    
+    void Clear();
+    bool Load(const json11::Json & json);
+    
+    void AddNode(Node * node);
+    void RemoveNode(Node * node);
+    void AddLink(Node * from, Node * to, const std::string & channel);
+    
+    void ResetTime();
+    void Tick(long samples);
+    void SetIsFinished();
+    bool IsFinished() const;
+    
+    void         SetSamplesPerSecond(unsigned int samples_per_second);
+    unsigned int GetSamplesPerSecond() const;
+    
+    std::mutex & GetLockMutex();
+    Node *       GetRoot() const;
+    Node *       GetNode(const std::string & id) const;
+    std::vector<Node *> GetNodesByType(const std::string & type) const;
+    
+  private:
+    NodeConstant *      _root;
+    std::vector<Node *> _nodes;
+    std::mutex          _lock_mutex;
+    long                _time_index;
+    unsigned int        _samples_per_second;
+  };
+}
 
 #endif

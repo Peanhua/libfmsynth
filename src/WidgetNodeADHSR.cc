@@ -21,8 +21,8 @@
 
 
 WidgetNodeADHSR::WidgetNodeADHSR(QWidget * parent)
-  : WidgetNode(parent, new NodeADHSR, true, true),
-    _node_adhsr(dynamic_cast<NodeADHSR *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeADHSR, true, true),
+    _node_adhsr(dynamic_cast<fmsynth::NodeADHSR *>(GetNode())),
     _ui_node_adhsr(new Ui::NodeADHSR)
 {
   SetNodeType("ADHSR", "ADSR");
@@ -82,7 +82,7 @@ void WidgetNodeADHSR::WidgetToNode()
                    _ui_node_adhsr->_hold->value(),
                    _ui_node_adhsr->_sustain->value(),
                    _ui_node_adhsr->_release->value(),
-                   static_cast<NodeADHSR::EndAction>(_ui_node_adhsr->_end_action->currentIndex())
+                   static_cast<fmsynth::NodeADHSR::EndAction>(_ui_node_adhsr->_end_action->currentIndex())
                    );
 }
 

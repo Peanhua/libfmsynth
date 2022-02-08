@@ -15,15 +15,18 @@
 #include "Node.hh"
 
 
-class NodeInverse : public Node
+namespace fmsynth
 {
-public:
-  NodeInverse();
+  class NodeInverse : public Node
+  {
+  public:
+    NodeInverse();
 
-  Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const override;
   
-protected:
-  double ProcessInput(double time, double form);
-};
+  protected:
+    double ProcessInput(double time, double form);
+  };
+}
 
 #endif

@@ -16,38 +16,41 @@
 #include <random>
 
 
-class NodeOscillator : public Node
+namespace fmsynth
 {
-public:
-  enum class Type {
-    SINE,
-    PULSE,
-    TRIANGLE,
-    SAWTOOTH,
-    NOISE
+  class NodeOscillator : public Node
+  {
+  public:
+    enum class Type {
+      SINE,
+      PULSE,
+      TRIANGLE,
+      SAWTOOTH,
+      NOISE
+    };
+  
+    NodeOscillator();
+
+    Type        GetType()                                 const;
+    std::string TypeToName(Type type)                     const;
+    Type        NameToType(const std::string & type_name) const;
+    double      GetPulseDutyCycle()                       const;
+    void        SetType(Type type);
+    void        SetPulseDutyCycle(double pulse_duty_cycle);
+
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
+  
+  protected:
+    double ProcessInput(double time, double form) override;
+
+  private:
+    Type   _type;
+    double _pulse_duty_cycle; // Percentage signal is high.
+    std::mt19937_64                        _random_generator;
+    std::uniform_real_distribution<double> _rdist;
+
   };
-  
-  NodeOscillator();
-
-  Type        GetType()                                 const;
-  std::string TypeToName(Type type)                     const;
-  Type        NameToType(const std::string & type_name) const;
-  double      GetPulseDutyCycle()                       const;
-  void        SetType(Type type);
-  void        SetPulseDutyCycle(double pulse_duty_cycle);
-
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
-  
-protected:
-  double ProcessInput(double time, double form) override;
-
-private:
-  Type   _type;
-  double _pulse_duty_cycle; // Percentage signal is high.
-  std::mt19937_64                        _random_generator;
-  std::uniform_real_distribution<double> _rdist;
-
-};
+}
 
 #endif

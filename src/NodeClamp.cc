@@ -12,6 +12,8 @@
 
 #include "NodeClamp.hh"
 
+using namespace fmsynth;
+
 
 NodeClamp::NodeClamp()
   : Node("Clamp"),

@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeClamp;
+namespace fmsynth
+{
+  class NodeClamp;
+}
 
 
 class WidgetNodeClamp : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
   
 private:
-  NodeClamp *     _node_clamp;
-  Ui::NodeClamp * _ui_node_clamp;
+  fmsynth::NodeClamp * _node_clamp;
+  Ui::NodeClamp *      _ui_node_clamp;
 };
 
 

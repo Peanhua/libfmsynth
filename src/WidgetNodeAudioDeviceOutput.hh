@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeAudioDeviceOutput;
+namespace fmsynth
+{
+  class NodeAudioDeviceOutput;
+}
 
 
 class WidgetNodeAudioDeviceOutput : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
 
 private:
-  NodeAudioDeviceOutput *     _node_audio_device_output;
-  Ui::NodeAudioDeviceOutput * _ui_node_audio_device_output;
+  fmsynth::NodeAudioDeviceOutput * _node_audio_device_output;
+  Ui::NodeAudioDeviceOutput *      _ui_node_audio_device_output;
 
   void UpdateMuteButton();
 };

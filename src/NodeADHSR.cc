@@ -14,6 +14,8 @@
 #include <cassert>
 #include <cmath>
 
+using namespace fmsynth;
+
 
 NodeADHSR::NodeADHSR()
   : Node("ADHSR"),

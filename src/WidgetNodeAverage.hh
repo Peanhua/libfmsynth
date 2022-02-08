@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeAverage;
+namespace fmsynth
+{
+  class NodeAverage;
+}
 
 
 class WidgetNodeAverage : public WidgetNode
@@ -24,8 +27,8 @@ public:
   WidgetNodeAverage(QWidget * parent);
 
 private:
-  NodeAverage *     _node_average;
-  Ui::NodeAverage * _ui_node_average;
+  fmsynth::NodeAverage * _node_average;
+  Ui::NodeAverage *      _ui_node_average;
 
   void UpdateInfo();
 };

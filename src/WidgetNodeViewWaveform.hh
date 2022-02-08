@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeMemoryBuffer;
+namespace fmsynth
+{
+  class NodeMemoryBuffer;
+}
 
 
 class WidgetNodeViewWaveform : public WidgetNode
@@ -32,8 +35,8 @@ public:
   void         timerEvent(QTimerEvent * event)        override;
   
 private:
-  NodeMemoryBuffer *     _node_memorybuffer;
-  Ui::NodeViewWaveform * _ui_node_view_waveform;
+  fmsynth::NodeMemoryBuffer * _node_memorybuffer;
+  Ui::NodeViewWaveform *      _ui_node_view_waveform;
 
   void Redraw();
 };

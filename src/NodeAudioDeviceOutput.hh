@@ -16,36 +16,40 @@
 #include <functional>
 
 
-class NodeAudioDeviceOutput : public Node
+namespace fmsynth
 {
-public:
-  typedef std::function<void(NodeAudioDeviceOutput * node, double sample)> play_sample_t;
-  typedef std::function<void(NodeAudioDeviceOutput * node)>                continue_playback_t;
+  class NodeAudioDeviceOutput : public Node
+  {
+  public:
+    typedef std::function<void(NodeAudioDeviceOutput * node, double sample)> play_sample_t;
+    typedef std::function<void(NodeAudioDeviceOutput * node)>                continue_playback_t;
   
-  NodeAudioDeviceOutput();
+    NodeAudioDeviceOutput();
 
-  void   SetCallbacks(play_sample_t play_sample, continue_playback_t continue_playback);
+    void   SetCallbacks(play_sample_t play_sample, continue_playback_t continue_playback);
 
-  bool   IsMuted() const;
-  void   SetMuted(bool muted);
+    bool   IsMuted() const;
+    void   SetMuted(bool muted);
 
-  double GetVolume() const;
-  void   SetVolume(double volume);
+    double GetVolume() const;
+    void   SetVolume(double volume);
   
-  int16_t SampleToInt(double sample);
+    int16_t SampleToInt(double sample);
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  void   OnInputConnected(Node * from)          override;
-  void   OnEnabled()                            override;
-  double ProcessInput(double time, double form) override;
+  protected:
+    void   OnInputConnected(Node * from)          override;
+    void   OnEnabled()                            override;
+    double ProcessInput(double time, double form) override;
   
-private:
-  double _amplitude;
-  bool   _muted;
-  play_sample_t       _play_sample;
-  continue_playback_t _continue_playback;
-};
+  private:
+    double _amplitude;
+    bool   _muted;
+    play_sample_t       _play_sample;
+    continue_playback_t _continue_playback;
+  };
+}
+
 #endif

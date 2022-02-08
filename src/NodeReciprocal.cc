@@ -12,6 +12,8 @@
 
 #include "NodeReciprocal.hh"
 
+using namespace fmsynth;
+
 
 NodeReciprocal::NodeReciprocal()
   : Node("Reciprocal")

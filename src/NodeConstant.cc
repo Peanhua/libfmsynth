@@ -15,6 +15,8 @@
 #include <cmath>
 #include <numbers>
 
+using namespace fmsynth;
+
 
 NodeConstant::NodeConstant()
   : Node("Constant"),

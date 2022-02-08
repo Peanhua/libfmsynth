@@ -19,8 +19,8 @@
 
 
 WidgetNodeAdd::WidgetNodeAdd(QWidget * parent)
-  : WidgetNode(parent, new NodeAdd, true, true),
-    _node_add(dynamic_cast<NodeAdd *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeAdd, true, true),
+    _node_add(dynamic_cast<fmsynth::NodeAdd *>(GetNode())),
     _ui_node_add(new Ui::NodeAdd)
 {
   SetNodeType("Add");

@@ -31,7 +31,7 @@ void WidgetGraphWaveform::ForceRedraw()
 }
 
 
-void WidgetGraphWaveform::Update(NodeMemoryBuffer * buffer, double length)
+void WidgetGraphWaveform::Update(fmsynth::NodeMemoryBuffer * buffer, double length)
 {
   {
     std::lock_guard lock(buffer->GetLockMutex());

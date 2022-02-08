@@ -19,8 +19,8 @@
 
 
 WidgetNodeConstant::WidgetNodeConstant(QWidget * parent)
-  : WidgetNode(parent, new NodeConstant, false, true),
-    _node_constant(dynamic_cast<NodeConstant *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeConstant, false, true),
+    _node_constant(dynamic_cast<fmsynth::NodeConstant *>(GetNode())),
     _ui_node_constant(new Ui::NodeConstant)
 {
   SetNodeType("Constant");

@@ -87,7 +87,7 @@ void Player::Stop()
 }
 
 
-void Player::SetNextProgram(Blueprint * program)
+void Player::SetNextProgram(fmsynth::Blueprint * program)
 {
   _is_playing = program;
   {
@@ -116,7 +116,7 @@ void Player::QueueNextBuffer()
 
 void Player::TickProgramChange()
 {
-  Blueprint * newprog = nullptr;
+  fmsynth::Blueprint * newprog = nullptr;
   bool change = false;
   {
     std::lock_guard lock(_next_program_mutex);
@@ -132,7 +132,7 @@ void Player::TickProgramChange()
 }
 
 
-void Player::ChangeProgram(Blueprint * program)
+void Player::ChangeProgram(fmsynth::Blueprint * program)
 {
   if(_now_playing && _now_playing != program)
     _now_playing->SetIsFinished();

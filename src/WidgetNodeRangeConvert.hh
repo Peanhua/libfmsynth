@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeRangeConvert;
+namespace fmsynth
+{
+  class NodeRangeConvert;
+}
 
 
 class WidgetNodeRangeConvert : public WidgetNode
@@ -30,8 +33,8 @@ public:
   void         SetFromJson(const json11::Json & json) override;
 
 private:
-  NodeRangeConvert *     _node_rangeconvert;
-  Ui::NodeRangeConvert * _ui_node_rangeconvert;
+  fmsynth::NodeRangeConvert * _node_rangeconvert;
+  Ui::NodeRangeConvert *      _ui_node_rangeconvert;
 
   void UpdateRange(QWidget * custom, int index);
 };

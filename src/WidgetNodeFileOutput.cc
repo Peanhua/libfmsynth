@@ -21,8 +21,8 @@
 
 
 WidgetNodeFileOutput::WidgetNodeFileOutput(QWidget * parent)
-  : WidgetNode(parent, new NodeFileOutput, true, false),
-    _node_file_output(dynamic_cast<NodeFileOutput *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeFileOutput, true, false),
+    _node_file_output(dynamic_cast<fmsynth::NodeFileOutput *>(GetNode())),
     _ui_node_file_output(new Ui::NodeFileOutput)
 {
   SetNodeType("FileOutput");

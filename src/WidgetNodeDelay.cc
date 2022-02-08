@@ -19,8 +19,8 @@
 
 
 WidgetNodeDelay::WidgetNodeDelay(QWidget * parent)
-  : WidgetNode(parent, new NodeDelay, true, true),
-    _node_delay(dynamic_cast<NodeDelay *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeDelay, true, true),
+    _node_delay(dynamic_cast<fmsynth::NodeDelay *>(GetNode())),
     _ui_node_delay(new Ui::NodeDelay)
 {
   SetNodeType("Delay");

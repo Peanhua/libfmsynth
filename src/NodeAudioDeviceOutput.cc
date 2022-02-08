@@ -12,6 +12,8 @@
 
 #include "NodeAudioDeviceOutput.hh"
 
+using namespace fmsynth;
+
 
 NodeAudioDeviceOutput::NodeAudioDeviceOutput()
   : Node("AudioDeviceOutput"),

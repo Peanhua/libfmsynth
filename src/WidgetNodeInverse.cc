@@ -19,8 +19,8 @@
 
 
 WidgetNodeInverse::WidgetNodeInverse(QWidget * parent)
-  : WidgetNode(parent, new NodeInverse, true, true),
-    _node_inverse(dynamic_cast<NodeInverse *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeInverse, true, true),
+    _node_inverse(dynamic_cast<fmsynth::NodeInverse *>(GetNode())),
     _ui_node_inverse(new Ui::NodeInverse)
 {
   SetNodeType("Inverse");

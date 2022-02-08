@@ -14,6 +14,8 @@
 #include <cassert>
 #include <numbers>
 
+using namespace fmsynth;
+
 
 NodeOscillator::NodeOscillator()
   : Node("Oscillator"),

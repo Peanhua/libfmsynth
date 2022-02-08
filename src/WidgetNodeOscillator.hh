@@ -20,20 +20,20 @@
 class WidgetNodeOscillator : public WidgetNode
 {
 public:
-  WidgetNodeOscillator(QWidget * parent, NodeOscillator::Type type);
+  WidgetNodeOscillator(QWidget * parent, fmsynth::NodeOscillator::Type type);
 
   void   UpdateConnectorStates() override;
   void   NodeToWidget()          override;
   void   WidgetToNode()          override;
 
 private:
-  NodeOscillator::Type _type;
-  NodeOscillator *     _node_oscillator;
-  Ui::NodeOscillator * _ui_node_oscillator;
+  fmsynth::NodeOscillator::Type _type;
+  fmsynth::NodeOscillator *     _node_oscillator;
+  Ui::NodeOscillator *          _ui_node_oscillator;
 
-  std::string          OscillatorTypeString(NodeOscillator::Type type) const;
-  NodeOscillator::Type OscillatorTypeFromString(const std::string & string) const;
-  void                 UpdateOscillatorType();
+  std::string                   OscillatorTypeString(fmsynth::NodeOscillator::Type type) const;
+  fmsynth::NodeOscillator::Type OscillatorTypeFromString(const std::string & string) const;
+  void                          UpdateOscillatorType();
 };
 
 

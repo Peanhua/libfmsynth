@@ -12,6 +12,8 @@
 
 #include "NodeMemoryBuffer.hh"
 
+using namespace fmsynth;
+
 
 NodeMemoryBuffer::NodeMemoryBuffer()
   : Node("MemoryBuffer")

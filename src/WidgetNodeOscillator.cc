@@ -19,10 +19,10 @@
 #include "QtIncludeEnd.hh"
 
 
-WidgetNodeOscillator::WidgetNodeOscillator(QWidget * parent, NodeOscillator::Type type)
-  : WidgetNode(parent, new NodeOscillator, true, true),
+WidgetNodeOscillator::WidgetNodeOscillator(QWidget * parent, fmsynth::NodeOscillator::Type type)
+  : WidgetNode(parent, new fmsynth::NodeOscillator, true, true),
     _type(type),
-    _node_oscillator(dynamic_cast<NodeOscillator *>(GetNode())),
+    _node_oscillator(dynamic_cast<fmsynth::NodeOscillator *>(GetNode())),
     _ui_node_oscillator(new Ui::NodeOscillator)
 {
   _ui_node->_input_aux->setToolTip("Pulse duty cycle");
@@ -42,11 +42,11 @@ WidgetNodeOscillator::WidgetNodeOscillator(QWidget * parent, NodeOscillator::Typ
           {
             switch(index)
               {
-              case 0: _type = NodeOscillator::Type::SINE;     break;
-              case 1: _type = NodeOscillator::Type::TRIANGLE; break;
-              case 2: _type = NodeOscillator::Type::SAWTOOTH; break;
-              case 3: _type = NodeOscillator::Type::PULSE;    break;
-              case 4: _type = NodeOscillator::Type::NOISE;    break;
+              case 0: _type = fmsynth::NodeOscillator::Type::SINE;     break;
+              case 1: _type = fmsynth::NodeOscillator::Type::TRIANGLE; break;
+              case 2: _type = fmsynth::NodeOscillator::Type::SAWTOOTH; break;
+              case 3: _type = fmsynth::NodeOscillator::Type::PULSE;    break;
+              case 4: _type = fmsynth::NodeOscillator::Type::NOISE;    break;
               }
             UpdateOscillatorType();
           });
@@ -76,30 +76,30 @@ void WidgetNodeOscillator::NodeToWidget()
 }
 
 
-std::string WidgetNodeOscillator::OscillatorTypeString(NodeOscillator::Type type) const
+std::string WidgetNodeOscillator::OscillatorTypeString(fmsynth::NodeOscillator::Type type) const
 {
   std::string rv;
   switch(type)
     {
-    case NodeOscillator::Type::SINE:     rv = "Sine";     break;
-    case NodeOscillator::Type::PULSE:    rv = "Pulse";   break;
-    case NodeOscillator::Type::TRIANGLE: rv = "Triangle"; break;
-    case NodeOscillator::Type::SAWTOOTH: rv = "Sawtooth"; break;
-    case NodeOscillator::Type::NOISE:    rv = "Noise";    break;
+    case fmsynth::NodeOscillator::Type::SINE:     rv = "Sine";     break;
+    case fmsynth::NodeOscillator::Type::PULSE:    rv = "Pulse";   break;
+    case fmsynth::NodeOscillator::Type::TRIANGLE: rv = "Triangle"; break;
+    case fmsynth::NodeOscillator::Type::SAWTOOTH: rv = "Sawtooth"; break;
+    case fmsynth::NodeOscillator::Type::NOISE:    rv = "Noise";    break;
     }
   return rv;
 }
 
 
-NodeOscillator::Type WidgetNodeOscillator::OscillatorTypeFromString(const std::string & string) const
+fmsynth::NodeOscillator::Type WidgetNodeOscillator::OscillatorTypeFromString(const std::string & string) const
 {
-  if(string == "Sine")     return NodeOscillator::Type::SINE;
-  if(string == "Triangle") return NodeOscillator::Type::TRIANGLE;
-  if(string == "Sawtooth") return NodeOscillator::Type::SAWTOOTH;
-  if(string == "Pulse")    return NodeOscillator::Type::PULSE;
-  if(string == "Noise")    return NodeOscillator::Type::NOISE;
+  if(string == "Sine")     return fmsynth::NodeOscillator::Type::SINE;
+  if(string == "Triangle") return fmsynth::NodeOscillator::Type::TRIANGLE;
+  if(string == "Sawtooth") return fmsynth::NodeOscillator::Type::SAWTOOTH;
+  if(string == "Pulse")    return fmsynth::NodeOscillator::Type::PULSE;
+  if(string == "Noise")    return fmsynth::NodeOscillator::Type::NOISE;
   assert(false);
-  return NodeOscillator::Type::NOISE;
+  return fmsynth::NodeOscillator::Type::NOISE;
 }
 
 
@@ -108,17 +108,17 @@ void WidgetNodeOscillator::UpdateOscillatorType()
   int sind;
   switch(_type)
     {
-    case NodeOscillator::Type::SINE:     sind = 0; break;
-    case NodeOscillator::Type::TRIANGLE: sind = 1; break;
-    case NodeOscillator::Type::SAWTOOTH: sind = 2; break;
-    case NodeOscillator::Type::PULSE:    sind = 3; break;
-    case NodeOscillator::Type::NOISE:    sind = 4; break;
+    case fmsynth::NodeOscillator::Type::SINE:     sind = 0; break;
+    case fmsynth::NodeOscillator::Type::TRIANGLE: sind = 1; break;
+    case fmsynth::NodeOscillator::Type::SAWTOOTH: sind = 2; break;
+    case fmsynth::NodeOscillator::Type::PULSE:    sind = 3; break;
+    case fmsynth::NodeOscillator::Type::NOISE:    sind = 4; break;
     }
   _ui_node_oscillator->_type->setCurrentIndex(sind);
   SetNodeType("Oscillator", "Oscillator" + OscillatorTypeString(_type));
 
-  _ui_node_oscillator->_pulse->setVisible(_type == NodeOscillator::Type::PULSE);
-  _ui_node->_input_aux->setVisible(_type == NodeOscillator::Type::PULSE);
+  _ui_node_oscillator->_pulse->setVisible(_type == fmsynth::NodeOscillator::Type::PULSE);
+  _ui_node->_input_aux->setVisible(_type == fmsynth::NodeOscillator::Type::PULSE);
 
   adjustSize();
 }

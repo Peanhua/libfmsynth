@@ -13,6 +13,8 @@
 #include "NodeRangeConvert.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 NodeRangeConvert::NodeRangeConvert()
   : Node("RangeConvert"),

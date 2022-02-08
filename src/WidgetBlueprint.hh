@@ -19,9 +19,12 @@
 #include <QtWidgets/QWidget>
 #include "QtIncludeEnd.hh"
 
-class Blueprint;
+namespace fmsynth
+{
+  class Blueprint;
+  class Node;
+}
 class Link;
-class Node;
 class QScrollArea;
 class WidgetMainWindow;
 class WidgetNode;
@@ -51,20 +54,20 @@ public:
   void Reset();
   const std::string & GetFilename() const;
   
-  Blueprint *  GetBlueprint() const;
-  WidgetNode * AddNode(int x, int y, const std::string & node_type);
-  void         AddLink(WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel);
-  void         DeleteNode(WidgetNode * node);
-  void         DeleteLink(WidgetNode * node, const std::string & channel);
-  void         DeleteLink(WidgetNode * node, const std::string & channel, WidgetNode * other);
-  void         OnNodeMoved(WidgetNode * node);
-  unsigned int CountLinks(WidgetNode * node, const std::string & channel) const;
-  std::vector<Link *> GetLinks(const WidgetNode * node, const std::string & channel) const;
-  bool         CanRun() const;
-  Blueprint *  Build() const;
-  bool         IsDirty() const;
-  void         SetDirty(bool dirty);
-  void         UpdateWindowTitle();
+  fmsynth::Blueprint * GetBlueprint() const;
+  WidgetNode *         AddNode(int x, int y, const std::string & node_type);
+  void                 AddLink(WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel);
+  void                 DeleteNode(WidgetNode * node);
+  void                 DeleteLink(WidgetNode * node, const std::string & channel);
+  void                 DeleteLink(WidgetNode * node, const std::string & channel, WidgetNode * other);
+  void                 OnNodeMoved(WidgetNode * node);
+  unsigned int         CountLinks(WidgetNode * node, const std::string & channel) const;
+  std::vector<Link *>  GetLinks(const WidgetNode * node, const std::string & channel) const;
+  bool                 CanRun() const;
+  fmsynth::Blueprint * Build() const;
+  bool                 IsDirty() const;
+  void                 SetDirty(bool dirty);
+  void                 UpdateWindowTitle();
 
   void PostEdit();
   void PostEdit(QWidget * edited_node);
@@ -93,7 +96,7 @@ public:
   
 private:
   std::string               _filename;
-  Blueprint *               _blueprint;
+  fmsynth::Blueprint *      _blueprint;
   std::vector<WidgetNode *> _nodes;
   std::vector<Link *>       _links;
   bool                      _dirty;

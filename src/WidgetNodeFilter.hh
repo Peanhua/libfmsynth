@@ -21,7 +21,7 @@ class WidgetNodeFilter : public WidgetNode
 {
 public:
   WidgetNodeFilter(QWidget * parent);
-  WidgetNodeFilter(QWidget * parent, NodeFilter::Type type);
+  WidgetNodeFilter(QWidget * parent, fmsynth::NodeFilter::Type type);
   
   void   UpdateConnectorStates() override;
   
@@ -29,13 +29,13 @@ public:
   void   WidgetToNode() override;
 
 private:
-  NodeFilter::Type _type;
-  NodeFilter *     _node_filter;
-  Ui::NodeFilter * _ui_node_filter;
+  fmsynth::NodeFilter::Type _type;
+  fmsynth::NodeFilter *     _node_filter;
+  Ui::NodeFilter *          _ui_node_filter;
 
-  std::string      FilterTypeString(NodeFilter::Type type) const;
-  NodeFilter::Type FilterTypeFromString(const std::string & string) const;
-  void             UpdateFilterType();
+  std::string               FilterTypeString(fmsynth::NodeFilter::Type type) const;
+  fmsynth::NodeFilter::Type FilterTypeFromString(const std::string & string) const;
+  void                      UpdateFilterType();
 };
 
 

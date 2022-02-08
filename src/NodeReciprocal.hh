@@ -15,13 +15,16 @@
 #include "Node.hh"
 
 
-class NodeReciprocal : public Node
+namespace fmsynth
 {
-public:
-  NodeReciprocal();
+  class NodeReciprocal : public Node
+  {
+  public:
+    NodeReciprocal();
   
-protected:
-  double ProcessInput(double time, double form);
-};
+  protected:
+    double ProcessInput(double time, double form);
+  };
+}
 
 #endif

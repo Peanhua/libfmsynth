@@ -21,8 +21,8 @@
 
 
 WidgetNodeRangeConvert::WidgetNodeRangeConvert(QWidget * parent)
-  : WidgetNode(parent, new NodeRangeConvert, true, true),
-    _node_rangeconvert(dynamic_cast<NodeRangeConvert *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeRangeConvert, true, true),
+    _node_rangeconvert(dynamic_cast<fmsynth::NodeRangeConvert *>(GetNode())),
     _ui_node_rangeconvert(new Ui::NodeRangeConvert)
 {
   SetNodeType("RangeConvert");
@@ -120,7 +120,7 @@ void WidgetNodeRangeConvert::WidgetToNode()
     if(min >= max)
       max = std::nextafter(min, min + 1);
     
-    Range rv(min, max);
+    fmsynth::Range rv(min, max);
     return rv;
   };
   

@@ -14,6 +14,8 @@
 #include <cassert>
 #include <numbers>
 
+using namespace fmsynth;
+
 
 NodeFilter::NodeFilter()
   : Node("Filter"),

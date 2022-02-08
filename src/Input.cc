@@ -14,6 +14,8 @@
 #include "Node.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 Input::Input(double default_value)
   : _default_value(default_value),

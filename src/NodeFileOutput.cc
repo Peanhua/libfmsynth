@@ -14,6 +14,8 @@
 #include <iostream>
 #include <AudioFile.h>
 
+using namespace fmsynth;
+
 
 NodeFileOutput::NodeFileOutput()
   : Node("FileOutput"),

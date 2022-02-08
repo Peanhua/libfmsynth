@@ -20,76 +20,79 @@
 #include <json11.hpp>
 
 
-class Node
+namespace fmsynth
 {
-public:
-  Node(const std::string & type);
-  virtual ~Node();
+  class Node
+  {
+  public:
+    Node(const std::string & type);
+    virtual ~Node();
 
-  static Node * Create(const json11::Json & json);
+    static Node * Create(const json11::Json & json);
 
-  const std::string & GetType() const;
-  const std::string & GetId()   const;
-  void                SetId(const std::string & id);
+    const std::string & GetType() const;
+    const std::string & GetId()   const;
+    void                SetId(const std::string & id);
   
-  void    AddAmplitudeInputNode(Node * node);
-  void    AddFormInputNode(Node * node);
-  void    AddAuxInputNode(Node * node);
-  void    RemoveAmplitudeInputNode(Node * node);
-  void    RemoveFormInputNode(Node * node);
-  void    RemoveAuxInputNode(Node * node);
+    void    AddAmplitudeInputNode(Node * node);
+    void    AddFormInputNode(Node * node);
+    void    AddAuxInputNode(Node * node);
+    void    RemoveAmplitudeInputNode(Node * node);
+    void    RemoveFormInputNode(Node * node);
+    void    RemoveAuxInputNode(Node * node);
 
-  virtual Input::Range GetAmplitudeInputRange() const;
-  Input::Range         GetFormInputRange()      const;
-  virtual Input::Range GetAuxInputRange()       const;
-  virtual Input::Range GetFormOutputRange()     const;
+    virtual Input::Range GetAmplitudeInputRange() const;
+    Input::Range         GetFormInputRange()      const;
+    virtual Input::Range GetAuxInputRange()       const;
+    virtual Input::Range GetFormOutputRange()     const;
 
-  void         SetSamplesPerSecond(unsigned int samples_per_second);
-  unsigned int GetSamplesPerSecond() const;
+    void         SetSamplesPerSecond(unsigned int samples_per_second);
+    unsigned int GetSamplesPerSecond() const;
 
-  void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
-  void    PushFormInput(long time_index, Node * pusher, double form);
-  void    PushAuxInput(long time_index, Node * pusher, double value);
+    void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
+    void    PushFormInput(long time_index, Node * pusher, double form);
+    void    PushAuxInput(long time_index, Node * pusher, double value);
 
-  bool    IsEnabled() const;
-  void    SetEnabled(const Node * root, bool enabled);
+    bool    IsEnabled() const;
+    void    SetEnabled(const Node * root, bool enabled);
 
-  bool    IsFinished() const;
-  void    SetIsFinished();
+    bool    IsFinished() const;
+    void    SetIsFinished();
 
-  std::set<Node *> GetAllConnectedNodes() const;
-  virtual void     ResetTime();
+    std::set<Node *> GetAllConnectedNodes() const;
+    virtual void     ResetTime();
 
-  virtual json11::Json to_json() const;
-  virtual void         SetFromJson(const json11::Json & json);
+    virtual json11::Json to_json() const;
+    virtual void         SetFromJson(const json11::Json & json);
   
-protected:
-  virtual void   OnInputConnected(Node * from);
-  virtual double ProcessInput(double time, double form) = 0;
-  virtual void   OnEnabled();
-  virtual void   OnEOF();
+  protected:
+    virtual void   OnInputConnected(Node * from);
+    virtual double ProcessInput(double time, double form) = 0;
+    virtual void   OnEnabled();
+    virtual void   OnEOF();
 
-  void          SetPreprocessAmplitude();
-  const Input * GetAmplitudeInput() const;
-  const Input * GetFormInput()      const;
-  Input *       GetFormInput();
-  Input *       GetAuxInput();
+    void          SetPreprocessAmplitude();
+    const Input * GetAmplitudeInput() const;
+    const Input * GetFormInput()      const;
+    Input *       GetFormInput();
+    Input *       GetAuxInput();
 
-private:
-  static unsigned int _next_id;
+  private:
+    static unsigned int _next_id;
   
-  std::string  _type;
-  std::string  _id;
-  bool         _preprocess_amplitude;
+    std::string  _type;
+    std::string  _id;
+    bool         _preprocess_amplitude;
 
-  bool         _enabled;
-  unsigned int _samples_per_second;
-  bool         _finished;
-  Input        _amplitude;
-  Input        _form;
-  Input        _aux;
+    bool         _enabled;
+    unsigned int _samples_per_second;
+    bool         _finished;
+    Input        _amplitude;
+    Input        _form;
+    Input        _aux;
 
-  void FinishFrame(long time_index);
-};
+    void FinishFrame(long time_index);
+  };
+}
 
 #endif

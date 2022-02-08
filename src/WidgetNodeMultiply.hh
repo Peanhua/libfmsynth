@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeMultiply;
+namespace fmsynth
+{
+  class NodeMultiply;
+}
 
 
 class WidgetNodeMultiply : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
 
 private:
-  NodeMultiply *     _node_multiply;
-  Ui::NodeMultiply * _ui_node_multiply;
+  fmsynth::NodeMultiply * _node_multiply;
+  Ui::NodeMultiply *      _ui_node_multiply;
 };
 
 

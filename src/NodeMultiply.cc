@@ -12,6 +12,8 @@
 
 #include "NodeMultiply.hh"
 
+using namespace fmsynth;
+
 
 NodeMultiply::NodeMultiply()
   : Node("Multiply"),

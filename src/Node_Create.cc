@@ -26,6 +26,8 @@
 #include "NodeReciprocal.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 Node * Node::Create(const json11::Json & json)
 {

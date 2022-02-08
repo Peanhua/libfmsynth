@@ -15,7 +15,11 @@
 
 #include "WidgetNode.hh"
 
-class NodeADHSR;
+namespace fmsynth
+{
+  class NodeADHSR;
+}
+
 class QDoubleSpinBox;
 class QSlider;
 
@@ -32,8 +36,8 @@ public:
   void         SetFromJson(const json11::Json & json) override;
 
 private:
-  NodeADHSR *     _node_adhsr;
-  Ui::NodeADHSR * _ui_node_adhsr;
+  fmsynth::NodeADHSR * _node_adhsr;
+  Ui::NodeADHSR *      _ui_node_adhsr;
 
   void SetSlidersFromSpinboxes();
   void SetSpinboxesFromSliders();

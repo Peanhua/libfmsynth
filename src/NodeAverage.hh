@@ -15,15 +15,18 @@
 #include "Node.hh"
 
 
-class NodeAverage : public Node
+namespace fmsynth
 {
-public:
-  NodeAverage();
+  class NodeAverage : public Node
+  {
+  public:
+    NodeAverage();
 
-  Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const override;
   
-protected:
-  double ProcessInput(double time, double form);
-};
+  protected:
+    double ProcessInput(double time, double form);
+  };
+}
 
 #endif

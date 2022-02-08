@@ -20,8 +20,8 @@
 
 
 WidgetNodeClamp::WidgetNodeClamp(QWidget * parent)
-  : WidgetNode(parent, new NodeClamp, true, true),
-    _node_clamp(dynamic_cast<NodeClamp *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeClamp, true, true),
+    _node_clamp(dynamic_cast<fmsynth::NodeClamp *>(GetNode())),
     _ui_node_clamp(new Ui::NodeClamp)
 {
   SetNodeType("Clamp");

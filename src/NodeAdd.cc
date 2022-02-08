@@ -12,6 +12,8 @@
 
 #include "NodeAdd.hh"
 
+using namespace fmsynth;
+
 
 NodeAdd::NodeAdd()
   : Node("Add"),

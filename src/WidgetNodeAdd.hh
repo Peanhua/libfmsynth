@@ -15,8 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeAdd;
-
+namespace fmsynth
+{
+  class NodeAdd;
+}
 
 class WidgetNodeAdd : public WidgetNode
 {
@@ -27,8 +29,8 @@ public:
   void WidgetToNode() override;
 
 private:
-  NodeAdd *     _node_add;
-  Ui::NodeAdd * _ui_node_add;
+  fmsynth::NodeAdd * _node_add;
+  Ui::NodeAdd *      _ui_node_add;
 };
 
 

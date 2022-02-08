@@ -13,6 +13,8 @@
 #include "Node.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 unsigned int Node::_next_id = 1;
 

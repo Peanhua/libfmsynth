@@ -17,7 +17,10 @@
 #include <QtGui/QPainterPath>
 #include "QtIncludeEnd.hh"
 
-class NodeMemoryBuffer;
+namespace fmsynth
+{
+  class NodeMemoryBuffer;
+}
 
 
 class WidgetGraphWaveform : public QWidget
@@ -26,7 +29,7 @@ public:
   WidgetGraphWaveform(QWidget * parent);
 
   void ForceRedraw();
-  void Update(NodeMemoryBuffer * buffer, double length);
+  void Update(fmsynth::NodeMemoryBuffer * buffer, double length);
   
   void paintEvent(QPaintEvent * event) override;
   

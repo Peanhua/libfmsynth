@@ -19,8 +19,8 @@
 
 
 WidgetNodeMultiply::WidgetNodeMultiply(QWidget * parent)
-  : WidgetNode(parent, new NodeMultiply, true, true),
-    _node_multiply(dynamic_cast<NodeMultiply *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeMultiply, true, true),
+    _node_multiply(dynamic_cast<fmsynth::NodeMultiply *>(GetNode())),
     _ui_node_multiply(new Ui::NodeMultiply)
 {
   SetNodeType("Multiply");

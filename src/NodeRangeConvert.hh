@@ -14,44 +14,47 @@
 
 #include "Node.hh"
 
-class Range
+namespace fmsynth
 {
-public:
-  Range(double min, double max);
-  double ConvertTo(double value, const Range & to);
+  class Range
+  {
+  public:
+    Range(double min, double max);
+    double ConvertTo(double value, const Range & to);
 
-  double GetMin() const;
-  double GetMax() const;
+    double GetMin() const;
+    double GetMax() const;
 
-  void Set(double min, double max);
+    void Set(double min, double max);
   
-private:
-  double _min;
-  double _max;
-};
+  private:
+    double _min;
+    double _max;
+  };
 
 
-class NodeRangeConvert : public Node
-{
-public:
-  NodeRangeConvert();
+  class NodeRangeConvert : public Node
+  {
+  public:
+    NodeRangeConvert();
 
-  const Range & GetFrom() const;
-  const Range & GetTo()   const;
-  void          SetFrom(const Range & range);
-  void          SetTo(const Range & range);
+    const Range & GetFrom() const;
+    const Range & GetTo()   const;
+    void          SetFrom(const Range & range);
+    void          SetTo(const Range & range);
 
-  Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const override;
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  Range _from;
-  Range _to;
-};
+  private:
+    Range _from;
+    Range _to;
+  };
+}
 
 #endif

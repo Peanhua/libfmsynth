@@ -19,8 +19,8 @@
 
 
 WidgetNodeAverage::WidgetNodeAverage(QWidget * parent)
-  : WidgetNode(parent, new NodeAverage, true, true),
-    _node_average(dynamic_cast<NodeAverage *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeAverage, true, true),
+    _node_average(dynamic_cast<fmsynth::NodeAverage *>(GetNode())),
     _ui_node_average(new Ui::NodeAverage)
 {
   SetNodeType("Average");

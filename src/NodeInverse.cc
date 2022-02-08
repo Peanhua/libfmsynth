@@ -13,6 +13,8 @@
 #include "NodeInverse.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 NodeInverse::NodeInverse()
   : Node("Inverse")

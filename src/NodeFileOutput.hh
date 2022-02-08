@@ -16,25 +16,28 @@
 
 template <class T> class AudioFile;
 
-
-class NodeFileOutput : public Node
+namespace fmsynth
 {
-public:
-  NodeFileOutput();
-  ~NodeFileOutput();
+  class NodeFileOutput : public Node
+  {
+  public:
+    NodeFileOutput();
+    ~NodeFileOutput();
 
-  const std::string & GetFilename() const;
-  void                SetFilename(const std::string & filename);
+    const std::string & GetFilename() const;
+    void                SetFilename(const std::string & filename);
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form) override;
-  void   OnEOF() override;
+  protected:
+    double ProcessInput(double time, double form) override;
+    void   OnEOF() override;
 
-private:
-  AudioFile<double> * _file;
-  std::string         _filename;
-};
+  private:
+    AudioFile<double> * _file;
+    std::string         _filename;
+  };
+}
+
 #endif

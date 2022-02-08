@@ -20,8 +20,8 @@
 
 
 WidgetNodeAudioDeviceOutput::WidgetNodeAudioDeviceOutput(QWidget * parent)
-  : WidgetNode(parent, new NodeAudioDeviceOutput, true, false),
-    _node_audio_device_output(dynamic_cast<NodeAudioDeviceOutput *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeAudioDeviceOutput, true, false),
+    _node_audio_device_output(dynamic_cast<fmsynth::NodeAudioDeviceOutput *>(GetNode())),
     _ui_node_audio_device_output(new Ui::NodeAudioDeviceOutput)
 {
   SetNodeType("AudioDeviceOutput");
@@ -45,12 +45,12 @@ WidgetNodeAudioDeviceOutput::WidgetNodeAudioDeviceOutput(QWidget * parent)
     });
 
   _node_audio_device_output->SetCallbacks(
-                                          [](NodeAudioDeviceOutput * node, double sample)
+                                          [](fmsynth::NodeAudioDeviceOutput * node, double sample)
                                           { 
                                             if(ProgramPlayer)
                                               ProgramPlayer->FillBackbufferValue(node->SampleToInt(sample));
                                           },
-                                          []([[maybe_unused]] NodeAudioDeviceOutput * node)
+                                          []([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node)
                                           {
                                             if(ProgramPlayer)
                                               ProgramPlayer->Continue();

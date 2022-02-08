@@ -12,6 +12,8 @@
 
 #include "NodeDelay.hh"
 
+using namespace fmsynth;
+
 
 NodeDelay::NodeDelay()
   : Node("Delay"),

@@ -19,8 +19,8 @@
 
 
 WidgetNodeReciprocal::WidgetNodeReciprocal(QWidget * parent)
-  : WidgetNode(parent, new NodeReciprocal, true, true),
-    _node_reciprocal(dynamic_cast<NodeReciprocal *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeReciprocal, true, true),
+    _node_reciprocal(dynamic_cast<fmsynth::NodeReciprocal *>(GetNode())),
     _ui_node_reciprocal(new Ui::NodeReciprocal)
 {
   SetNodeType("Reciprocal");

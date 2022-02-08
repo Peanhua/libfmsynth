@@ -14,6 +14,8 @@
 #include "NodeConstant.hh"
 #include <cassert>
 
+using namespace fmsynth;
+
 
 Blueprint::Blueprint()
   : _root(new NodeConstant),

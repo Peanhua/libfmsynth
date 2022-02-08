@@ -136,7 +136,7 @@ static int playback(void *                  outputBuffer,
 {
   assert(!status);
   
-  auto [blueprint, audiodevicenodes, output_file] = *static_cast<std::tuple<Blueprint *, std::vector<NodeAudioDeviceOutput *> *, AudioFile<double> *> *>(userData);
+  auto [blueprint, audiodevicenodes, output_file] = *static_cast<std::tuple<fmsynth::Blueprint *, std::vector<fmsynth::NodeAudioDeviceOutput *> *, AudioFile<double> *> *>(userData);
   assert(blueprint);
   assert(audiodevicenodes->size() > 0);
   
@@ -145,11 +145,11 @@ static int playback(void *                  outputBuffer,
   double currentsample = 0;
   for(auto n : *audiodevicenodes)
     n->SetCallbacks(
-                    [&currentsample]([[maybe_unused]] NodeAudioDeviceOutput * node, double sample)
+                    [&currentsample]([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node, double sample)
                     {
                       currentsample += sample;
                     },
-                    []([[maybe_unused]] NodeAudioDeviceOutput * node)
+                    []([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node)
                     {
                     }
                     );
@@ -265,7 +265,7 @@ int main(int argc, char * argv[])
   if(!json)
     return EXIT_FAILURE;
 
-  Blueprint blueprint;
+  fmsynth::Blueprint blueprint;
   auto loadok = blueprint.Load(*json);
   if(!loadok)
     return EXIT_FAILURE;
@@ -327,9 +327,9 @@ int main(int argc, char * argv[])
       delete dac;
       return EXIT_FAILURE;
     }
-  std::vector<NodeAudioDeviceOutput *> nodes;
+  std::vector<fmsynth::NodeAudioDeviceOutput *> nodes;
   for(auto n : ados)
-    nodes.push_back(dynamic_cast<NodeAudioDeviceOutput *>(n));
+    nodes.push_back(dynamic_cast<fmsynth::NodeAudioDeviceOutput *>(n));
   if(config.verbose)
     {
       std::cout << argv[0] << ": Output nodes           = " << nodes.size() << " : ";

@@ -19,7 +19,10 @@
 #include <QtCore/QPoint>
 #include "QtIncludeEnd.hh"
 
-class Node;
+namespace fmsynth
+{
+  class Node;
+}
 class WidgetBlueprint;
 class WidgetConnector;
 
@@ -27,7 +30,7 @@ class WidgetConnector;
 class WidgetNode : public QWidget
 {
 public:
-  WidgetNode(QWidget * parent, Node * node, bool takes_input, bool has_output);
+  WidgetNode(QWidget * parent, fmsynth::Node * node, bool takes_input, bool has_output);
   virtual ~WidgetNode();
 
   bool eventFilter(QObject * object, QEvent * event) override;
@@ -35,7 +38,7 @@ public:
 
   bool                 DependsOn(const WidgetNode * node) const;
 
-  Node *               GetNode()     const;
+  fmsynth::Node *      GetNode()     const;
   const std::string &  GetNodeType() const;
   const std::string &  GetNodeId()   const;
   void                 SetNodeId(const std::string & id);
@@ -58,11 +61,11 @@ public:
   virtual void         SetFromJson(const json11::Json & json);
 
 protected:
-  Ui::Node * _ui_node;
-  Node *     _node;
-  bool       _click_to_raise;
-  bool       _selecting_selects_contents;
-  QWidget *  _stack_under;
+  Ui::Node *      _ui_node;
+  fmsynth::Node * _node;
+  bool            _click_to_raise;
+  bool            _selecting_selects_contents;
+  QWidget *       _stack_under;
 
   void AddAuxInput();
   void SetNodeType(const std::string & type, const std::string & icon_filename = "");

@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeFileOutput;
+namespace fmsynth
+{
+  class NodeFileOutput;
+}
 
 
 class WidgetNodeFileOutput : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
 
 private:
-  NodeFileOutput *     _node_file_output;
-  Ui::NodeFileOutput * _ui_node_file_output;
+  fmsynth::NodeFileOutput * _node_file_output;
+  Ui::NodeFileOutput *      _ui_node_file_output;
 };
 
 

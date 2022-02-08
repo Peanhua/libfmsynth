@@ -29,7 +29,7 @@
 #include "QtIncludeEnd.hh"
 
 
-WidgetNode::WidgetNode(QWidget * parent, Node * node, bool takes_input, bool has_output)
+WidgetNode::WidgetNode(QWidget * parent, fmsynth::Node * node, bool takes_input, bool has_output)
   : QWidget(parent),
     _ui_node(new Ui::Node),
     _node(node),
@@ -92,7 +92,7 @@ WidgetNode::~WidgetNode()
 }
 
 
-Node * WidgetNode::GetNode() const
+fmsynth::Node * WidgetNode::GetNode() const
 {
   return _node;
 }
@@ -253,12 +253,12 @@ bool WidgetNode::IsMultiInput(const std::string & channel)
 
 void WidgetNode::SetConnectorsRanges()
 {
-  auto r2s = [](Input::Range r) -> std::string {
+  auto r2s = [](fmsynth::Input::Range r) -> std::string {
     switch(r)
       {
-      case Input::Range::Inf_Inf:      return "Inf";
-      case Input::Range::MinusOne_One: return "-1_1";
-      case Input::Range::Zero_One:     return "0_1";
+      case fmsynth::Input::Range::Inf_Inf:      return "Inf";
+      case fmsynth::Input::Range::MinusOne_One: return "-1_1";
+      case fmsynth::Input::Range::Zero_One:     return "0_1";
       }
     assert(false);
     return "";

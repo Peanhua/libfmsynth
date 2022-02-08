@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeInverse;
+namespace fmsynth
+{
+  class NodeInverse;
+}
 
 
 class WidgetNodeInverse : public WidgetNode
@@ -24,8 +27,8 @@ public:
   WidgetNodeInverse(QWidget * parent);
 
 private:
-  NodeInverse *     _node_inverse;
-  Ui::NodeInverse * _ui_node_inverse;
+  fmsynth::NodeInverse * _node_inverse;
+  Ui::NodeInverse *      _ui_node_inverse;
 };
 
 

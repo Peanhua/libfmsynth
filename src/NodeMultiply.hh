@@ -15,25 +15,28 @@
 #include "Node.hh"
 
 
-class NodeMultiply : public Node
+namespace fmsynth
 {
-public:
-  NodeMultiply();
+  class NodeMultiply : public Node
+  {
+  public:
+    NodeMultiply();
 
-  double GetMultiplier() const;
-  void   SetMultiplier(double multiplier);
+    double GetMultiplier() const;
+    void   SetMultiplier(double multiplier);
 
-  Input::Range GetAmplitudeInputRange() const override;
-  Input::Range GetFormOutputRange()     const override;
+    Input::Range GetAmplitudeInputRange() const override;
+    Input::Range GetFormOutputRange()     const override;
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  double _multiplier;
-};
+  private:
+    double _multiplier;
+  };
+}
 
 #endif

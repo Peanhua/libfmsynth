@@ -21,8 +21,10 @@
 #include <thread>
 #include <vector>
 
-class Blueprint;
-class Node;
+namespace fmsynth
+{
+  class Blueprint;
+}
 
 
 class Player
@@ -35,7 +37,7 @@ public:
 
   bool IsPlaying() const;
   void Continue();
-  void SetNextProgram(Blueprint * program);
+  void SetNextProgram(fmsynth::Blueprint * program);
   void FillBackbufferValue(int16_t value);
 
 private:
@@ -44,7 +46,7 @@ private:
   bool           _is_playing;
 
   // Player thread data:
-  Blueprint *           _now_playing;
+  fmsynth::Blueprint *  _now_playing;
   std::array<ALuint, 2> _buffers;
   std::vector<ALuint>   _buffers_to_delete;
   unsigned int          _current_buffer;
@@ -54,14 +56,14 @@ private:
   unsigned int          _current_source;
 
   // Communication between threads:
-  std::atomic<bool>                       _resume_playing;
-  std::optional<std::atomic<Blueprint *>> _next_program;
-  std::mutex                              _next_program_mutex;
+  std::atomic<bool>                                _resume_playing;
+  std::optional<std::atomic<fmsynth::Blueprint *>> _next_program;
+  std::mutex                                       _next_program_mutex;
 
   void   TickResumePlaying();
   
   void   TickProgramChange();
-  void   ChangeProgram(Blueprint * program);
+  void   ChangeProgram(fmsynth::Blueprint * program);
 
   void   TickSourceQueues();
   void   QueueNextBuffer();

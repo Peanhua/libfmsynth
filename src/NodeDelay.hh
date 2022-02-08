@@ -15,28 +15,31 @@
 #include "Node.hh"
 #include <deque>
 
-class NodeDelay : public Node
+namespace fmsynth
 {
-public:
-  NodeDelay();
+  class NodeDelay : public Node
+  {
+  public:
+    NodeDelay();
 
-  double GetDelayTime()            const;
-  void   SetDelayTime(double time);
+    double GetDelayTime()            const;
+    void   SetDelayTime(double time);
 
-  void         ResetTime()                override;
-  Input::Range GetFormOutputRange() const override;
+    void         ResetTime()                override;
+    Input::Range GetFormOutputRange() const override;
   
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  double             _delay_time;
-  std::deque<double> _buffer;
+  private:
+    double             _delay_time;
+    std::deque<double> _buffer;
 
-  void PrefillBuffer();
-};
+    void PrefillBuffer();
+  };
+}
 
 #endif

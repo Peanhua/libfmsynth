@@ -37,8 +37,8 @@ using fmt::format;
 
 
 WidgetNodeViewWaveform::WidgetNodeViewWaveform(QWidget * parent)
-  : WidgetNode(parent, new NodeMemoryBuffer, true, false),
-    _node_memorybuffer(dynamic_cast<NodeMemoryBuffer *>(GetNode())),
+  : WidgetNode(parent, new fmsynth::NodeMemoryBuffer, true, false),
+    _node_memorybuffer(dynamic_cast<fmsynth::NodeMemoryBuffer *>(GetNode())),
     _ui_node_view_waveform(new Ui::NodeViewWaveform)
 {
   SetNodeType("ViewWaveform");
@@ -87,7 +87,7 @@ void WidgetNodeViewWaveform::NodeToWidget()
 void WidgetNodeViewWaveform::WidgetToNode()
 {
   WidgetNode::WidgetToNode();
-  auto node = dynamic_cast<NodeMemoryBuffer *>(GetNode());
+  auto node = dynamic_cast<fmsynth::NodeMemoryBuffer *>(GetNode());
   assert(node);
   {
     std::lock_guard lock(node->GetLockMutex());

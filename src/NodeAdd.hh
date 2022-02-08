@@ -15,22 +15,25 @@
 #include "Node.hh"
 
 
-class NodeAdd : public Node
+namespace fmsynth
 {
-public:
-  NodeAdd();
+  class NodeAdd : public Node
+  {
+  public:
+    NodeAdd();
 
-  double GetValue() const;
-  void   SetValue(double value);
+    double GetValue() const;
+    void   SetValue(double value);
   
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  double _value;
-};
+  private:
+    double _value;
+  };
+}
 
 #endif

@@ -15,27 +15,30 @@
 #include "Node.hh"
 
 
-class NodeClamp : public Node
+namespace fmsynth
 {
-public:
-  NodeClamp();
+  class NodeClamp : public Node
+  {
+  public:
+    NodeClamp();
 
-  double GetMin() const;
-  double GetMax() const;
-  void   SetMin(double min);
-  void   SetMax(double max);
+    double GetMin() const;
+    double GetMax() const;
+    void   SetMin(double min);
+    void   SetMax(double max);
 
-  Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const override;
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+    json11::Json to_json() const                        override;
+    void         SetFromJson(const json11::Json & json) override;
   
-protected:
-  double ProcessInput(double time, double form);
+  protected:
+    double ProcessInput(double time, double form);
   
-private:
-  double _min;
-  double _max;
-};
+  private:
+    double _min;
+    double _max;
+  };
+}
 
 #endif

@@ -20,15 +20,15 @@
 
 
 WidgetNodeFilter::WidgetNodeFilter(QWidget * parent)
-  : WidgetNodeFilter(parent, NodeFilter::Type::LOW_PASS)
+  : WidgetNodeFilter(parent, fmsynth::NodeFilter::Type::LOW_PASS)
 {
 }
 
 
-WidgetNodeFilter::WidgetNodeFilter(QWidget * parent, NodeFilter::Type type)
-  : WidgetNode(parent, new NodeFilter, true, true),
+WidgetNodeFilter::WidgetNodeFilter(QWidget * parent, fmsynth::NodeFilter::Type type)
+  : WidgetNode(parent, new fmsynth::NodeFilter, true, true),
     _type(type),
-    _node_filter(dynamic_cast<NodeFilter *>(GetNode())),
+    _node_filter(dynamic_cast<fmsynth::NodeFilter *>(GetNode())),
     _ui_node_filter(new Ui::NodeFilter)
 {
   AddAuxInput();
@@ -46,8 +46,8 @@ WidgetNodeFilter::WidgetNodeFilter(QWidget * parent, NodeFilter::Type type)
           {
             switch(index)
               {
-              case 0: _type = NodeFilter::Type::LOW_PASS;  break;
-              case 1: _type = NodeFilter::Type::HIGH_PASS; break;
+              case 0: _type = fmsynth::NodeFilter::Type::LOW_PASS;  break;
+              case 1: _type = fmsynth::NodeFilter::Type::HIGH_PASS; break;
               }
             UpdateFilterType();
           });
@@ -85,24 +85,24 @@ void WidgetNodeFilter::UpdateConnectorStates()
 }
 
 
-std::string WidgetNodeFilter::FilterTypeString(NodeFilter::Type type) const
+std::string WidgetNodeFilter::FilterTypeString(fmsynth::NodeFilter::Type type) const
 {
   std::string rv;
   switch(type)
     {
-    case NodeFilter::Type::LOW_PASS:  rv = "LowPass";  break;
-    case NodeFilter::Type::HIGH_PASS: rv = "HighPass"; break;
+    case fmsynth::NodeFilter::Type::LOW_PASS:  rv = "LowPass";  break;
+    case fmsynth::NodeFilter::Type::HIGH_PASS: rv = "HighPass"; break;
     }
   return rv;
 }
 
 
-NodeFilter::Type WidgetNodeFilter::FilterTypeFromString(const std::string & string) const
+fmsynth::NodeFilter::Type WidgetNodeFilter::FilterTypeFromString(const std::string & string) const
 {
-  if(string == "LowPass")  return NodeFilter::Type::LOW_PASS;
-  if(string == "HighPass") return NodeFilter::Type::HIGH_PASS;
+  if(string == "LowPass")  return fmsynth::NodeFilter::Type::LOW_PASS;
+  if(string == "HighPass") return fmsynth::NodeFilter::Type::HIGH_PASS;
   assert(false);
-  return NodeFilter::Type::LOW_PASS;
+  return fmsynth::NodeFilter::Type::LOW_PASS;
 }
 
 
@@ -111,8 +111,8 @@ void WidgetNodeFilter::UpdateFilterType()
   int sind;
   switch(_type)
     {
-    case NodeFilter::Type::LOW_PASS:  sind = 0; break;
-    case NodeFilter::Type::HIGH_PASS: sind = 1; break;
+    case fmsynth::NodeFilter::Type::LOW_PASS:  sind = 0; break;
+    case fmsynth::NodeFilter::Type::HIGH_PASS: sind = 1; break;
     }
   _ui_node_filter->_type->setCurrentIndex(sind);
   SetNodeType("Filter", "Filter" + FilterTypeString(_type));

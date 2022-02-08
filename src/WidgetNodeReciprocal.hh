@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeReciprocal;
+namespace fmsynth
+{
+  class NodeReciprocal;
+}
 
 
 class WidgetNodeReciprocal : public WidgetNode
@@ -24,8 +27,8 @@ public:
   WidgetNodeReciprocal(QWidget * parent);
 
 private:
-  NodeReciprocal *     _node_reciprocal;
-  Ui::NodeReciprocal * _ui_node_reciprocal;
+  fmsynth::NodeReciprocal * _node_reciprocal;
+  Ui::NodeReciprocal *      _ui_node_reciprocal;
 };
 
 

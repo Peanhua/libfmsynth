@@ -49,7 +49,7 @@
 
 WidgetBlueprint::WidgetBlueprint(QWidget * parent)
   : QWidget(parent),
-    _blueprint(new Blueprint),
+    _blueprint(new fmsynth::Blueprint),
     _dirty(false),
     _loading(false),
     _undopos(0),
@@ -172,15 +172,15 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
   else if(node_type == "AudioDeviceOutput")
     nodewidget = new WidgetNodeAudioDeviceOutput(this);
   else if(node_type == "Sine" || node_type == "Oscillator")
-    nodewidget = new WidgetNodeOscillator(this, NodeOscillator::Type::SINE);
+    nodewidget = new WidgetNodeOscillator(this, fmsynth::NodeOscillator::Type::SINE);
   else if(node_type == "Pulse")
-    nodewidget = new WidgetNodeOscillator(this, NodeOscillator::Type::PULSE);
+    nodewidget = new WidgetNodeOscillator(this, fmsynth::NodeOscillator::Type::PULSE);
   else if(node_type == "Triangle")
-    nodewidget = new WidgetNodeOscillator(this, NodeOscillator::Type::TRIANGLE);
+    nodewidget = new WidgetNodeOscillator(this, fmsynth::NodeOscillator::Type::TRIANGLE);
   else if(node_type == "Sawtooth")
-    nodewidget = new WidgetNodeOscillator(this, NodeOscillator::Type::SAWTOOTH);
+    nodewidget = new WidgetNodeOscillator(this, fmsynth::NodeOscillator::Type::SAWTOOTH);
   else if(node_type == "Noise")
-    nodewidget = new WidgetNodeOscillator(this, NodeOscillator::Type::NOISE);
+    nodewidget = new WidgetNodeOscillator(this, fmsynth::NodeOscillator::Type::NOISE);
   else if(node_type == "ADHSR")
     nodewidget = new WidgetNodeADHSR(this);
   else if(node_type == "Add")
@@ -194,9 +194,9 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
   else if(node_type == "Filter")
     nodewidget = new WidgetNodeFilter(this);
   else if(node_type == "LowPass")
-    nodewidget = new WidgetNodeFilter(this, NodeFilter::Type::LOW_PASS);
+    nodewidget = new WidgetNodeFilter(this, fmsynth::NodeFilter::Type::LOW_PASS);
   else if(node_type == "HighPass")
-    nodewidget = new WidgetNodeFilter(this, NodeFilter::Type::HIGH_PASS);
+    nodewidget = new WidgetNodeFilter(this, fmsynth::NodeFilter::Type::HIGH_PASS);
   else if(node_type == "RangeConvert")
     nodewidget = new WidgetNodeRangeConvert(this);
   else if(node_type == "Clamp")
@@ -359,7 +359,7 @@ unsigned int WidgetBlueprint::CountLinks(WidgetNode * node, const std::string & 
 }
 
 
-Blueprint * WidgetBlueprint::Build() const
+fmsynth::Blueprint * WidgetBlueprint::Build() const
 {
   std::lock_guard lock(_blueprint->GetLockMutex());
   assert(CanRun());
@@ -882,7 +882,7 @@ void WidgetBlueprint::UpdateNodesData()
 }
 
 
-Blueprint * WidgetBlueprint::GetBlueprint() const
+fmsynth::Blueprint * WidgetBlueprint::GetBlueprint() const
 {
   return _blueprint;
 }

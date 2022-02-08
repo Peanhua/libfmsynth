@@ -17,7 +17,6 @@
 #include <QtCore/QPoint>
 #include "QtIncludeEnd.hh"
 
-class Node;
 class WidgetBlueprint;
 class WidgetNode;
 class WidgetLine;

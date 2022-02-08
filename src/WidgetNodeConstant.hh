@@ -15,7 +15,10 @@
 
 #include "WidgetNode.hh"
 
-class NodeConstant;
+namespace fmsynth
+{
+  class NodeConstant;
+}
 
 
 class WidgetNodeConstant : public WidgetNode
@@ -27,8 +30,8 @@ public:
   void   WidgetToNode() override;
 
 private:
-  NodeConstant *     _node_constant;
-  Ui::NodeConstant * _ui_node_constant;
+  fmsynth::NodeConstant * _node_constant;
+  Ui::NodeConstant *      _ui_node_constant;
 };
 
 

@@ -17,26 +17,30 @@
 #include <vector>
 
 
-class NodeMemoryBuffer : public Node
+namespace fmsynth
 {
-public:
-  NodeMemoryBuffer();
+  class NodeMemoryBuffer : public Node
+  {
+  public:
+    NodeMemoryBuffer();
 
-  void                      SetMaxLength(double seconds);
-  void                      Clear();
-  const std::vector<double> GetData() const;
-  std::mutex &              GetLockMutex();
+    void                      SetMaxLength(double seconds);
+    void                      Clear();
+    const std::vector<double> GetData() const;
+    std::mutex &              GetLockMutex();
 
-  void                      ResetTime() override;
-  Input::Range              GetFormOutputRange() const override;
+    void                      ResetTime() override;
+    Input::Range              GetFormOutputRange() const override;
 
-protected:
-  unsigned int        _max_samples;
-  std::vector<double> _buffer;
-  std::mutex          _mutex;
+  protected:
+    unsigned int        _max_samples;
+    std::vector<double> _buffer;
+    std::mutex          _mutex;
   
-  double ProcessInput(double time, double form) override;
+    double ProcessInput(double time, double form) override;
   
-private:
-};
+  private:
+  };
+}
+
 #endif
