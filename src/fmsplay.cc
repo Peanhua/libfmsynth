@@ -30,12 +30,16 @@
 # pragma GCC diagnostic pop
 #endif
 #include <cxxopts.hpp>
+#include <AudioFile.h>
 
 
 struct Configuration
 {
-  bool        verbose  = false;
-  std::string filename;
+  bool                verbose  = false;
+  unsigned int        samples_per_second;
+  std::string         filename;
+  std::string         output_filename;
+  AudioFile<double> * output_file = nullptr;
 };
 
 std::optional<Configuration> ParseCommandline(int argc, char * argv[])
@@ -45,24 +49,27 @@ std::optional<Configuration> ParseCommandline(int argc, char * argv[])
   cxxopts::Options options(argv[0], "Play .sbp files.");
   options.custom_help("[OPTION...] <filename>");
   options.add_options()
-    ("v,verbose", "Verbose mode", cxxopts::value<bool>()->default_value("false"))
-    ("h,help",    "Print help (this text)")
+    ("v,verbose",            "Verbose mode.",                                                    cxxopts::value<bool>()->default_value("false"))
+    ("s,samples-per-second", std::string("Set samples per second. Use 0 for maximum possible."), cxxopts::value<unsigned int>()->default_value("44100"))
+    ("o,output",             "Write to file in WAV format.",                                     cxxopts::value<std::string>())
+    ("h,help",               "Print help (this text).")
     ;
   
   auto cmdline = options.parse(argc, argv);
   
   rv.verbose = cmdline["verbose"].as<bool>();
-  
+  rv.samples_per_second = cmdline["samples-per-second"].as<unsigned int>();
+
+  if(cmdline.count("output") > 0)
+    rv.output_filename = cmdline["output"].as<std::string>();
+
   if(cmdline.count("help"))
     {
       std::cerr << options.help() << std::endl;
       return std::nullopt;
     }
   
-  if(cmdline.count("file") > 0)
-    rv.filename = cmdline["file"].as<std::string>();
-  
-  if(argc == 2)
+  if(argc >= 2)
     rv.filename = argv[1];
   
   if(rv.filename.length() == 0)
@@ -129,7 +136,7 @@ static int playback(void *                  outputBuffer,
 {
   assert(!status);
   
-  auto [blueprint, audiodevicenode] = *static_cast<std::pair<Blueprint *, NodeAudioDeviceOutput *> *>(userData);
+  auto [blueprint, audiodevicenode, output_file] = *static_cast<std::tuple<Blueprint *, NodeAudioDeviceOutput *, AudioFile<double> *> *>(userData);
   assert(blueprint);
   assert(audiodevicenode);
   
@@ -152,6 +159,12 @@ static int playback(void *                  outputBuffer,
     {
       blueprint->Tick(1);
       *buffer++ = currentsample;
+      if(output_file)
+        {
+          auto ind = output_file->samples[0u].size();
+          output_file->setNumSamplesPerChannel(static_cast<int>(ind + 1));
+          output_file->samples[0u][ind] = currentsample;
+        }
     }
   
   if(blueprint->IsFinished())
@@ -210,9 +223,9 @@ static RtAudio * GetDAC()
 }
 
 
-static unsigned int GetSampleRate(const RtAudio::DeviceInfo & deviceinfo)
+static std::optional<unsigned int> GetSampleRate(unsigned int request_rate, const RtAudio::DeviceInfo & deviceinfo)
 {
-  unsigned int sample_rate = 44100;
+  unsigned int sample_rate = request_rate;
   // No automatic sample rate conversion, change the sample rate to one supported:
   assert(deviceinfo.sampleRates.size() > 0);
   auto r = std::find(deviceinfo.sampleRates.cbegin(), deviceinfo.sampleRates.cend(), sample_rate);
@@ -220,7 +233,12 @@ static unsigned int GetSampleRate(const RtAudio::DeviceInfo & deviceinfo)
   auto supported = r != deviceinfo.sampleRates.cend();
   
   if(!supported)
-    sample_rate = deviceinfo.sampleRates.back();
+    {
+      if(request_rate == 0)
+        sample_rate = deviceinfo.sampleRates.back();
+      else
+        return std::nullopt;
+    }
 
   return sample_rate;
 }
@@ -233,6 +251,9 @@ int main(int argc, char * argv[])
   if(!cmdconf.has_value())
     return EXIT_FAILURE;
   auto config = cmdconf.value();
+
+  if(config.verbose)
+    std::cout << argv[0] << ": Input file             = '" << config.filename << "'" << std::endl;
   
   auto text = LoadText(config.filename);
   if(!text.has_value())
@@ -271,10 +292,31 @@ int main(int argc, char * argv[])
       }
 
   auto deviceinfo = dac->getDeviceInfo(parameters.deviceId);
+  if(config.verbose)
+    {
+      std::cout << argv[0] << ": Audio device           = " << deviceinfo.name << "\n";
+      std::cout << argv[0] << ": Available sample rates = ";
+      bool first = true;
+      for(auto sr : deviceinfo.sampleRates)
+        {
+          if(!first)
+            std::cout << ", ";
+          first = false;
+
+          std::cout << sr;
+        }
+      std::cout << std::endl;
+    }
   
-  auto sample_rate = GetSampleRate(deviceinfo);
-  //blueprint->SetSampleRate(sample_rate); // todo
-  assert(sample_rate == 44100);
+  auto sr = GetSampleRate(config.samples_per_second, deviceinfo);
+  if(!sr.has_value())
+    {
+      std::cerr << argv[0] << ": Error, no suitable sample rate available." << std::endl;
+      delete dac;
+      return EXIT_FAILURE;
+    }
+  auto sample_rate = sr.value();
+  blueprint.SetSamplesPerSecond(sample_rate);
 
   NodeAudioDeviceOutput * n = nullptr;
   auto ados = blueprint.GetNodesByType("AudioDeviceOutput");
@@ -283,10 +325,23 @@ int main(int argc, char * argv[])
   else
     std::cout << argv[0] << ": Warning: No AudioDeviceOutput node present, nothing will be output.\n";
 
-  auto callbackdata = std::make_pair(&blueprint, n);
+  if(config.output_filename.length() > 0)
+    {
+      config.output_file = new AudioFile<double>();
+      assert(config.output_file);
+      config.output_file->setSampleRate(config.samples_per_second);
+    }
+
+  auto callbackdata = std::make_tuple(&blueprint, n, config.output_file);
 
 
-  if(config.verbose) std::cout << argv[0] << ": Using device " << deviceinfo.name << ", sample rate " << sample_rate << std::endl;
+  if(config.verbose)
+    {
+      std::cout << argv[0] << ": Sample rate            = " << sample_rate << "\n";
+      if(config.output_filename.length() > 0)
+        std::cout << argv[0] << ": Output file            = '" << config.output_filename << "'\n";
+      std::cout << std::flush;
+    }
   
   int rv = EXIT_SUCCESS;
   try
@@ -294,6 +349,7 @@ int main(int argc, char * argv[])
       unsigned int bframes = 1024;
       dac->openStream(&parameters, nullptr, RTAUDIO_FLOAT64, sample_rate, &bframes, playback, &callbackdata);
       dac->startStream();
+      done.wait();
     }
   catch(RtAudioError & e)
     {
@@ -301,11 +357,10 @@ int main(int argc, char * argv[])
       rv = EXIT_FAILURE;
     }
 
-  if(rv == EXIT_SUCCESS)
-    done.wait();
-
-  
   delete dac;
+  
+  if(config.output_file)
+    config.output_file->save(config.output_filename);
   
   return rv;
 }

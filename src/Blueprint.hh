@@ -39,6 +39,9 @@ public:
   void SetIsFinished();
   bool IsFinished() const;
 
+  void         SetSamplesPerSecond(unsigned int samples_per_second);
+  unsigned int GetSamplesPerSecond() const;
+
   std::mutex & GetLockMutex();
   Node *       GetRoot() const;
   Node *       GetNode(const std::string & id) const;
@@ -49,6 +52,7 @@ private:
   std::vector<Node *> _nodes;
   std::mutex          _lock_mutex;
   long                _time_index;
+  unsigned int        _samples_per_second;
 };
 
 #endif

@@ -44,6 +44,9 @@ public:
   virtual Input::Range GetAuxInputRange()       const;
   virtual Input::Range GetFormOutputRange()     const;
 
+  void         SetSamplesPerSecond(unsigned int samples_per_second);
+  unsigned int GetSamplesPerSecond() const;
+
   void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
   void    PushFormInput(long time_index, Node * pusher, double form);
   void    PushAuxInput(long time_index, Node * pusher, double value);
@@ -75,15 +78,16 @@ protected:
 private:
   static unsigned int _next_id;
   
-  std::string _type;
-  std::string _id;
-  bool        _preprocess_amplitude;
+  std::string  _type;
+  std::string  _id;
+  bool         _preprocess_amplitude;
 
-  bool        _enabled;
-  bool        _finished;
-  Input       _amplitude;
-  Input       _form;
-  Input       _aux;
+  bool         _enabled;
+  unsigned int _samples_per_second;
+  bool         _finished;
+  Input        _amplitude;
+  Input        _form;
+  Input        _aux;
 
   void FinishFrame(long time_index);
 };

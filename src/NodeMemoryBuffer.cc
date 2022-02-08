@@ -23,7 +23,7 @@ NodeMemoryBuffer::NodeMemoryBuffer()
 
 void NodeMemoryBuffer::SetMaxLength(double seconds)
 {
-  _max_samples = static_cast<unsigned int>(44100.0 * seconds);
+  _max_samples = static_cast<unsigned int>(static_cast<double>(GetSamplesPerSecond()) * seconds);
   _buffer.reserve(_max_samples);
 }
 

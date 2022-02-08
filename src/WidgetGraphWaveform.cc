@@ -55,9 +55,10 @@ void WidgetGraphWaveform::Update(NodeMemoryBuffer * buffer, double length)
             _path.moveTo(QPoint(-1, static_cast<int>(centery + wav[0] * height)));
           }
 
-        while(_last_draw_index < wav.size() && static_cast<double>(_last_draw_index) / 44100.0 < length)
+        auto samples_per_second = static_cast<double>(buffer->GetSamplesPerSecond());
+        while(_last_draw_index < wav.size() && static_cast<double>(_last_draw_index) / samples_per_second < length)
           {
-            double x = static_cast<double>(_last_draw_index) / (length * 44100.0) * width;
+            double x = static_cast<double>(_last_draw_index) / (length * samples_per_second) * width;
             double y = centery + wav[_last_draw_index] * -1.0 * height;
             _path.lineTo(QPoint(static_cast<int>(x), static_cast<int>(y)));
             _last_draw_index++;

@@ -22,6 +22,7 @@ Node::Node(const std::string & type)
     _id(std::to_string(_next_id)),
     _preprocess_amplitude(false),
     _enabled(true),
+    _samples_per_second(0),
     _finished(false),
     _amplitude(1),
     _form(0),
@@ -70,8 +71,10 @@ void Node::SetPreprocessAmplitude()
 }
 
 
-void Node::OnInputConnected([[maybe_unused]] Node * from)
+void Node::OnInputConnected(Node * from)
 {
+  if(from)
+    SetSamplesPerSecond(from->GetSamplesPerSecond());
 }
 
 
@@ -158,7 +161,8 @@ void Node::FinishFrame(long time_index)
       
       auto form = _form.GetValueAndReset();
 
-      double time = static_cast<double>(time_index) / 44100.0;
+      assert(_samples_per_second > 0);
+      double time = static_cast<double>(time_index) / static_cast<double>(_samples_per_second);
 
       double result;
       if(_preprocess_amplitude)
@@ -327,5 +331,17 @@ Input::Range Node::GetAuxInputRange() const
 Input::Range Node::GetFormOutputRange() const
 {
   return _form.GetOutputRange();
+}
+
+
+void Node::SetSamplesPerSecond(unsigned int samples_per_second)
+{
+  _samples_per_second = samples_per_second;
+}
+
+
+unsigned int Node::GetSamplesPerSecond() const
+{
+  return _samples_per_second;
 }
 

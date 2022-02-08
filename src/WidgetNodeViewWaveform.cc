@@ -70,7 +70,7 @@ void WidgetNodeViewWaveform::Redraw()
 {
   {
     std::lock_guard lock(_node_memorybuffer->GetLockMutex());
-    double length = static_cast<double>(_node_memorybuffer->GetData().size()) / 44100.0;
+    double length = static_cast<double>(_node_memorybuffer->GetData().size()) / static_cast<double>(_node_memorybuffer->GetSamplesPerSecond());
     _ui_node_view_waveform->_length_label->setText(QString::fromStdString(format("{:.1f}s", length)));
   }
 

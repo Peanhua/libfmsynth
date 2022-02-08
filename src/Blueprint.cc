@@ -17,11 +17,13 @@
 
 Blueprint::Blueprint()
   : _root(new NodeConstant),
-    _time_index(0)
+    _time_index(0),
+    _samples_per_second(44100)
 {
   _root->SetConstant(1);
   _root->SetIsFrequency(false);
   _root->AddFormInputNode(nullptr);
+  _root->SetSamplesPerSecond(_samples_per_second);
 }
 
 
@@ -35,6 +37,7 @@ void Blueprint::AddNode(Node * node)
   if(dynamic_cast<NodeConstant *>(node))
     node->AddFormInputNode(_root);
   _nodes.push_back(node);
+  node->SetSamplesPerSecond(_samples_per_second);
 }
 
 
@@ -163,3 +166,25 @@ bool Blueprint::Load(const json11::Json & json)
 
   return true;
 }
+
+
+
+void Blueprint::SetSamplesPerSecond(unsigned int samples_per_second)
+{
+  _samples_per_second = samples_per_second;
+
+  _root->SetSamplesPerSecond(_samples_per_second);
+
+  for(auto node : _nodes)
+    if(node)
+      node->SetSamplesPerSecond(samples_per_second);
+
+  ResetTime();
+}
+
+
+unsigned int Blueprint::GetSamplesPerSecond() const
+{
+  return _samples_per_second;
+}
+

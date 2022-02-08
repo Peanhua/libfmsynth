@@ -17,7 +17,6 @@ NodeDelay::NodeDelay()
   : Node("Delay"),
     _delay_time(0)
 { // todo: Use std::vector instead.
-  PrefillBuffer();
 }
 
 
@@ -36,7 +35,7 @@ void NodeDelay::SetDelayTime(double time)
 void NodeDelay::PrefillBuffer()
 {
   _buffer.clear();
-  auto n = static_cast<unsigned int>(_delay_time * 44100.0);
+  auto n = static_cast<unsigned int>(_delay_time * static_cast<double>(GetSamplesPerSecond()));
   for(unsigned int i = 0; i < n; i++)
     _buffer.push_back(0);
 }
