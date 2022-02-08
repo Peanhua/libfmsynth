@@ -136,27 +136,29 @@ static int playback(void *                  outputBuffer,
 {
   assert(!status);
   
-  auto [blueprint, audiodevicenode, output_file] = *static_cast<std::tuple<Blueprint *, NodeAudioDeviceOutput *, AudioFile<double> *> *>(userData);
+  auto [blueprint, audiodevicenodes, output_file] = *static_cast<std::tuple<Blueprint *, std::vector<NodeAudioDeviceOutput *> *, AudioFile<double> *> *>(userData);
   assert(blueprint);
-  assert(audiodevicenode);
+  assert(audiodevicenodes->size() > 0);
   
   std::lock_guard lock(blueprint->GetLockMutex());
   
   double currentsample = 0;
-  audiodevicenode->SetCallbacks(
-                                [&currentsample]([[maybe_unused]] NodeAudioDeviceOutput * node, double sample)
-                                {
-                                  currentsample = sample;
-                                },
-                                []([[maybe_unused]] NodeAudioDeviceOutput * node)
-                                {
-                                }
-                                );
+  for(auto n : *audiodevicenodes)
+    n->SetCallbacks(
+                    [&currentsample]([[maybe_unused]] NodeAudioDeviceOutput * node, double sample)
+                    {
+                      currentsample += sample;
+                    },
+                    []([[maybe_unused]] NodeAudioDeviceOutput * node)
+                    {
+                    }
+                    );
   
   
   auto buffer = static_cast<double *>(outputBuffer);
   for(unsigned i = 0; i < nBufferFrames; i++)
     {
+      currentsample = 0;
       blueprint->Tick(1);
       *buffer++ = currentsample;
       if(output_file)
@@ -318,12 +320,29 @@ int main(int argc, char * argv[])
   auto sample_rate = sr.value();
   blueprint.SetSamplesPerSecond(sample_rate);
 
-  NodeAudioDeviceOutput * n = nullptr;
   auto ados = blueprint.GetNodesByType("AudioDeviceOutput");
-  if(ados.size() > 0)
-    n = dynamic_cast<NodeAudioDeviceOutput *>(ados[0]);
-  else
-    std::cout << argv[0] << ": Warning: No AudioDeviceOutput node present, nothing will be output.\n";
+  if(ados.size() == 0)
+    {
+      std::cerr << argv[0] << ": Error, no AudioDeviceOutput node in the input.\n";
+      delete dac;
+      return EXIT_FAILURE;
+    }
+  std::vector<NodeAudioDeviceOutput *> nodes;
+  for(auto n : ados)
+    nodes.push_back(dynamic_cast<NodeAudioDeviceOutput *>(n));
+  if(config.verbose)
+    {
+      std::cout << argv[0] << ": Output nodes           = " << nodes.size() << " : ";
+      bool first = true;
+      for(auto n : nodes)
+        {
+          if(!first)
+            std::cout << ", ";
+          first = false;
+          std::cout << "'" << n->GetId() << "'";
+        }
+      std::cout << std::endl;
+    }
 
   if(config.output_filename.length() > 0)
     {
@@ -332,7 +351,7 @@ int main(int argc, char * argv[])
       config.output_file->setSampleRate(config.samples_per_second);
     }
 
-  auto callbackdata = std::make_tuple(&blueprint, n, config.output_file);
+  auto callbackdata = std::make_tuple(&blueprint, &nodes, config.output_file);
 
 
   if(config.verbose)
