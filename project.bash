@@ -84,6 +84,6 @@ if [ ${profileok} -ne 0 ]; then
     
 
     autoreconf --include=m4 --install
-    #./configure --prefix=$(pwd) --disable-shared ${CONFIGUREFLAGS}
-    ./configure ${CONFIGUREFLAGS}
+    ./configure --prefix=$(pwd) --disable-shared ${CONFIGUREFLAGS}
+    #./configure ${CONFIGUREFLAGS}
 fi
