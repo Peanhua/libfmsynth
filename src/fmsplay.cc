@@ -10,25 +10,15 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "AudioDevice.hh"
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
+#include <algorithm>
 #include <cassert>
 #include <fstream>
 #include <iostream>
 #include <latch>
 #include <optional>
-#include <thread>
-#include <utility>
-#ifdef __GNUC__
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wold-style-cast"
-# pragma GCC diagnostic ignored "-Wdeprecated-copy"
-# pragma GCC diagnostic ignored "-Wconversion"
-#endif
-#include <RtAudio.h>
-#ifdef __GNUC__
-# pragma GCC diagnostic pop
-#endif
 #include <cxxopts.hpp>
 #include <AudioFile.h>
 
@@ -125,124 +115,18 @@ static json11::Json * LoadJson(const std::string & json_string)
 }
 
 
-static std::latch done{1};
-
-static int playback(void *                  outputBuffer,
-                    [[maybe_unused]] void * inputBuffer,
-                    unsigned int            nBufferFrames,
-                    [[maybe_unused]] double streamTime,
-                    RtAudioStreamStatus     status,
-                    void *                  userData)
+static std::optional<unsigned int> GetSampleRate(unsigned int request_rate, const std::vector<unsigned int> & sample_rates)
 {
-  assert(!status);
+  assert(sample_rates.size() > 0);
   
-  auto [blueprint, audiodevicenodes, output_file] = *static_cast<std::tuple<fmsynth::Blueprint *, std::vector<fmsynth::NodeAudioDeviceOutput *> *, AudioFile<double> *> *>(userData);
-  assert(blueprint);
-  assert(audiodevicenodes->size() > 0);
-  
-  std::lock_guard lock(blueprint->GetLockMutex());
-  
-  double currentsample = 0;
-  for(auto n : *audiodevicenodes)
-    n->SetCallbacks(
-                    [&currentsample]([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node, double sample)
-                    {
-                      currentsample += sample;
-                    },
-                    []([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node)
-                    {
-                    }
-                    );
-  
-  
-  auto buffer = static_cast<double *>(outputBuffer);
-  for(unsigned i = 0; i < nBufferFrames; i++)
-    {
-      currentsample = 0;
-      blueprint->Tick(1);
-      *buffer++ = currentsample;
-      if(output_file)
-        {
-          auto ind = output_file->samples[0u].size();
-          output_file->setNumSamplesPerChannel(static_cast<int>(ind + 1));
-          output_file->samples[0u][ind] = currentsample;
-        }
-    }
-  
-  if(blueprint->IsFinished())
-    {
-      done.count_down();
-      return 1;
-    }
-  
-  return 0;
-}
+  if(request_rate == 0)
+    return *std::max_element(sample_rates.cbegin(), sample_rates.cend());
 
-
-static RtAudio * GetDAC()
-{
-  auto getit = [](RtAudio::Api api) -> RtAudio *
-  {
-    try
-      {
-        RtAudio * rv;
-        if(api == RtAudio::Api::UNSPECIFIED)
-          rv = new RtAudio();
-        else
-          rv = new RtAudio(api);
-        if(rv)
-          {
-            if((api == RtAudio::Api::UNSPECIFIED || api == rv->getCurrentApi()) && rv->getDeviceCount() > 0)
-              return rv;
-            else
-              delete rv;
-          }
-      }
-    catch(RtAudioError & e)
-      {
-      }
-
-    return nullptr;
-  };
-
-  
-  std::vector<RtAudio::Api> apis
-    {
-#ifdef __linux__
-      RtAudio::Api::LINUX_PULSE,
-#endif
-      RtAudio::Api::UNSPECIFIED
-    };
-  for(auto api : apis)
-    {
-      auto rv = getit(api);
-      if(rv)
-        return rv;
-    }
-
-  assert(false);
-  return nullptr;
-}
-
-
-static std::optional<unsigned int> GetSampleRate(unsigned int request_rate, const RtAudio::DeviceInfo & deviceinfo)
-{
-  unsigned int sample_rate = request_rate;
-  // No automatic sample rate conversion, change the sample rate to one supported:
-  assert(deviceinfo.sampleRates.size() > 0);
-  auto r = std::find(deviceinfo.sampleRates.cbegin(), deviceinfo.sampleRates.cend(), sample_rate);
-
-  auto supported = r != deviceinfo.sampleRates.cend();
-  
+  auto supported = std::find(sample_rates.cbegin(), sample_rates.cend(), request_rate) != sample_rates.cend();
   if(!supported)
-    {
-      if(request_rate == 0)
-        sample_rate = deviceinfo.sampleRates.back();
-      else
-        return std::nullopt;
-    }
+    return std::nullopt;
 
-  return sample_rate;
+  return request_rate;
 }
 
 
@@ -270,79 +154,16 @@ int main(int argc, char * argv[])
   if(!loadok)
     return EXIT_FAILURE;
 
-  auto dac = GetDAC();
-  if(!dac)
-    {
-      std::cerr << argv[0] << ": Error, no audio devices found.\n";
-      return EXIT_FAILURE;
-    }
-  
-  RtAudio::StreamParameters parameters;
-  parameters.nChannels = 1;
-  parameters.firstChannel = 0;
-  parameters.deviceId = dac->getDefaultOutputDevice();
-  // Try to fix case when dac->getDefaultOutputDevice() sometimes incorrectly returns 0:
-  for(unsigned int i = 0; parameters.deviceId == 0 && i < dac->getDeviceCount(); i++)
-    try
-      {
-        auto info = dac->getDeviceInfo(i);
-        if(info.outputChannels > 0)
-          parameters.deviceId = i;
-      }
-    catch(const std::exception & e)
-      {
-      }
+  AudioDevice adev;
 
-  auto deviceinfo = dac->getDeviceInfo(parameters.deviceId);
-  if(config.verbose)
-    {
-      std::cout << argv[0] << ": Audio device           = " << deviceinfo.name << "\n";
-      std::cout << argv[0] << ": Available sample rates = ";
-      bool first = true;
-      for(auto sr : deviceinfo.sampleRates)
-        {
-          if(!first)
-            std::cout << ", ";
-          first = false;
-
-          std::cout << sr;
-        }
-      std::cout << std::endl;
-    }
-  
-  auto sr = GetSampleRate(config.samples_per_second, deviceinfo);
+  auto sr = GetSampleRate(config.samples_per_second, adev.GetSampleRates());
   if(!sr.has_value())
     {
       std::cerr << argv[0] << ": Error, no suitable sample rate available." << std::endl;
-      delete dac;
       return EXIT_FAILURE;
     }
   auto sample_rate = sr.value();
   blueprint.SetSamplesPerSecond(sample_rate);
-
-  auto ados = blueprint.GetNodesByType("AudioDeviceOutput");
-  if(ados.size() == 0)
-    {
-      std::cerr << argv[0] << ": Error, no AudioDeviceOutput node in the input.\n";
-      delete dac;
-      return EXIT_FAILURE;
-    }
-  std::vector<fmsynth::NodeAudioDeviceOutput *> nodes;
-  for(auto n : ados)
-    nodes.push_back(dynamic_cast<fmsynth::NodeAudioDeviceOutput *>(n));
-  if(config.verbose)
-    {
-      std::cout << argv[0] << ": Output nodes           = " << nodes.size() << " : ";
-      bool first = true;
-      for(auto n : nodes)
-        {
-          if(!first)
-            std::cout << ", ";
-          first = false;
-          std::cout << "'" << n->GetId() << "'";
-        }
-      std::cout << std::endl;
-    }
 
   if(config.output_filename.length() > 0)
     {
@@ -350,36 +171,63 @@ int main(int argc, char * argv[])
       assert(config.output_file);
       config.output_file->setSampleRate(config.samples_per_second);
     }
-
-  auto callbackdata = std::make_tuple(&blueprint, &nodes, config.output_file);
-
-
+  
   if(config.verbose)
     {
+      std::cout << argv[0] << ": Audio device           = " << adev.GetDeviceName() << "\n";
+      {
+        std::cout << argv[0] << ": Available sample rates = ";
+        bool first = true;
+        for(auto rate : adev.GetSampleRates())
+          {
+            if(!first)
+              std::cout << ", ";
+            first = false;
+            
+            std::cout << rate;
+          }
+        std::cout << "\n";
+      }
+      {
+        std::cout << argv[0] << ": Audio output nodes     = " << adev.GetInputNodes().size() << " : ";
+        bool first = true;
+        for(auto n : adev.GetInputNodes())
+          {
+            if(!first)
+              std::cout << ", ";
+            first = false;
+            std::cout << "'" << n->GetId() << "'";
+          }
+        std::cout << "\n";
+      }
       std::cout << argv[0] << ": Sample rate            = " << sample_rate << "\n";
       if(config.output_filename.length() > 0)
         std::cout << argv[0] << ": Output file            = '" << config.output_filename << "'\n";
+      
       std::cout << std::flush;
     }
-  
-  int rv = EXIT_SUCCESS;
-  try
-    {
-      unsigned int bframes = 1024;
-      dac->openStream(&parameters, nullptr, RTAUDIO_FLOAT64, sample_rate, &bframes, playback, &callbackdata);
-      dac->startStream();
-      done.wait();
-    }
-  catch(RtAudioError & e)
-    {
-      e.printMessage();
-      rv = EXIT_FAILURE;
-    }
 
-  delete dac;
+  
+  std::latch done{1};
+
+  adev.SetOnPostTick([&config, &adev, &done](double sample)
+  {
+    if(config.output_file)
+      {
+        auto ind = config.output_file->samples[0u].size();
+        config.output_file->setNumSamplesPerChannel(static_cast<int>(ind + 1));
+        config.output_file->samples[0u][ind] = sample;
+      }
+  
+    if(adev.GetBlueprint()->IsFinished())
+      done.count_down();
+  });
+  
+  adev.Play(&blueprint);
+  done.wait();
   
   if(config.output_file)
     config.output_file->save(config.output_filename);
-  
-  return rv;
+
+  return EXIT_SUCCESS;
 }

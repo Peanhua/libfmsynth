@@ -12,7 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
-#include <al.h>
+#include "AudioDevice.hh"
 #include <array>
 #include <mutex>
 #include <optional>
@@ -36,9 +36,7 @@ public:
   void Stop();
 
   bool IsPlaying() const;
-  void Continue();
   void SetNextProgram(fmsynth::Blueprint * program);
-  void FillBackbufferValue(int16_t value);
 
 private:
   // Caller thread data:
@@ -47,33 +45,13 @@ private:
 
   // Player thread data:
   fmsynth::Blueprint *  _now_playing;
-  std::array<ALuint, 2> _buffers;
-  std::vector<ALuint>   _buffers_to_delete;
-  unsigned int          _current_buffer;
-  std::vector<int16_t>  _data;
-
-  std::array<ALuint, 2> _sources;
-  unsigned int          _current_source;
+  AudioDevice           _device;
 
   // Communication between threads:
-  std::atomic<bool>                                _resume_playing;
   std::optional<std::atomic<fmsynth::Blueprint *>> _next_program;
   std::mutex                                       _next_program_mutex;
 
-  void   TickResumePlaying();
-  
   void   TickProgramChange();
-  void   ChangeProgram(fmsynth::Blueprint * program);
-
-  void   TickSourceQueues();
-  void   QueueNextBuffer();
-
-  void   FillBackBuffer();
-  void   UpdateBackBuffer(std::vector<int16_t> & data);
-  void   SwapBuffers();
-  
-  ALuint GetCurrentBuffer() const;
-  ALuint GetBackBuffer()    const;
 };
 
 extern Player * ProgramPlayer;

@@ -24,8 +24,6 @@ AC_CHECK_HEADER([cxxopts.hpp], [], [AC_MSG_ERROR([Unable to find header for cxxo
 AC_LANG_POP
 
 PKG_CHECK_MODULES([JSON],    [json11])
-PKG_CHECK_MODULES([ALUT],    [freealut])
-PKG_CHECK_MODULES([OPENAL],  [openal])
 PKG_CHECK_MODULES([RTAUDIO], [rtaudio])
 
 PRE512QT=0

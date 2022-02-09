@@ -19,17 +19,15 @@ NodeAudioDeviceOutput::NodeAudioDeviceOutput()
   : Node("AudioDeviceOutput"),
     _amplitude(1),
     _muted(false),
-    _play_sample(nullptr),
-    _continue_playback(nullptr)
+    _on_play_sample(nullptr)
 {
   SetPreprocessAmplitude();
 }
 
 
-void NodeAudioDeviceOutput::SetCallbacks(play_sample_t play_sample, continue_playback_t continue_playback)
+void NodeAudioDeviceOutput::SetOnPlaySample(on_play_sample_t callback)
 {
-  _play_sample       = play_sample;
-  _continue_playback = continue_playback;
+  _on_play_sample = callback;
 }
 
 
@@ -61,8 +59,8 @@ double NodeAudioDeviceOutput::ProcessInput([[maybe_unused]] double time, double 
   if(_muted)
     return 0;
 
-  if(_play_sample)
-    _play_sample(this, _amplitude * form);
+  if(_on_play_sample)
+    _on_play_sample(_amplitude * form);
   
   return form;
 }
@@ -93,20 +91,4 @@ void NodeAudioDeviceOutput::SetFromJson(const json11::Json & json)
   Node::SetFromJson(json);
   _muted     = json["audiodeviceoutput_muted"].bool_value();
   _amplitude = json["audiodeviceoutput_volume"].number_value();
-}
-
-
-void NodeAudioDeviceOutput::OnInputConnected(Node * from)
-{
-  Node::OnInputConnected(from);
-  if(_continue_playback)
-    _continue_playback(this);
-}
-
-
-void NodeAudioDeviceOutput::OnEnabled()
-{
-  Node::OnEnabled();
-  if(_continue_playback)
-    _continue_playback(this);
 }

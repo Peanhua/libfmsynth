@@ -12,7 +12,6 @@
 
 #include "WidgetNodeAudioDeviceOutput.hh"
 #include "NodeAudioDeviceOutput.hh"
-#include "Player.hh"
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"
 #include "UiNodeAudioDeviceOutput.hh"
@@ -43,19 +42,6 @@ WidgetNodeAudioDeviceOutput::WidgetNodeAudioDeviceOutput(QWidget * parent)
       _ui_node_audio_device_output->_volume,
       _ui_node_audio_device_output->_mute
     });
-
-  _node_audio_device_output->SetCallbacks(
-                                          [](fmsynth::NodeAudioDeviceOutput * node, double sample)
-                                          { 
-                                            if(ProgramPlayer)
-                                              ProgramPlayer->FillBackbufferValue(node->SampleToInt(sample));
-                                          },
-                                          []([[maybe_unused]] fmsynth::NodeAudioDeviceOutput * node)
-                                          {
-                                            if(ProgramPlayer)
-                                              ProgramPlayer->Continue();
-                                          }
-                                          );
 }
 
 

@@ -21,12 +21,11 @@ namespace fmsynth
   class NodeAudioDeviceOutput : public Node
   {
   public:
-    typedef std::function<void(NodeAudioDeviceOutput * node, double sample)> play_sample_t;
-    typedef std::function<void(NodeAudioDeviceOutput * node)>                continue_playback_t;
+    typedef std::function<void(double sample)> on_play_sample_t;
   
     NodeAudioDeviceOutput();
 
-    void   SetCallbacks(play_sample_t play_sample, continue_playback_t continue_playback);
+    void   SetOnPlaySample(on_play_sample_t callback);
 
     bool   IsMuted() const;
     void   SetMuted(bool muted);
@@ -40,15 +39,12 @@ namespace fmsynth
     void         SetFromJson(const json11::Json & json) override;
   
   protected:
-    void   OnInputConnected(Node * from)          override;
-    void   OnEnabled()                            override;
     double ProcessInput(double time, double form) override;
   
   private:
-    double _amplitude;
-    bool   _muted;
-    play_sample_t       _play_sample;
-    continue_playback_t _continue_playback;
+    double           _amplitude;
+    bool             _muted;
+    on_play_sample_t _on_play_sample;
   };
 }
 

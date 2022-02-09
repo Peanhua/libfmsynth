@@ -20,7 +20,6 @@
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QApplication>
 #include "QtIncludeEnd.hh"
-#include <AL/alut.h>
 #include <filesystem>
 #include <iostream>
 
@@ -37,10 +36,6 @@ int main(int argc, char *argv[])
   Settings settings;
   UserSettings = &settings;
   settings.Load();
-  
-  auto success = alutInit(nullptr, nullptr);
-  if(!success)
-    return EXIT_FAILURE;
   
   Player p;
   p.Start();

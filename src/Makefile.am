@@ -130,20 +130,20 @@ libfmsynth_la_SOURCES =			\
 fmsedit_CXXFLAGS = 			\
 	$(AM_CXXFLAGS)			\
 	$(EXTRA_FMSEDIT_QT_CXXFLAGS)	\
-	$(ALUT_CFLAGS)			\
-	$(OPENAL_CFLAGS)		\
-	$(QT_CFLAGS)			
+	$(QT_CFLAGS)			\
+	$(RTAUDIO_CFLAGS)		
 
 fmsedit_LDADD =		\
 	libfmsynth.la	\
-	$(ALUT_LIBS)	\
 	$(FMT_LIBS)	\
 	$(JSON_LIBS)	\
-	$(OPENAL_LIBS)	\
 	$(PTHREAD_LIBS)	\
-	$(QT_LIBS)
+	$(QT_LIBS)	\
+	$(RTAUDIO_LIBS)
 
 fmsedit_SOURCES =			\
+	AudioDevice.cc			\
+	AudioDevice.hh			\
 	Link.cc				\
 	Link.hh				\
 	Player.cc			\
@@ -249,6 +249,8 @@ fmsplay_LDADD =		\
 	$(RTAUDIO_LIBS)	
 
 fmsplay_SOURCES =			\
+	AudioDevice.cc			\
+	AudioDevice.hh			\
 	fmsplay.cc			
 
 

@@ -14,6 +14,7 @@
 #include "Blueprint.hh"
 #include "Link.hh"
 #include "NodeConstant.hh"
+#include "Player.hh"
 #include "WidgetAddNode.hh"
 #include "WidgetMainWindow.hh"
 #include "WidgetNodeADHSR.hh"
