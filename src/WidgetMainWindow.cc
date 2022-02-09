@@ -505,7 +505,6 @@ void WidgetMainWindow::UpdateToolbarButtonStates()
   _ui->actionUndo->setEnabled(bp->CanUndo());
   _ui->actionRedo->setEnabled(bp->CanRedo());
   _ui->actionMenuPlay->setEnabled(bp->CanRun());
-  _ui->actionMenuStop->setEnabled(ProgramPlayer->IsPlaying());
   _ui->actionDelete->setEnabled(bp->GetSelectedNodesCount() > 0);
 }
 
