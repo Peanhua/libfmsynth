@@ -10,6 +10,9 @@
   Complete license can be found in the LICENSE file.
 */
 
+#ifdef HAVE_CONFIG_H
+# include "../config.h"
+#endif
 #include "WidgetHelpAbout.hh"
 #include "QtIncludeBegin.hh"
 #include "UiHelpAbout.hh"
@@ -21,4 +24,6 @@ WidgetHelpAbout::WidgetHelpAbout(QWidget * parent)
     _ui(new Ui::HelpAbout)
 {
   _ui->setupUi(this);
+
+  _ui->_label_version->setText(QString::fromStdString(PACKAGE_VERSION));
 }

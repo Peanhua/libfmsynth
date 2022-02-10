@@ -60,11 +60,37 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>FMSEdit version 0.1</string>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>0</number>
            </property>
-          </widget>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>FMSEdit version </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="_label_version">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLabel" name="label_5">
@@ -87,7 +113,7 @@
               <x>0</x>
               <y>0</y>
               <width>383</width>
-              <height>171</height>
+              <height>169</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">

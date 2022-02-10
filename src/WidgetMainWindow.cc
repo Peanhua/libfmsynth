@@ -10,6 +10,9 @@
   Complete license can be found in the LICENSE file.
 */
 
+#ifdef HAVE_CONFIG_H
+# include "../config.h"
+#endif
 #include "WidgetMainWindow.hh"
 #include "Node.hh"
 #include "Player.hh"
@@ -129,20 +132,14 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
               _ui->_blueprint->NodeSelectionAll();
             else if(a == "actionSelectNone")
               _ui->_blueprint->NodeSelectionSet(nullptr);
-            else
-              std::cerr << "Invalid action: " << a << std::endl;
-          });
-
-  connect(_ui->_toolbar_edit, &QToolBar::actionTriggered,
-          [this](QAction * action)
-          {
-            auto a = action->objectName().toStdString();
-            if(a == "actionSnapToGrid")
+            else if(a == "actionSnapToGrid")
               {
                 bool snapping = _ui->actionSnapToGrid->isChecked();
                 _ui->_blueprint->SetSnapToGrid(snapping);
                 UserSettings->Set("snap_to_grid", snapping);
               }
+            else
+              std::cerr << "Invalid action: " << a << std::endl;
           });
 
   if(UserSettings->GetInt("theme") == 1)
@@ -168,7 +165,7 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
         ToggleCategoryExpand(category);
     }
 
-  statusBar()->showMessage(QString::fromStdString("Welcome to FMSEdit v0.1."), 5000);
+  statusBar()->showMessage(QString::fromStdString("Welcome to FMSEdit v" PACKAGE_VERSION "."), 5000);
 
   _ui->_blueprint->UpdateWindowTitle();
   UpdateToolbarButtonStates();
