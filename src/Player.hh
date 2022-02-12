@@ -35,6 +35,7 @@ public:
   void Start();
   void Stop();
 
+  const AudioDevice * GetAudioDevice() const;
   bool IsPlaying() const;
   void SetNextProgram(fmsynth::Blueprint * program);
 

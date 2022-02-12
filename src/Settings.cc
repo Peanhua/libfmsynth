@@ -33,6 +33,7 @@ void Settings::SetDefaults()
 {
   _ints["theme"] = 0;
   _ints["recent_files"] = 0;
+  _ints["sample_rate"] = 44100;
   _bools["nodecategory_inputs_collapsed"]        = false;
   _bools["nodecategory_inputs_grid"]             = false;
   _bools["nodecategory_oscillators_collapsed"]   = false;

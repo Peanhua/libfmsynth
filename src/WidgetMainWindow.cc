@@ -14,6 +14,7 @@
 # include "../config.h"
 #endif
 #include "WidgetMainWindow.hh"
+#include "Blueprint.hh"
 #include "Node.hh"
 #include "Player.hh"
 #include "Settings.hh"
@@ -35,6 +36,29 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
   _ui->setupUi(this);
   _default_palette = palette();
 
+  assert(ProgramPlayer);
+
+  const auto rates = ProgramPlayer->GetAudioDevice()->GetSampleRates();
+  assert(rates.size() > 0);
+  unsigned int currate = static_cast<unsigned int>(UserSettings->GetInt("sample_rate"));
+  if(std::find(rates.cbegin(), rates.cend(), currate) == rates.cend())
+    currate = *std::max_element(rates.cbegin(), rates.cend());
+
+  auto ag = new QActionGroup(_ui->_menu_settings_samplerate);
+  for(auto rate : rates)
+    {
+      auto action = new QAction(this);
+      action->setObjectName(QString::fromStdString(std::string("actionSampleRate") + std::to_string(rate)));
+      action->setCheckable(true);
+      if(rate == currate)
+        action->setChecked(true);
+      action->setText(QCoreApplication::translate("MainWindow", std::to_string(rate).c_str(), nullptr));
+      _ui->_menu_settings_samplerate->addAction(action);
+      ag->addAction(action);
+    }
+  ag->setExclusive(true);
+
+  
   std::vector<std::string> cats {
     "inputs",
     "oscillators",
@@ -137,6 +161,20 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
                 bool snapping = _ui->actionSnapToGrid->isChecked();
                 _ui->_blueprint->SetSnapToGrid(snapping);
                 UserSettings->Set("snap_to_grid", snapping);
+              }
+            else if(a.starts_with("actionSampleRate"))
+              {
+                auto wasplaying = ProgramPlayer->IsPlaying();
+                ProgramPlayer->SetNextProgram(nullptr);
+                auto rate = std::stoul(a.substr(std::string("actionSampleRate").length()));
+                UserSettings->Set("sample_rate", static_cast<int>(rate));
+                auto bp = _ui->_blueprint->GetBlueprint();
+                if(bp)
+                  {
+                    bp->SetSamplesPerSecond(static_cast<unsigned int>(rate));
+                    if(wasplaying)
+                      ProgramPlayer->SetNextProgram(bp);
+                  }
               }
             else
               std::cerr << "Invalid action: " << a << std::endl;

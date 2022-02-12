@@ -40,7 +40,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-250</y>
+         <y>0</y>
          <width>164</width>
          <height>802</height>
         </rect>
@@ -1915,8 +1915,14 @@
      <addaction name="actionMenuThemeDefault"/>
      <addaction name="actionMenuThemeDark"/>
     </widget>
+    <widget class="QMenu" name="_menu_settings_samplerate">
+     <property name="title">
+      <string>Sample rate</string>
+     </property>
+    </widget>
     <addaction name="menuTheme"/>
     <addaction name="actionSnapToGrid"/>
+    <addaction name="_menu_settings_samplerate"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2189,7 +2195,8 @@
   </action>
   <action name="actionSelectAll">
    <property name="icon">
-    <iconset theme="edit-select-all"/>
+    <iconset theme="edit-select-all">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Select all</string>
@@ -2203,7 +2210,8 @@
   </action>
   <action name="actionSelectNone">
    <property name="icon">
-    <iconset theme="edit-clear"/>
+    <iconset theme="edit-clear">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Select none</string>

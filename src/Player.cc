@@ -99,3 +99,10 @@ bool Player::IsPlaying() const
 
   return true;
 }
+
+
+const AudioDevice * Player::GetAudioDevice() const
+{
+  return &_device;
+}
+
