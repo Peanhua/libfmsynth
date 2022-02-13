@@ -12,6 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "ConstantValue.hh"
 #include "Node.hh"
 
 
@@ -22,10 +23,8 @@ namespace fmsynth
   public:
     NodeConstant();
 
-    double GetConstant() const;
-    void   SetConstant(double constant);
-    bool   IsFrequency() const;
-    void   SetIsFrequency(bool is_frequency);
+    ConstantValue &       GetValue();
+    const ConstantValue & GetValue() const;
 
     Input::Range GetFormOutputRange() const override;
 
@@ -36,8 +35,7 @@ namespace fmsynth
     double ProcessInput(double time, double form);
   
   private:
-    double _constant;
-    bool   _is_frequency;
+    ConstantValue _value;
   };
 }
 

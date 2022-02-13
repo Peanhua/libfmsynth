@@ -19,52 +19,32 @@ using namespace fmsynth;
 
 
 NodeConstant::NodeConstant()
-  : Node("Constant"),
-    _constant(1),
-    _is_frequency(true)
+  : Node("Constant")
 {
 }
 
 
-double NodeConstant::GetConstant() const
+ConstantValue & NodeConstant::GetValue()
 {
-  return _constant;
+  return _value;
 }
 
 
-void NodeConstant::SetConstant(double constant)
+const ConstantValue & NodeConstant::GetValue() const
 {
-  _constant = constant;
-}
-
-
-bool NodeConstant::IsFrequency() const
-{
-  return _is_frequency;
-}
-
-
-void NodeConstant::SetIsFrequency(bool is_frequency)
-{
-  _is_frequency = is_frequency;
+  return _value;
 }
 
 
 double NodeConstant::ProcessInput([[maybe_unused]] double time, [[maybe_unused]] double form)
 {
-  auto m = _constant;
-  if(_is_frequency)
-    m *= std::numbers::pi * 2.0;
-
-  return m;
+  return _value.GetValue();
 }
 
 
 Input::Range NodeConstant::GetFormOutputRange() const
 {
-  auto c = _constant;
-  if(_is_frequency)
-    c *= std::numbers::pi * 2.0;
+  auto c = _value.GetValue();
 
   if(c >= 0 && c <= 1)
     return Input::Range::Zero_One;
@@ -78,8 +58,7 @@ Input::Range NodeConstant::GetFormOutputRange() const
 json11::Json NodeConstant::to_json() const
 {
   auto rv = Node::to_json().object_items();
-  rv["constant_value"] = _constant;
-  rv["is_frequency"]   = _is_frequency;
+  rv["constant"] = _value.to_json();
   return rv;
 }
 
@@ -87,8 +66,18 @@ json11::Json NodeConstant::to_json() const
 void NodeConstant::SetFromJson(const json11::Json & json)
 {
   Node::SetFromJson(json);
-  assert(json["constant_value"].is_number());
-  _constant = json["constant_value"].number_value();
-  if(json["is_frequency"].is_bool())
-    _is_frequency = json["is_frequency"].bool_value();
+  if(json["constant"].is_object())
+    _value.SetFromJson(json["constant"]);
+  else
+    { // v0.1 file format read support:
+      assert(json["constant_value"].is_number());
+      auto unit = fmsynth::ConstantValue::Unit::Absolute;
+      if(json["is_frequency"].is_bool() && json["is_frequency"].bool_value())
+        unit = fmsynth::ConstantValue::Unit::Hertz;
+
+      _value = fmsynth::ConstantValue {
+        json["constant_value"].number_value(),
+        unit
+      };
+    }
 }

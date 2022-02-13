@@ -58,6 +58,7 @@ AM_CXXFLAGS =				\
 
 pkginclude_HEADERS =			\
 	Blueprint.hh			\
+	ConstantValue.hh		\
 	Input.hh			\
 	Node.hh				\
 	NodeADHSR.hh			\
@@ -87,6 +88,8 @@ bin_PROGRAMS = fmsedit fmsplay
 libfmsynth_la_SOURCES =			\
 	Blueprint.cc			\
 	Blueprint.hh			\
+	ConstantValue.cc		\
+	ConstantValue.hh		\
 	Input.cc			\
 	Input.hh			\
 	Node.cc				\
@@ -191,6 +194,8 @@ fmsedit_SOURCES =			\
 	WidgetGraphWaveform.hh		\
 	WidgetHelpAbout.cc		\
 	WidgetHelpAbout.hh		\
+	WidgetInputConstant.cc		\
+	WidgetInputConstant.hh		\
 	WidgetLine.cc			\
 	WidgetLine.hh			\
 	WidgetMainWindow.cc		\

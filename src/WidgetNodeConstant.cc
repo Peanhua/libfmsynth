@@ -30,26 +30,19 @@ WidgetNodeConstant::WidgetNodeConstant(QWidget * parent)
 
   _ui_node_constant->setupUi(_ui_node->_content);
   adjustSize();
-  ListenWidgetChanges({
-      _ui_node_constant->_value,
-      _ui_node_constant->_is_frequency
-    });
+  ListenWidgetChanges(_ui_node_constant->_constant->GetControlWidgets());
 }
 
 
 void WidgetNodeConstant::NodeToWidget()
 {
   WidgetNode::NodeToWidget();
-  _ui_node_constant->_value->setValue(_node_constant->GetConstant());
-  _ui_node_constant->_is_frequency->setCheckState(_node_constant->IsFrequency() ? Qt::Checked : Qt::Unchecked);
+  _ui_node_constant->_constant->SetConstantValue(_node_constant->GetValue());
 }
 
 
 void WidgetNodeConstant::WidgetToNode()
 {
   WidgetNode::WidgetToNode();
-  auto value = _ui_node_constant->_value->value();
-  _node_constant->SetConstant(value);
-  auto is_freq = _ui_node_constant->_is_frequency->checkState() == Qt::Checked;
-  _node_constant->SetIsFrequency(is_freq);
+  _node_constant->GetValue() = _ui_node_constant->_constant->GetConstantValue();
 }

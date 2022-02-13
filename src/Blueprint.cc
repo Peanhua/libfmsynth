@@ -22,8 +22,7 @@ Blueprint::Blueprint()
     _time_index(0),
     _samples_per_second(44100)
 {
-  _root->SetConstant(1);
-  _root->SetIsFrequency(false);
+  _root->GetValue() = ConstantValue(1, ConstantValue::Unit::Absolute);
   _root->AddFormInputNode(nullptr);
   _root->SetSamplesPerSecond(_samples_per_second);
 }
