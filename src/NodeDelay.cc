@@ -54,6 +54,7 @@ double NodeDelay::ProcessInput([[maybe_unused]] double time, double form)
 
 void NodeDelay::ResetTime()
 {
+  Node::ResetTime();
   PrefillBuffer();
 }
 

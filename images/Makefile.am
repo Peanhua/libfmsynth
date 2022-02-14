@@ -37,6 +37,7 @@ imagefiles_DATA = 			\
 	NodeFilterBandPass.png		\
 	NodeFilterHighPass.png		\
 	NodeFilterLowPass.png		\
+	NodeGrowth.png			\
 	NodeInverse.png			\
 	NodeMultiply.png		\
 	NodeOscillatorNoise.png		\

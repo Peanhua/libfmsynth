@@ -42,7 +42,7 @@
          <x>0</x>
          <y>0</y>
          <width>164</width>
-         <height>802</height>
+         <height>829</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -252,6 +252,23 @@
                 </property>
                 <property name="NodeType" stdset="0">
                  <string notr="true">Constant</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_inputs_Growth">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Growth</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeGrowth.png</normaloff>images/NodeGrowth.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Growth</string>
                 </property>
                </widget>
               </item>

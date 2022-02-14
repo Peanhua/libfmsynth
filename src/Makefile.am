@@ -17,6 +17,7 @@ UiNodeClamp.hh			: UiNodeClamp.ui
 UiNodeDelay.hh			: UiNodeDelay.ui
 UiNodeFileOutput.hh		: UiNodeFileOutput.ui
 UiNodeFilter.hh			: UiNodeFilter.ui
+UiNodeGrowth.hh			: UiNodeGrowth.ui
 UiNodeInverse.hh		: UiNodeInverse.ui
 UiNodeMultiply.hh		: UiNodeMultiply.ui
 UiNodeOscillator.hh		: UiNodeOscillator.ui
@@ -41,6 +42,7 @@ BUILT_SOURCES = 			\
 	UiNodeDelay.hh			\
 	UiNodeFileOutput.hh		\
 	UiNodeFilter.hh			\
+	UiNodeGrowth.hh			\
 	UiNodeInverse.hh		\
 	UiNodeMultiply.hh		\
 	UiNodeOscillator.hh		\
@@ -70,6 +72,7 @@ pkginclude_HEADERS =			\
 	NodeDelay.hh			\
 	NodeFileOutput.hh		\
 	NodeFilter.hh			\
+	NodeGrowth.hh			\
 	NodeMemoryBuffer.hh		\
 	NodeInverse.hh			\
 	NodeMultiply.hh			\
@@ -113,6 +116,8 @@ libfmsynth_la_SOURCES =			\
 	NodeFileOutput.hh		\
 	NodeFilter.cc			\
 	NodeFilter.hh			\
+	NodeGrowth.cc			\
+	NodeGrowth.hh			\
 	NodeInverse.cc			\
 	NodeInverse.hh			\
 	NodeMemoryBuffer.cc		\
@@ -170,6 +175,7 @@ fmsedit_SOURCES =			\
 	UiNodeDelay.ui			\
 	UiNodeFileOutput.ui		\
 	UiNodeFilter.ui			\
+	UiNodeGrowth.ui			\
 	UiNodeInverse.ui		\
 	UiNodeMultiply.ui		\
 	UiNodeOscillator.ui		\
@@ -222,6 +228,8 @@ fmsedit_SOURCES =			\
 	WidgetNodeFileOutput.hh		\
 	WidgetNodeFilter.cc		\
 	WidgetNodeFilter.hh		\
+	WidgetNodeGrowth.cc		\
+	WidgetNodeGrowth.hh		\
 	WidgetNodeInverse.cc		\
 	WidgetNodeInverse.hh		\
 	WidgetNodeMultiply.cc		\

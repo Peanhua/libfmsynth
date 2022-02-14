@@ -12,6 +12,7 @@
 
 #include "Blueprint.hh"
 #include "NodeConstant.hh"
+#include "NodeGrowth.hh"
 #include <cassert>
 
 using namespace fmsynth;
@@ -35,7 +36,7 @@ Blueprint::~Blueprint()
 
 void Blueprint::AddNode(Node * node)
 {
-  if(dynamic_cast<NodeConstant *>(node))
+  if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
     node->AddFormInputNode(_root);
   _nodes.push_back(node);
   node->SetSamplesPerSecond(_samples_per_second);

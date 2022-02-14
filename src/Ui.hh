@@ -28,6 +28,7 @@ namespace Ui
   class NodeDelay;
   class NodeFileOutput;
   class NodeFilter;
+  class NodeGrowth;
   class NodeOscillator;
   class NodeInverse;
   class NodeMultiply;

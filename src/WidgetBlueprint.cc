@@ -27,6 +27,7 @@
 #include "WidgetNodeDelay.hh"
 #include "WidgetNodeFileOutput.hh"
 #include "WidgetNodeFilter.hh"
+#include "WidgetNodeGrowth.hh"
 #include "WidgetNodeInverse.hh"
 #include "WidgetNodeMultiply.hh"
 #include "WidgetNodeOscillator.hh"
@@ -168,6 +169,8 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
   WidgetNode * nodewidget = nullptr;
   if(node_type == "Constant")
     nodewidget = new WidgetNodeConstant(this);
+  else if(node_type == "Growth")
+    nodewidget = new WidgetNodeGrowth(this);
   else if(node_type == "FileOutput")
     nodewidget = new WidgetNodeFileOutput(this);
   else if(node_type == "AudioDeviceOutput")
@@ -671,7 +674,7 @@ bool WidgetBlueprint::CanRun() const
       {
         if(n->GetErrorStatus())
           return false;
-        if(dynamic_cast<WidgetNodeConstant *>(n))
+        if(dynamic_cast<WidgetNodeConstant *>(n) || dynamic_cast<WidgetNodeGrowth *>(n))
           has_start_nodes = true;
       }
   return has_start_nodes;
