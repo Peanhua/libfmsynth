@@ -1,4 +1,4 @@
-AC_INIT([libfmsynth], [0.1])
+AC_INIT([libfmsynth], [0.2b])
 AC_PREREQ([2.69])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([foreign dist-xz subdir-objects])
