@@ -15,9 +15,8 @@
 #include "Test.hh"
 
 
-static int Test()
+static void Test()
 {
-  int testid = 1;
   {
     fmsynth::Blueprint bp;
     bp.SetSamplesPerSecond(10);
@@ -36,7 +35,7 @@ static int Test()
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
         std::cout << "# i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert(testid++, "Linear-NoEnd grows expectedly.", success);
+    testAssert("Linear-NoEnd grows expectedly.", success);
   }
 
   {
@@ -58,7 +57,7 @@ static int Test()
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
         std::cout << "# i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert(testid++, "Linear-RepeatLast grows expectedly.", success);
+    testAssert("Linear-RepeatLast grows expectedly.", success);
 
     for(int i = 0; success && i < 100; i++)
       {
@@ -66,9 +65,6 @@ static int Test()
         success = std::abs(node.GetLastFrame() - 1.0) < 0.1;
         std::cout << "# i=" << (10 + i) << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert(testid++, "Linear-RepeatLast stays same after end.", success);
+    testAssert("Linear-RepeatLast stays same after end.", success);
   }
-  
-
-  return testid;
 }

@@ -15,36 +15,38 @@
 #include <iostream>
 #include <cassert>
 
-#define testAssert(ID, NAME, CONDITION) do {                            \
-  auto testAssertId = ID;                                               \
-  assert(testAssertId > 0);                                             \
-  if(CONDITION)                                                         \
-    std::cout << "ok " << testAssertId << " " << NAME << std::endl;     \
-  else                                                                  \
+#define testAssert(NAME, CONDITION) do {                                \
+    testid++;                                                           \
+    if(CONDITION)                                                       \
+      std::cout << "ok " << testid << " " << NAME << std::endl;         \
+    else                                                                \
     {                                                                   \
-      std::cout << "not ok " << testAssertId << " " << NAME << std::endl; \
+      std::cout << "not ok " << testid << " " << NAME << std::endl;     \
       std::cout << "  failed condition: " << #CONDITION << std::endl;   \
     }                                                                   \
   } while(0)
 
-#define testSkip(ID, NAME, DESCRIPTION) do {                            \
-    std::cout << "ok " << ID << " " << NAME                             \
+#define testSkip(NAME, DESCRIPTION) do {                                \
+    testid++;                                                           \
+    std::cout << "ok " << testid << " " << NAME                         \
               << " # SKIP " << DESCRIPTION << std::endl;                \
   } while(0)
 
-#define testPlan(TESTCOUNT) do { std::cout << "1.." << TESTCOUNT << std::endl; } while(0)
 
-
-static int Test();
+static void Test();
 
 static std::string srcdir;
+static int testid;
 
 int main()
 {
   srcdir = std::getenv("srcdir");
+  testid = 0;
   
-  auto next_id = Test();
-  testPlan(next_id - 1);
+  Test();
+
+  std::cout << "1.." << testid << std::endl;
+  
   return 0;
 }
 

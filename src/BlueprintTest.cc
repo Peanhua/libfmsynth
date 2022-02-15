@@ -16,28 +16,26 @@
 #include "Util.hh"
 
 
-static int Test()
+static void Test()
 {
-  int id = 1;
-
   {
     fmsynth::Blueprint bp;
-    testAssert(id++, "Blueprint has root node.", bp.GetRoot());
+    testAssert("Blueprint has root node.", bp.GetRoot());
   }
   {
     fmsynth::Blueprint bp;
-    testAssert(id++, "Load empty json.", bp.Load("{}"));
+    testAssert("Load empty json.", bp.Load("{}"));
   }
   {
     fmsynth::Blueprint bp;
-    testAssert(id++, "Load emptyish json.", bp.Load("{\"links\": [], \"nodes\": []}"));
+    testAssert("Load emptyish json.", bp.Load("{\"links\": [], \"nodes\": []}"));
   }
 
   {
     fmsynth::Blueprint bp;
     fmsynth::NodeConstant node;
     bp.AddNode(&node);
-    testAssert(id++, "GetNodesByType() returns added node.", bp.GetNodesByType(node.GetType()).size() > 0);
+    testAssert("GetNodesByType() returns added node.", bp.GetNodesByType(node.GetType()).size() > 0);
   }
 
   {
@@ -45,7 +43,7 @@ static int Test()
     fmsynth::NodeConstant node;
     node.SetId("owerowir");
     bp.AddNode(&node);
-    testAssert(id++, "GetNode() returns added node.", bp.GetNode(node.GetId()));
+    testAssert("GetNode() returns added node.", bp.GetNode(node.GetId()));
   }
 
   {
@@ -67,13 +65,11 @@ static int Test()
         auto [json, error] = fmsynth::util::LoadJsonFile(srcdir + "/../examples/" + e);
         if(!json)
           {
-            testSkip(id++, testname, error);
+            testSkip(testname, error);
             continue;
           }
         fmsynth::Blueprint bp;
-        testAssert(id++, testname, bp.Load(*json));
+        testAssert(testname, bp.Load(*json));
       }
   }
-
-  return id;
 }

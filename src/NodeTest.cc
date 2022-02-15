@@ -28,7 +28,7 @@
 #include "NodeReciprocal.hh"
 #include <tuple>
 
-static int Test()
+static void Test()
 {
   std::vector<std::tuple<fmsynth::Node *, std::string>> nodes
     {
@@ -49,24 +49,21 @@ static int Test()
       { new fmsynth::NodeReciprocal(),        "Reciprocal"        },
     };
   auto root = new fmsynth::NodeConstant();
-  int id = 1;
 
   for(auto [node, type] : nodes)
     {
-      testAssert(id++, "Node '" + type + "' was created.",                node);
+      testAssert("Node '" + type + "' was created.",                node);
       
-      testAssert(id++, "Node '" + type + "' returns the correct type.",   node->GetType() == type);
+      testAssert("Node '" + type + "' returns the correct type.",   node->GetType() == type);
       
-      testAssert(id++, "Node '" + type + "' is initially not finished.",  node->IsFinished() == false);
+      testAssert("Node '" + type + "' is initially not finished.",  node->IsFinished() == false);
       
       node->SetIsFinished();
-      testAssert(id++, "Finishing node '" + type + "' sets it finished.", node->IsFinished());
+      testAssert("Finishing node '" + type + "' sets it finished.", node->IsFinished());
       
-      testAssert(id++, "Node '" + type + "' is initially enabled.",       node->IsEnabled());
+      testAssert("Node '" + type + "' is initially enabled.",       node->IsEnabled());
       node->SetEnabled(root, false);
       
-      testAssert(id++, "Disabling node '" + type + "' sets it disabled.", node->IsEnabled() == false);
+      testAssert("Disabling node '" + type + "' sets it disabled.", node->IsEnabled() == false);
     }
-
-  return id;
 }
