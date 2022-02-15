@@ -13,9 +13,9 @@
 #include "AudioDevice.hh"
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
+#include "Util.hh"
 #include <algorithm>
 #include <cassert>
-#include <fstream>
 #include <iostream>
 #include <latch>
 #include <optional>
@@ -73,47 +73,6 @@ std::optional<Configuration> ParseCommandline(int argc, char * argv[])
 }
 
 
-static std::optional<std::string> LoadText(const std::string & filename)
-{
-  std::string text;
-  std::ifstream fp(filename);
-  if(!fp)
-    {
-      std::cerr << "Failed to open '" + filename + "' for reading.\n";
-      return std::nullopt;
-    }
-  
-  std::string tmp;
-  while(std::getline(fp, tmp))
-    text += tmp + '\n';
-      
-  // todo: Add proper error message.
-  if(!fp.eof())
-    {
-      std::cerr << "Error loading '" + filename + "': something went wrong\n";
-      return std::nullopt;
-    }
-  
-  return text;
-}
-
-static json11::Json * LoadJson(const std::string & json_string)
-{
-  auto json = new json11::Json();
-  if(!json_string.empty())
-    {
-      std::string err;
-      *json = json11::Json::parse(json_string, err);
-      if(!json->is_object())
-        {
-          std::cerr << "Error while parsing json: " << err << std::endl;
-          delete json;
-          json = nullptr;
-        }
-    }
-  return json;
-}
-
 
 static std::optional<unsigned int> GetSampleRate(unsigned int request_rate, const std::vector<unsigned int> & sample_rates)
 {
@@ -140,14 +99,13 @@ int main(int argc, char * argv[])
 
   if(config.verbose)
     std::cout << argv[0] << ": Input file             = '" << config.filename << "'" << std::endl;
-  
-  auto text = LoadText(config.filename);
-  if(!text.has_value())
-    return EXIT_FAILURE;
 
-  auto json = LoadJson(text.value());
+  auto [json, error] = fmsynth::util::LoadJsonFile(config.filename);
   if(!json)
-    return EXIT_FAILURE;
+    {
+      std::cerr << error << std::endl;
+      return EXIT_FAILURE;
+    }
 
   fmsynth::Blueprint blueprint;
   auto loadok = blueprint.Load(*json);
@@ -188,18 +146,6 @@ int main(int argc, char * argv[])
           }
         std::cout << "\n";
       }
-      {
-        std::cout << argv[0] << ": Audio output nodes     = " << adev.GetInputNodes().size() << " : ";
-        bool first = true;
-        for(auto n : adev.GetInputNodes())
-          {
-            if(!first)
-              std::cout << ", ";
-            first = false;
-            std::cout << "'" << n->GetId() << "'";
-          }
-        std::cout << "\n";
-      }
       std::cout << argv[0] << ": Sample rate            = " << sample_rate << "\n";
       if(config.output_filename.length() > 0)
         std::cout << argv[0] << ": Output file            = '" << config.output_filename << "'\n";
@@ -224,6 +170,21 @@ int main(int argc, char * argv[])
   });
   
   adev.Play(&blueprint);
+
+  if(config.verbose)
+    {
+      std::cout << argv[0] << ": Audio output nodes     = " << adev.GetInputNodes().size() << " : ";
+      bool first = true;
+      for(auto n : adev.GetInputNodes())
+        {
+          if(!first)
+            std::cout << ", ";
+          first = false;
+          std::cout << "'" << n->GetId() << "'";
+        }
+      std::cout << std::endl;
+    }
+  
   done.wait();
   
   if(config.output_file)

@@ -15,6 +15,7 @@
 #include "Link.hh"
 #include "NodeConstant.hh"
 #include "Player.hh"
+#include "Util.hh"
 #include "WidgetAddNode.hh"
 #include "WidgetMainWindow.hh"
 #include "WidgetNodeADHSR.hh"
@@ -506,45 +507,15 @@ void WidgetBlueprint::Load(const std::string & filename)
 {
   SetFilename(filename);
 
-  auto LoadText = [this, filename]()
-  {
-    std::string text;
-    std::ifstream fp(filename);
-    if(fp)
-      {
-        std::string tmp;
-        while(std::getline(fp, tmp))
-          text += tmp + '\n';
-        
-        // todo: Add proper error message.
-        if(!fp.eof())
-          GetMainWindow()->statusBar()->showMessage(QString::fromStdString("Error loading '" + _filename + "': " + "something went wrong"));
-      }
-    return text;
-  };
-  
-  auto LoadJson = [this](const std::string & json_string)
-  {
-    auto json = new json11::Json();
-    if(!json_string.empty())
-      {
-        std::string err;
-        *json = json11::Json::parse(json_string, err);
-        if(!json->is_object())
-          {
-            GetMainWindow()->statusBar()->showMessage(QString::fromStdString("Error parsing file '" + _filename + "': " + err));
-            std::cerr << "Error while parsing: " << err << std::endl;
-            delete json;
-            json = nullptr;
-          }
-      }
-    return json;
-  };
-
   GetMainWindow()->statusBar()->showMessage(QString::fromStdString("Loading '" + _filename + "'..."));
-  auto json = LoadJson(LoadText());
+
+  auto [json, error] = fmsynth::util::LoadJsonFile(_filename);
   if(!json || !json->is_object())
-    return;
+    {
+      GetMainWindow()->statusBar()->showMessage(QString::fromStdString(error));
+      std::cerr << error << std::endl;
+      return;
+    }
 
   Load(*json);
   _undopos = 0;

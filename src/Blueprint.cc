@@ -85,6 +85,15 @@ Node * Blueprint::GetRoot() const
 }
 
 
+Node * Blueprint::GetNode(const std::string & id) const
+{
+  for(auto n : _nodes)
+    if(n && n->GetId() == id)
+      return n;
+  return nullptr;
+}
+
+
 std::vector<Node *> Blueprint::GetNodesByType(const std::string & type) const
 {
   std::vector<Node *> nodes;
@@ -128,41 +137,40 @@ void Blueprint::Tick(long samples)
 
 bool Blueprint::Load(const json11::Json & json)
 {
-  if(!json["links"].is_array())
-    return false;
-
-  if(!json["nodes"].is_array())
-    return false;
-
-  auto links = json["links"].array_items();
-  auto nodes = json["nodes"].array_items();
-
-  for(auto n : nodes)
+  if(json["nodes"].is_array())
     {
-      assert(n["node_type"].is_string());
-      auto type = n["node_type"].string_value();
-      auto node = Node::Create(n);
-      if(node)
-        AddNode(node);
-    }
-
-  auto FindNodeById = [this](const std::string & node_id) -> Node *
-  {
-    for(auto n : _nodes)
-      if(n)
-        if(n->GetId() == node_id)
-          return n;
-    return nullptr;
-  };
-  
-  for(auto l : links)
-    {
-      auto from_node = FindNodeById(l["from"].string_value());
-      auto to_node   = FindNodeById(l["to"].string_value());
-      if(from_node && to_node)
+      for(auto n : json["nodes"].array_items())
         {
-          auto to_channel = l["to_channel"].string_value();
-          AddLink(from_node, to_node, to_channel);
+          assert(n["node_type"].is_string());
+          auto type = n["node_type"].string_value();
+          auto node = Node::Create(n);
+          if(node)
+            AddNode(node);
+        }
+    }      
+
+  if(json["links"].is_array())
+    {
+      auto links = json["links"].array_items();
+
+      auto FindNodeById = [this](const std::string & node_id) -> Node *
+      {
+        for(auto n : _nodes)
+          if(n)
+            if(n->GetId() == node_id)
+              return n;
+        return nullptr;
+      };
+      
+      for(auto l : links)
+        {
+          auto from_node = FindNodeById(l["from"].string_value());
+          auto to_node   = FindNodeById(l["to"].string_value());
+          if(from_node && to_node)
+            {
+              auto to_channel = l["to_channel"].string_value();
+              AddLink(from_node, to_node, to_channel);
+            }
         }
     }
 

@@ -77,7 +77,8 @@ pkginclude_HEADERS =			\
 	NodeMultiply.hh			\
 	NodeOscillator.hh		\
 	NodeRangeConvert.hh		\
-	NodeReciprocal.hh		
+	NodeReciprocal.hh		\
+	Util.hh
 
 
 
@@ -128,7 +129,9 @@ libfmsynth_la_SOURCES =			\
 	NodeRangeConvert.cc		\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.cc		\
-	NodeReciprocal.hh		
+	NodeReciprocal.hh		\
+	Util.cc				\
+	Util.hh
 
 
 
@@ -276,11 +279,11 @@ uninstall-hook:
 
 
 # Testing:
-check_PROGRAMS = NodeTest NodeGrowthTest
+check_PROGRAMS = BlueprintTest NodeTest NodeGrowthTest
 
 TESTS = $(check_PROGRAMS)
 
-EXTRA_DIST = Test.hh NodeTest.cc NodeGrowthTest.cc
+EXTRA_DIST = Test.hh BlueprintTest.cc NodeTest.cc NodeGrowthTest.cc
 
 NodeTest_LDADD =	\
 	libfmsynth.la	\
@@ -291,8 +294,10 @@ NodeTest_SOURCES =	\
 	Test.hh		
 
 NodeGrowthTest_LDADD = $(NodeTest_LDADD)
-
 NodeGrowthTest_SOURCES = NodeGrowthTest.cc Test.hh
+
+BlueprintTest_LDADD = $(NodeTest_LDADD)
+BlueprintTest_SOURCES = BlueprintTest.cc Test.hh
 
 # Testing TAP setup:
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) $(top_srcdir)/build-aux/tap-driver.sh

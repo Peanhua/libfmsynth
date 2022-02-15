@@ -11,6 +11,7 @@
 */
 
 #include "Settings.hh"
+#include "Util.hh"
 #include <cassert>
 #include <fstream>
 #include <iostream>
@@ -80,34 +81,15 @@ void Settings::Save()
 
 void Settings::Load()
 {
-  auto LoadText = [this]()
-  {
-    std::string text;
-    std::ifstream fp(_filename);
-    if(fp)
-      {
-        std::string tmp;
-        while(std::getline(fp, tmp))
-          text += tmp + '\n';
-
-        if(!fp.eof())
-          std::cerr << "Error while reading '" << _filename << "': something went wrong" << std::endl;
-      }
-    return text;
-  };
-
   std::cout << "Loading settings from '" << _filename << "'" << std::endl;
-  auto json_string = LoadText();
-  if(json_string.empty())
-    return;
-
-  std::string err;
-  auto json = json11::Json::parse(json_string, err);
-  if(!json.is_object())
+  auto [json_ptr, error] = fmsynth::util::LoadJsonFile(_filename);
+  if(!json_ptr)
     {
-      std::cerr << "Error while parsing: " << err << std::endl;
+      std::cerr << error << std::endl;
       return;
     }
+
+  auto json = *json_ptr;
 
   auto bools = json["bools"].object_items();
   for(auto & [k, v] : bools)

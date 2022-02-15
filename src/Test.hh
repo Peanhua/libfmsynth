@@ -27,13 +27,22 @@
     }                                                                   \
   } while(0)
 
+#define testSkip(ID, NAME, DESCRIPTION) do {                            \
+    std::cout << "ok " << ID << " " << NAME                             \
+              << " # SKIP " << DESCRIPTION << std::endl;                \
+  } while(0)
+
 #define testPlan(TESTCOUNT) do { std::cout << "1.." << TESTCOUNT << std::endl; } while(0)
 
 
 static int Test();
 
+static std::string srcdir;
+
 int main()
 {
+  srcdir = std::getenv("srcdir");
+  
   auto next_id = Test();
   testPlan(next_id - 1);
   return 0;

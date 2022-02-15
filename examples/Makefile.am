@@ -7,7 +7,8 @@ examplefiles_DATA = 		\
 	Tremolo.sbp		\
 	Vibrato.sbp		\
 	Weapon1.sbp		\
-	Weird1.sbp		
+	Weird1.sbp		\
+	Weird2.sbp		
 
 
 EXTRA_DIST = $(examplefiles_DATA)
