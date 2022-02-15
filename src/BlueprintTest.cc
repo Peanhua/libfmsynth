@@ -14,6 +14,7 @@
 #include "NodeConstant.hh"
 #include "Test.hh"
 #include "Util.hh"
+#include <vector>
 
 
 static void Test()
@@ -47,29 +48,73 @@ static void Test()
   }
 
   {
-    std::array examples
+    struct Example
+    {
+      bool        ends;
+      std::string filename;
+    };
+    std::vector<Example> examples
       {
-        "Echo.sbp",
-        "HelloWorld.sbp",
-        "HitExplosion.sbp",
-        "Tremolo.sbp",
-        "Vibrato.sbp",
-        "Weapon1.sbp",
-        "Weird1.sbp",
-        "Weird2.sbp",
+        { true,  "Echo.sbp"         },
+        { false, "HelloWorld.sbp"   },
+        { true,  "HitExplosion.sbp" },
+        { false, "Tremolo.sbp"      },
+        { false, "Vibrato.sbp"      },
+        { true,  "Weapon1.sbp"      },
+        { false, "Weird1.sbp"       },
+        { false, "Weird2.sbp"       },
       };
     for(auto e : examples)
       {
-        std::string testname { std::string("Load example '") + e + "' succeeds." };
+        std::string testname { "Load example '" + e.filename + "' succeeds." };
 
-        auto [json, error] = fmsynth::util::LoadJsonFile(srcdir + "/../examples/" + e);
+        auto [json, error] = fmsynth::util::LoadJsonFile(srcdir + "/../examples/" + e.filename);
         if(!json)
           {
             testSkip(testname, error);
             continue;
           }
-        fmsynth::Blueprint bp;
-        testAssert(testname, bp.Load(*json));
+        {
+          fmsynth::Blueprint bp;
+          testAssert(testname, bp.Load(*json));
+          
+          if(e.ends)
+            {
+              bool endedok = false;
+              unsigned int samplecount = 0;
+              for(unsigned int i = 0; !endedok && i < 1000 * bp.GetSamplesPerSecond(); i++)
+                {
+                  bp.Tick(1);
+                  if(bp.IsFinished())
+                    endedok = true;
+                  else
+                    samplecount++;
+                }
+              testAssert("Playbacking example '" + e.filename + "' ends after some time.", endedok);
+
+              bp.ResetTime();
+              unsigned int reset_samplecount = 0;
+              for(unsigned int i = 0; !bp.IsFinished() && i < 1000 * bp.GetSamplesPerSecond(); i++)
+                {
+                  bp.Tick(1);
+                  if(!bp.IsFinished())
+                    reset_samplecount++;
+                }
+              testAssert("Playbacking example '" + e.filename + "' after ResetTime() produces the same number of samples as from the first playback.", samplecount == reset_samplecount);
+            }
+        }
+        {
+          testname = "Playbacking example '" + e.filename + "' produces samples.";
+          fmsynth::Blueprint bp;
+          bool loaded = bp.Load(*json);
+          if(loaded)
+            {
+              bp.Tick(1);
+              testAssert(testname, !bp.IsFinished());
+            }
+          else
+            testSkip(testname, "Failed to load '" + e.filename + "'.");
+        }
       }
   }
 }
