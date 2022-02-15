@@ -32,6 +32,7 @@
 *.app
 src/fmsedit
 src/fmsplay
+src/*Test
 
 # Temporary files
 *~
@@ -43,6 +44,7 @@ Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
+build-aux
 compile
 config.guess
 config.h

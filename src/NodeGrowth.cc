@@ -53,12 +53,12 @@ double NodeGrowth::ProcessInput(double time, [[maybe_unused]] double form)
   {
     if(_growth_amount.GetValue() < 0)
       {
-        if(_current_value < _end_value.GetValue())
+        if(_current_value <= _end_value.GetValue())
           return true;
       }
     else
       {
-        if(_current_value > _end_value.GetValue())
+        if(_current_value >= _end_value.GetValue())
           return true;
       }
     return false;

@@ -1,10 +1,13 @@
 AC_INIT([libfmsynth], [0.2b])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_PREREQ([2.69])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([foreign dist-xz subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_MACRO_DIRS([m4])
+AC_REQUIRE_AUX_FILE([tap-driver.sh])
 
+AC_PROG_AWK
 AC_PROG_SED
 AC_PROG_GREP
 

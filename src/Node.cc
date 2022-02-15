@@ -28,7 +28,8 @@ Node::Node(const std::string & type)
     _finished(false),
     _amplitude(1),
     _form(0),
-    _aux(0)
+    _aux(0),
+    _last_frame(0)
 {
   _next_id++;
 }
@@ -182,7 +183,15 @@ void Node::FinishFrame(long time_index)
 
       for(auto o : _aux.GetOutputNodes())
         o->PushAuxInput(time_index, this, result);
+
+      _last_frame = result;
     }
+}
+
+
+double Node::GetLastFrame() const
+{
+  return _last_frame;
 }
 
 

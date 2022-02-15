@@ -52,7 +52,6 @@ BUILT_SOURCES = 			\
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
-	$(FMT_CFLAGS)			\
 	$(JSON_CFLAGS)			\
 	$(PTHREAD_CFLAGS)		\
 	$(VALGRIND_CFLAGS)
@@ -138,6 +137,7 @@ libfmsynth_la_SOURCES =			\
 fmsedit_CXXFLAGS = 			\
 	$(AM_CXXFLAGS)			\
 	$(EXTRA_FMSEDIT_QT_CXXFLAGS)	\
+	$(FMT_CFLAGS)			\
 	$(QT_CFLAGS)			\
 	$(RTAUDIO_CFLAGS)		
 
@@ -256,7 +256,6 @@ fmsplay_CXXFLAGS = 			\
 
 fmsplay_LDADD =		\
 	libfmsynth.la	\
-	$(FMT_LIBS)	\
 	$(JSON_LIBS)	\
 	$(PTHREAD_LIBS)	\
 	$(RTAUDIO_LIBS)	
@@ -273,3 +272,27 @@ CLEANFILES = $(nodist_fmsedit_SOURCES)
 
 uninstall-hook:
 	-rmdir $(pkgincludedir)
+
+
+
+# Testing:
+check_PROGRAMS = NodeTest NodeGrowthTest
+
+TESTS = $(check_PROGRAMS)
+
+EXTRA_DIST = Test.hh NodeTest.cc NodeGrowthTest.cc
+
+NodeTest_LDADD =	\
+	libfmsynth.la	\
+	$(JSON_LIBS)
+
+NodeTest_SOURCES =	\
+	NodeTest.cc	\
+	Test.hh		
+
+NodeGrowthTest_LDADD = $(NodeTest_LDADD)
+
+NodeGrowthTest_SOURCES = NodeGrowthTest.cc Test.hh
+
+# Testing TAP setup:
+LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) $(top_srcdir)/build-aux/tap-driver.sh

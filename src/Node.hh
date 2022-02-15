@@ -53,6 +53,8 @@ namespace fmsynth
     void    PushFormInput(long time_index, Node * pusher, double form);
     void    PushAuxInput(long time_index, Node * pusher, double value);
 
+    double  GetLastFrame() const;
+
     bool    IsEnabled() const;
     void    SetEnabled(const Node * root, bool enabled);
 
@@ -90,6 +92,7 @@ namespace fmsynth
     Input        _amplitude;
     Input        _form;
     Input        _aux;
+    double       _last_frame;
 
     void FinishFrame(long time_index);
   };

@@ -19,6 +19,7 @@
 #include "NodeDelay.hh"
 #include "NodeFileOutput.hh"
 #include "NodeFilter.hh"
+#include "NodeGrowth.hh"
 #include "NodeInverse.hh"
 #include "NodeMultiply.hh"
 #include "NodeOscillator.hh"
@@ -37,6 +38,8 @@ Node * Node::Create(const json11::Json & json)
   Node * node = nullptr;
   if(type == "Constant")
     node = new NodeConstant();
+  else if(type == "Growth")
+    node = new NodeGrowth();
   else if(type == "FileOutput")
     node = new NodeFileOutput();
   else if(type == "AudioDeviceOutput")
