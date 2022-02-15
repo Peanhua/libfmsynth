@@ -52,6 +52,7 @@ BUILT_SOURCES = 			\
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
+	-DLIBFMSYNTH_ENABLE_NODETESTING=$(ENABLE_NODETESTING)	\
 	$(JSON_CFLAGS)			\
 	$(PTHREAD_CFLAGS)		\
 	$(VALGRIND_CFLAGS)
@@ -133,7 +134,11 @@ libfmsynth_la_SOURCES =			\
 	Util.cc				\
 	Util.hh
 
-
+if !ENABLE_NODETESTING
+install-data-hook:
+	$(AM_V_GEN) $(SED) -i 's/ifndef LIBFMSYNTH_ENABLE_NODETESTING/if 1/' $(includedir)/libfmsynth/Node.hh
+	$(AM_V_GEN) $(SED) -i 's/define LIBFMSYNTH_ENABLE_NODETESTING 1/define LIBFMSYNTH_ENABLE_NODETESTING 0/' $(includedir)/libfmsynth/Node.hh
+endif
 
 # fmsedit:
 

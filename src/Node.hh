@@ -12,6 +12,12 @@
   Complete license can be found in the LICENSE file.
 */
 
+// Do not edit the following (it is modified by the install script):
+#ifndef LIBFMSYNTH_ENABLE_NODETESTING
+# define LIBFMSYNTH_ENABLE_NODETESTING 1
+#endif
+// End of "do not edit".
+
 #include "Input.hh"
 #include <map>
 #include <memory>
@@ -53,8 +59,10 @@ namespace fmsynth
     void    PushFormInput(long time_index, Node * pusher, double form);
     void    PushAuxInput(long time_index, Node * pusher, double value);
 
+#if LIBFMSYNTH_ENABLE_NODETESTING
     double  GetLastFrame() const;
-
+#endif
+    
     bool    IsEnabled() const;
     void    SetEnabled(const Node * root, bool enabled);
 
@@ -92,8 +100,9 @@ namespace fmsynth
     Input        _amplitude;
     Input        _form;
     Input        _aux;
+#if LIBFMSYNTH_ENABLE_NODETESTING
     double       _last_frame;
-
+#endif
     void FinishFrame(long time_index);
   };
 }

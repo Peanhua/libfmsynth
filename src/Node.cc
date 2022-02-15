@@ -28,8 +28,10 @@ Node::Node(const std::string & type)
     _finished(false),
     _amplitude(1),
     _form(0),
-    _aux(0),
-    _last_frame(0)
+    _aux(0)
+#if LIBFMSYNTH_ENABLE_NODETESTING
+  , _last_frame(0)
+#endif
 {
   _next_id++;
 }
@@ -184,15 +186,19 @@ void Node::FinishFrame(long time_index)
       for(auto o : _aux.GetOutputNodes())
         o->PushAuxInput(time_index, this, result);
 
+#if LIBFMSYNTH_ENABLE_NODETESTING
       _last_frame = result;
+#endif
     }
 }
 
 
+#if LIBFMSYNTH_ENABLE_NODETESTING
 double Node::GetLastFrame() const
 {
   return _last_frame;
 }
+#endif
 
 
 void Node::SetIsFinished()

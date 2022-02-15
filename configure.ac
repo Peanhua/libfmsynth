@@ -51,6 +51,14 @@ AS_IF([test "x$with_valgrind" = "xyes"], [
   AC_DEFINE([WITH_VALGRIND], [1], [Define to use Valgrind.])
 ])
 
+ENABLE_NODETESTING=1
+AC_ARG_ENABLE([nodetesting], AS_HELP_STRING([--disable-nodetesting], [Disable code that is used only by unit tests.]))
+AS_IF([test "x$enable_nodetesting" = "xno"], [
+  ENABLE_NODETESTING=0
+])
+AM_CONDITIONAL([ENABLE_NODETESTING], [test $ENABLE_NODETESTING = 1])
+AC_SUBST(ENABLE_NODETESTING)
+
 
 DX_PDF_FEATURE(OFF)
 DX_PS_FEATURE(OFF)
