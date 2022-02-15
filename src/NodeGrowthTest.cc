@@ -59,6 +59,7 @@ static void Test()
       }
     testAssert("Linear-RepeatLast grows expectedly.", success);
 
+    success = true;
     for(int i = 0; success && i < 100; i++)
       {
         bp.Tick(1);
