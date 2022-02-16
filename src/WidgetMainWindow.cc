@@ -139,6 +139,9 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
               {
                 ProgramPlayer->SetNextProgram(nullptr);
                 UpdateToolbarButtonStates();
+                auto bp = _ui->_blueprint->GetBlueprint();
+                if(bp)
+                  bp->SetIsFinished();
               }
             else if(a == "actionMenuThemeDefault")
               ThemeDefault();
