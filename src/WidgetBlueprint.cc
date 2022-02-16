@@ -394,6 +394,9 @@ void WidgetBlueprint::Reset()
   for(auto n : _nodes)
     delete n;
   _nodes.clear();
+
+  delete _blueprint;
+  _blueprint = new fmsynth::Blueprint;
   
   SetDirty(false);
 
