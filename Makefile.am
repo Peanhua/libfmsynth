@@ -15,6 +15,4 @@ uninstall-hook:
 	-rmdir $(pkgdatadir)
 
 
-man_MANS = fmsedit.1 fmsplay.1
-
-dist_man_MANS = $(man_MANS)
+dist_man_MANS = fmsedit.1 fmsplay.1
