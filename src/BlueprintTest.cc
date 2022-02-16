@@ -56,8 +56,10 @@ static void Test()
     std::vector<Example> examples
       {
         { true,  "Echo.sbp"         },
+        { true,  "FallingBomb.sbp"  },
         { false, "HelloWorld.sbp"   },
         { true,  "HitExplosion.sbp" },
+        { true,  "Quack.sbp"        },
         { false, "Tremolo.sbp"      },
         { false, "Vibrato.sbp"      },
         { true,  "Weapon1.sbp"      },
@@ -77,6 +79,8 @@ static void Test()
         {
           fmsynth::Blueprint bp;
           testAssert(testname, bp.Load(*json));
+
+          testAssert("After loading example '" + e.filename + "', the blueprint is not immediately finished.", !bp.IsFinished());
           
           if(e.ends)
             {
@@ -100,6 +104,7 @@ static void Test()
                   if(!bp.IsFinished())
                     reset_samplecount++;
                 }
+              std::cout << "# samplecount=" << samplecount << ", reset_samplecount=" << reset_samplecount << "\n";
               testAssert("Playbacking example '" + e.filename + "' after ResetTime() produces the same number of samples as from the first playback.", samplecount == reset_samplecount);
             }
         }

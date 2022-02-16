@@ -49,28 +49,30 @@ double NodeGrowth::ProcessInput(double time, [[maybe_unused]] double form)
     return 0;
   };
 
-  auto IsEnded = [this]() -> bool
+  auto IsEnded = [this](double current) -> bool
   {
     if(_growth_amount.GetValue() < 0)
       {
-        if(_current_value <= _end_value.GetValue())
+        if(current <= _end_value.GetValue())
           return true;
       }
     else
       {
-        if(_current_value >= _end_value.GetValue())
+        if(current >= _end_value.GetValue())
           return true;
       }
     return false;
   };
 
-  if(!IsEnded())
-    _current_value = GetNextValue();
+  const auto nextval = GetNextValue();
+  
+  if(!IsEnded(nextval))
+    _current_value = nextval;
   else
     switch(_end_action)
       {
       case EndAction::NoEnd:
-        _current_value = GetNextValue();
+        _current_value = nextval;
         break;
       case EndAction::RepeatLast:
         break;
