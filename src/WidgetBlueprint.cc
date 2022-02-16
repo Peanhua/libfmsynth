@@ -376,35 +376,40 @@ fmsynth::Blueprint * WidgetBlueprint::Build() const
 
 void WidgetBlueprint::Reset()
 {
-  std::lock_guard lock(_blueprint->GetLockMutex());
+  ProgramPlayer->SetNextProgram(nullptr);
 
-  _selected_nodes.clear();
+  auto oldbp = _blueprint;
+  {
+    std::lock_guard lock(_blueprint->GetLockMutex());
+
+    _selected_nodes.clear();
     
-  if(!_loading)
-    {
-      GetMainWindow()->statusBar()->showMessage(QString::fromStdString("New blueprint."), 3000);
-      _undopos = 0;
-      _undobuffer.clear();
-    }
+    if(!_loading)
+      {
+        GetMainWindow()->statusBar()->showMessage(QString::fromStdString("New blueprint."), 3000);
+        _undopos = 0;
+        _undobuffer.clear();
+      }
   
-  for(auto l : _links)
-    delete l;
-  _links.clear();
+    for(auto l : _links)
+      delete l;
+    _links.clear();
 
-  for(auto n : _nodes)
-    delete n;
-  _nodes.clear();
+    for(auto n : _nodes)
+      delete n;
+    _nodes.clear();
 
-  delete _blueprint;
-  _blueprint = new fmsynth::Blueprint;
+    _blueprint = new fmsynth::Blueprint;
   
-  SetDirty(false);
+    SetDirty(false);
 
-  if(!_loading)
-    {
-      _post_edit_save = to_json();
-      GetMainWindow()->UpdateToolbarButtonStates();
-    }
+    if(!_loading)
+      {
+        _post_edit_save = to_json();
+        GetMainWindow()->UpdateToolbarButtonStates();
+      }
+  }
+  delete oldbp;
 }
 
 
