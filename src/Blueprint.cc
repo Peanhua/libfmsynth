@@ -36,8 +36,12 @@ Blueprint::~Blueprint()
 
 void Blueprint::AddNode(Node * node)
 {
+  if(!node)
+    return;
+  
   if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
     node->AddFormInputNode(_root);
+  
   _nodes.push_back(node);
   node->SetSamplesPerSecond(_samples_per_second);
 }
