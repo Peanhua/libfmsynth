@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>128</width>
+    <width>156</width>
     <height>113</height>
    </rect>
   </property>
@@ -335,7 +335,8 @@
          <item>
           <widget class="QPushButton" name="_propertiesbutton">
            <property name="icon">
-            <iconset theme="document-properties"/>
+            <iconset theme="document-properties">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -410,6 +411,12 @@
          </property>
          <item>
           <widget class="QWidget" name="_input_container" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QVBoxLayout" name="_left">
             <property name="spacing">
              <number>2</number>
@@ -559,10 +566,23 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="_content" native="true"/>
+          <widget class="QWidget" name="_content" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QWidget" name="_output_container" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QVBoxLayout" name="_right">
             <property name="spacing">
              <number>2</number>
