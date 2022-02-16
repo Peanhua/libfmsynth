@@ -66,5 +66,5 @@ DX_INIT_DOXYGEN([libfmsynth])
 
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile src/Makefile images/Makefile examples/Makefile libfmsynth.pc Doxyfile])
+AC_CONFIG_FILES([Makefile src/Makefile images/Makefile examples/Makefile doc/Makefile libfmsynth.pc Doxyfile])
 AC_OUTPUT

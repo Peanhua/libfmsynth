@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src images examples
+SUBDIRS = src images examples doc
 
 MOSTLYCLEANFILES = $(DX_CLEANFILES)
 
@@ -13,6 +13,3 @@ pkgconfig_DATA = libfmsynth.pc
 
 uninstall-hook:
 	-rmdir $(pkgdatadir)
-
-
-dist_man_MANS = fmsedit.1 fmsplay.1
