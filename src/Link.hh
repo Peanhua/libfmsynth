@@ -28,7 +28,7 @@ public:
   Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel);
   ~Link();
 
-  void Update(WidgetNode * node);
+  void Update(const WidgetNode * node);
   bool Match(const WidgetNode * node, const std::string & channel) const;
 
   WidgetNode *        GetFromNode()     const;

@@ -16,12 +16,16 @@
 #include <QtWidgets/QPushButton>
 #include "QtIncludeEnd.hh"
 
+class WidgetBlueprint;
+class WidgetNode;
+
 
 class WidgetConnector : public QPushButton
 {
 public:
   WidgetConnector(QWidget * parent);
 
+  void SetOwner(WidgetBlueprint * blueprint, WidgetNode * node);
   void SetRangeFilename(const std::string & range_filename);
   
   bool IsOptional() const;
@@ -29,14 +33,18 @@ public:
 
   bool IsConnected() const;
   void SetIsConnected(bool is_connected);
+
+  void moveEvent(QMoveEvent *event) override;
   
 protected:
   bool _is_input;
 
 private:
-  bool        _is_optional;
-  std::string _range_filename;
-  bool        _connected;
+  WidgetBlueprint * _blueprint;
+  WidgetNode *      _node;
+  bool              _is_optional;
+  std::string       _range_filename;
+  bool              _connected;
 };
 
 #endif

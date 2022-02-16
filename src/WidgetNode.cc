@@ -54,6 +54,7 @@ WidgetNode::WidgetNode(QWidget * parent, fmsynth::Node * node, bool takes_input,
   _ui_node->_input_aux->setVisible(false);
   _ui_node->_input_aux->SetIsOptional();
   _ui_node->_output->setVisible(has_output);
+  _ui_node->_output->SetOwner(GetWidgetBlueprint(), this);
   _ui_node->_output->SetIsOptional();
 
   connect(_ui_node->_closebutton, &QPushButton::clicked,

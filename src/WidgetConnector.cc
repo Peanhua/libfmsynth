@@ -11,11 +11,15 @@
 */
 
 #include "WidgetConnector.hh"
+#include "WidgetBlueprint.hh"
+#include "WidgetNode.hh"
 
 
 WidgetConnector::WidgetConnector(QWidget * parent)
   : QPushButton(parent),
     _is_input(false),
+    _blueprint(nullptr),
+    _node(nullptr),
     _is_optional(false)
 {
   setFlat(true);
@@ -78,4 +82,18 @@ bool WidgetConnector::IsOptional() const
 bool WidgetConnector::IsConnected() const
 {
   return _connected;
+}
+
+
+void WidgetConnector::SetOwner(WidgetBlueprint * blueprint, WidgetNode * node)
+{
+  _blueprint = blueprint;
+  _node      = node;
+}
+
+
+void WidgetConnector::moveEvent([[maybe_unused]] QMoveEvent *event)
+{
+  if(_blueprint && _node)
+    _blueprint->UpdateLinks(_node);
 }

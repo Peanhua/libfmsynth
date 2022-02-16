@@ -49,7 +49,8 @@ Link::~Link()
   delete _line;
 }
 
-void Link::Update(WidgetNode * node)
+
+void Link::Update(const WidgetNode * node)
 {
   if(node != _from_node && node != _to_node)
     return;

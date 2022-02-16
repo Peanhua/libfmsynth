@@ -60,9 +60,9 @@ public:
   void                 DeleteNode(WidgetNode * node);
   void                 DeleteLink(WidgetNode * node, const std::string & channel);
   void                 DeleteLink(WidgetNode * node, const std::string & channel, WidgetNode * other);
-  void                 OnNodeMoved(WidgetNode * node);
   unsigned int         CountLinks(WidgetNode * node, const std::string & channel) const;
   std::vector<Link *>  GetLinks(const WidgetNode * node, const std::string & channel) const;
+  void                 UpdateLinks(const WidgetNode * node);
   bool                 CanRun() const;
   fmsynth::Blueprint * Build() const;
   bool                 IsDirty() const;

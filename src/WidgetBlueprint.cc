@@ -259,13 +259,11 @@ void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, cons
 }
 
 
-
-void WidgetBlueprint::OnNodeMoved(WidgetNode * node)
+void WidgetBlueprint::UpdateLinks(const WidgetNode * node)
 {
   for(auto link : _links)
     if(link)
       link->Update(node);
-  PostEdit(node);
 }
 
 
@@ -833,7 +831,8 @@ void WidgetBlueprint::MoveSelectedNodes(const QPoint & delta)
           }
         
         node->move(pos);
-        OnNodeMoved(node);
+        PostEdit(node);
+        UpdateLinks(node);
       }
 }
 
