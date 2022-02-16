@@ -59,6 +59,7 @@ void NodeFileOutput::OnEOF()
 {
   std::cout << "Writing " << _filename << std::endl;
   _file->save(_filename);
+  _file->setNumSamplesPerChannel(0);
 }    
 
 
