@@ -44,7 +44,7 @@ static void Test()
         node.PushFormInput(ind++, nullptr, v);
         auto expecting = node.GetValue() + v;
         auto result = node.GetLastFrame();
-        std::cout << "# expecting=" << expecting << ", result=" << result << "\n";
+        testComment << "expecting=" << expecting << ", result=" << result << "\n";
         testAssert(std::to_string(node.GetValue()) + " + " + std::to_string(v) + " = " + std::to_string(expecting), result == expecting);
       }
   }

@@ -105,7 +105,7 @@ static void Test()
                   if(!bp.IsFinished())
                     reset_samplecount++;
                 }
-              std::cout << "# samplecount=" << samplecount << ", reset_samplecount=" << reset_samplecount << "\n";
+              testComment << "samplecount=" << samplecount << ", reset_samplecount=" << reset_samplecount << "\n";
               testAssert("Playbacking example '" + e.filename + "' after ResetTime() produces the same number of samples as from the first playback.", samplecount == reset_samplecount);
             }
         }

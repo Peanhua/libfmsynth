@@ -39,7 +39,7 @@ static void Test()
           changes++;
         prevval = v;
       }
-    std::cout << "# hz=" << hz.GetValue() << ", first=" << first << ", last=" << o.GetLastFrame() << ", changes=" << changes << "\n";
+    testComment << "hz=" << hz.GetValue() << ", first=" << first << ", last=" << o.GetLastFrame() << ", changes=" << changes << "\n";
     
     testAssert("Oscillator node returns nearly the same value after 1 second with 1Hz sine wave.", std::abs(first - o.GetLastFrame()) < 0.0001);
     testAssert("Oscillator node returns different values for most timesteps.", changes > sps / 2);

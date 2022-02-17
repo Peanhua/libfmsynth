@@ -33,7 +33,7 @@ static void Test()
       {
         bp.Tick(1);
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
-        std::cout << "# i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
+        testComment << "i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
     testAssert("Linear-NoEnd grows expectedly.", success);
   }
@@ -55,7 +55,7 @@ static void Test()
       {
         bp.Tick(1);
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
-        std::cout << "# i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
+        testComment << "i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
     testAssert("Linear-RepeatLast grows expectedly.", success);
 
@@ -64,7 +64,7 @@ static void Test()
       {
         bp.Tick(1);
         success = std::abs(node.GetLastFrame() - 1.0) < 0.1;
-        std::cout << "# i=" << (10 + i) << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
+        testComment << "i=" << (10 + i) << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
     testAssert("Linear-RepeatLast stays same after end.", success);
   }

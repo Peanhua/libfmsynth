@@ -32,6 +32,8 @@
               << " # SKIP " << DESCRIPTION << std::endl;                \
   } while(0)
 
+#define testComment std::cout << "# "
+
 
 static void Test();
 
