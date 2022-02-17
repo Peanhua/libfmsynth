@@ -527,6 +527,7 @@ void WidgetBlueprint::Load(const std::string & filename)
 
   Load(*json);
   _undopos = 0;
+  _undobuffer.clear();
   _post_edit_save = to_json();
   GetMainWindow()->UpdateToolbarButtonStates();
   
