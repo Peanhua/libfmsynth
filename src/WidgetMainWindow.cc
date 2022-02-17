@@ -97,7 +97,10 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
             if(a == "actionMenuQuit")
               {
                 if(!_ui->_blueprint->IsDirty() || AskUserConfirmation())
-                  QApplication::quit();
+                  {
+                    SaveWindowSettings();
+                    QApplication::quit();
+                  }
               }
             else if(a == "actionMenuNew")
               {
@@ -210,6 +213,12 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
 
   _ui->_blueprint->UpdateWindowTitle();
   UpdateToolbarButtonStates();
+
+  if(UserSettings->GetInt("window_x") > 0)
+    {
+      move(UserSettings->GetInt("window_x"), UserSettings->GetInt("window_y"));
+      resize(UserSettings->GetInt("window_width"), UserSettings->GetInt("window_height"));
+    }
 
   _ui->_scrollArea_Blueprint->ensureVisible(2048, 2048);
 }
@@ -528,11 +537,21 @@ bool WidgetMainWindow::AskUserConfirmation()
 
 void WidgetMainWindow::closeEvent(QCloseEvent * event)
 {
+  SaveWindowSettings();
   if(!_ui->_blueprint->IsDirty() || AskUserConfirmation())
     event->accept();
   else
     event->ignore();
 }
+
+
+void WidgetMainWindow::SaveWindowSettings()
+{
+  UserSettings->Set("window_x", pos().x());
+  UserSettings->Set("window_y", pos().y());
+  UserSettings->Set("window_width", size().width());
+  UserSettings->Set("window_height", size().height());
+}  
 
 
 void WidgetMainWindow::UpdateToolbarButtonStates()

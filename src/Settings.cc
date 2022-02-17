@@ -35,6 +35,10 @@ void Settings::SetDefaults()
   _ints["theme"] = 0;
   _ints["recent_files"] = 0;
   _ints["sample_rate"] = 44100;
+  _ints["window_x"] = -1;
+  _ints["window_y"] = -1;
+  _ints["window_width"] = -1;
+  _ints["window_height"] = -1;
   _bools["nodecategory_inputs_collapsed"]        = false;
   _bools["nodecategory_inputs_grid"]             = false;
   _bools["nodecategory_oscillators_collapsed"]   = false;

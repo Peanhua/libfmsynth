@@ -47,6 +47,7 @@ private:
   void ToggleCategoryExpand(const std::string & category);
   void HelpAbout();
   bool AskUserConfirmation();
+  void SaveWindowSettings();
 };
 
 #endif
