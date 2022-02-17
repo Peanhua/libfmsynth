@@ -284,11 +284,14 @@ uninstall-hook:
 
 
 # Testing:
-check_PROGRAMS = BlueprintTest NodeTest NodeAddTest NodeGrowthTest NodeOscillatorTest
+check_PROGRAMS = BlueprintTest NodeTest NodeAddTest NodeDelayTest NodeGrowthTest NodeOscillatorTest NodeRangeConvertTest
 
 TESTS = $(check_PROGRAMS)
 
-EXTRA_DIST = Test.hh BlueprintTest.cc NodeTest.cc NodeAddTest.cc NodeGrowthTest.cc NodeOscillatorTest.cc
+EXTRA_DIST = Test.hh BlueprintTest.cc NodeTest.cc NodeAddTest.cc NodeDelayTest.cc NodeGrowthTest.cc NodeOscillatorTest.cc NodeRangeConvertTest.cc
+
+BlueprintTest_LDADD = $(NodeTest_LDADD)
+BlueprintTest_SOURCES = BlueprintTest.cc Test.hh
 
 NodeTest_LDADD = libfmsynth.la $(JSON_LIBS)
 NodeTest_SOURCES = NodeTest.cc Test.hh		
@@ -296,14 +299,17 @@ NodeTest_SOURCES = NodeTest.cc Test.hh
 NodeAddTest_LDADD = $(NodeTest_LDADD)
 NodeAddTest_SOURCES = NodeAddTest.cc Test.hh
 
+NodeDelayTest_LDADD = $(NodeTest_LDADD)
+NodeDelayTest_SOURCES = NodeDelayTest.cc Test.hh
+
 NodeGrowthTest_LDADD = $(NodeTest_LDADD)
 NodeGrowthTest_SOURCES = NodeGrowthTest.cc Test.hh
 
 NodeOscillatorTest_LDADD = $(NodeTest_LDADD)
 NodeOscillatorTest_SOURCES = NodeOscillatorTest.cc Test.hh
 
-BlueprintTest_LDADD = $(NodeTest_LDADD)
-BlueprintTest_SOURCES = BlueprintTest.cc Test.hh
+NodeRangeConvertTest_LDADD = $(NodeTest_LDADD)
+NodeRangeConvertTest_SOURCES = NodeRangeConvertTest.cc Test.hh
 
 # Testing TAP setup:
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) $(top_srcdir)/build-aux/tap-driver.sh

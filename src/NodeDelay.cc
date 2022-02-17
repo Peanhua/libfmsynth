@@ -45,6 +45,9 @@ void NodeDelay::PrefillBuffer()
 
 double NodeDelay::ProcessInput([[maybe_unused]] double time, double form)
 {
+  if(_buffer.empty() && _delay_time > 0.0)
+    PrefillBuffer();
+  
   _buffer.push_back(form);
   auto rv = _buffer.front();
   _buffer.pop_front();
