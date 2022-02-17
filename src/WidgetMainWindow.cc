@@ -214,7 +214,7 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
   _ui->_blueprint->UpdateWindowTitle();
   UpdateToolbarButtonStates();
 
-  if(UserSettings->GetInt("window_x") > 0)
+  if(UserSettings->GetInt("window_x") >= 0)
     {
       move(UserSettings->GetInt("window_x"), UserSettings->GetInt("window_y"));
       resize(UserSettings->GetInt("window_width"), UserSettings->GetInt("window_height"));
