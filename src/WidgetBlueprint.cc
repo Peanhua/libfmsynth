@@ -254,6 +254,8 @@ void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, cons
   }
   
   _links.push_back(new Link(this, from_node, to_node, to_channel));
+
+  // todo: Update only the connectors that actually change, not all connectors of both nodes.
   from_node->UpdateConnectorStates();
   to_node->UpdateConnectorStates();
 }

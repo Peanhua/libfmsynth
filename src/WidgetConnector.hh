@@ -25,6 +25,8 @@ class WidgetConnector : public QPushButton
 public:
   WidgetConnector(QWidget * parent);
 
+  const WidgetNode * GetOwner() const;
+
   void SetOwner(WidgetBlueprint * blueprint, WidgetNode * node);
   void SetRangeFilename(const std::string & range_filename);
   
@@ -34,6 +36,8 @@ public:
   bool IsConnected() const;
   void SetIsConnected(bool is_connected);
 
+  void UpdateVisuals();
+  
   void moveEvent(QMoveEvent *event) override;
   
 protected:

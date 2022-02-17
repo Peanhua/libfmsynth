@@ -29,21 +29,19 @@ WidgetConnector::WidgetConnector(QWidget * parent)
 void WidgetConnector::SetIsOptional()
 {
   _is_optional = true;
-  SetIsConnected(_connected);
+  UpdateVisuals();
 }
 
 
 void WidgetConnector::SetRangeFilename(const std::string & range_filename)
 {
   _range_filename = range_filename;
-  SetIsConnected(_connected);
+  UpdateVisuals();
 }
 
 
-void WidgetConnector::SetIsConnected(bool is_connected)
+void WidgetConnector::UpdateVisuals()
 {
-  _connected = is_connected;
-  
   std::string filename("images/Link");
   if(_connected)
     {
@@ -70,6 +68,13 @@ void WidgetConnector::SetIsConnected(bool is_connected)
   icon.addFile(QString::fromStdString(filename + _range_filename + ".png"), QSize(), QIcon::Normal, QIcon::Off);
   setIcon(icon);
   setIconSize(size());
+}  
+
+
+void WidgetConnector::SetIsConnected(bool is_connected)
+{
+  _connected = is_connected;
+  UpdateVisuals();
 }
 
 
@@ -82,6 +87,12 @@ bool WidgetConnector::IsOptional() const
 bool WidgetConnector::IsConnected() const
 {
   return _connected;
+}
+
+
+const WidgetNode * WidgetConnector::GetOwner() const
+{
+  return _node;
 }
 
 
