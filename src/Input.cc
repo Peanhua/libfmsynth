@@ -39,6 +39,7 @@ void Input::SetDefaultValue(double new_default_value)
 
 bool Input::IsReady() const
 {
+  assert(_input_count <= _input_nodes.size());
   return _input_count == _input_nodes.size();
 }
 

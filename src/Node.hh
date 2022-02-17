@@ -69,7 +69,7 @@ namespace fmsynth
     bool    IsFinished() const;
     void    SetIsFinished();
 
-    std::set<Node *> GetAllConnectedNodes() const;
+    std::set<Node *> GetAllConnectedNodes() const; // todo: Rename to match the behavior: This currently returns all output nodes.
     virtual void     ResetTime();
 
     virtual json11::Json to_json() const;

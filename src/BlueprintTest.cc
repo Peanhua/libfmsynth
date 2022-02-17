@@ -86,6 +86,7 @@ static void Test()
             {
               bool endedok = false;
               unsigned int samplecount = 0;
+
               for(unsigned int i = 0; !endedok && i < 1000 * bp.GetSamplesPerSecond(); i++)
                 {
                   bp.Tick(1);
@@ -116,6 +117,44 @@ static void Test()
             {
               bp.Tick(1);
               testAssert(testname, !bp.IsFinished());
+            }
+          else
+            testSkip(testname, "Failed to load '" + e.filename + "'.");
+        }
+        {
+          testname = "Playbacking example '" + e.filename + "' produces variation in the output.";
+
+          fmsynth::Blueprint bp;
+          bool loaded = bp.Load(*json);
+          if(loaded)
+            {
+              fmsynth::Node * outputnode = nullptr;
+              {
+                auto nodes = bp.GetNodesByType("AudioDeviceOutput");
+                if(!nodes.empty())
+                  outputnode = nodes[0];
+              }
+              testAssert("Example '" + e.filename + "' has an audio device output node.", outputnode);
+              
+              if(outputnode)
+                {
+                  unsigned int variationcount = 0;
+                  double lastval = 0;
+                  for(unsigned int i = 0; !bp.IsFinished() && i < 10 * bp.GetSamplesPerSecond(); i++)
+                    {
+                      bp.Tick(1);
+                      if(!bp.IsFinished())
+                        {
+                          auto v = outputnode->GetLastFrame();
+                          if(lastval != v)
+                            variationcount++;
+                          lastval = v;
+                        }
+                    }
+                  testAssert("Playbacking example '" + e.filename + "' provides some variation in output within the first 10 seconds.", variationcount > 100);
+                }
+              else
+                testSkip(testname, "No audio device output node present in the example.");
             }
           else
             testSkip(testname, "Failed to load '" + e.filename + "'.");

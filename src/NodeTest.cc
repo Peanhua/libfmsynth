@@ -66,4 +66,16 @@ static void Test()
       
       testAssert("Disabling node '" + type + "' sets it disabled.", node->IsEnabled() == false);
     }
+
+  {
+    fmsynth::NodeOscillator node;
+    testAssert("New node does not have any output nodes connected to it.", node.GetAllConnectedNodes().empty());
+  }
+  {
+    fmsynth::NodeOscillator o1, o2;
+    o2.AddFormInputNode(&o1);
+    testAssert("After adding input node, the node can be seen in the other node as output node.", o1.GetAllConnectedNodes().contains(&o2));
+    o2.RemoveFormInputNode(&o1);
+    testAssert("After removing input node, the node can no longer be seen in the other node as output node.", !o1.GetAllConnectedNodes().contains(&o2));
+  }
 }
