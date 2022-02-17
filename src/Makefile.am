@@ -284,15 +284,17 @@ uninstall-hook:
 
 
 # Testing:
-check_PROGRAMS = BlueprintTest NodeTest NodeGrowthTest NodeOscillatorTest
+check_PROGRAMS = BlueprintTest NodeTest NodeAddTest NodeGrowthTest NodeOscillatorTest
 
 TESTS = $(check_PROGRAMS)
 
-EXTRA_DIST = Test.hh BlueprintTest.cc NodeTest.cc NodeGrowthTest.cc NodeOscillatorTest.cc
+EXTRA_DIST = Test.hh BlueprintTest.cc NodeTest.cc NodeAddTest.cc NodeGrowthTest.cc NodeOscillatorTest.cc
 
 NodeTest_LDADD = libfmsynth.la $(JSON_LIBS)
-
 NodeTest_SOURCES = NodeTest.cc Test.hh		
+
+NodeAddTest_LDADD = $(NodeTest_LDADD)
+NodeAddTest_SOURCES = NodeAddTest.cc Test.hh
 
 NodeGrowthTest_LDADD = $(NodeTest_LDADD)
 NodeGrowthTest_SOURCES = NodeGrowthTest.cc Test.hh
