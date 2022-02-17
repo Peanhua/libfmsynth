@@ -57,8 +57,11 @@ double NodeFileOutput::ProcessInput([[maybe_unused]] double time, double form)
 
 void NodeFileOutput::OnEOF()
 {
-  std::cout << "Writing " << _filename << std::endl;
-  _file->save(_filename);
+  if(!_filename.empty())
+    {
+      std::cout << "Writing " << _filename << std::endl;
+      _file->save(_filename);
+    }
   _file->setNumSamplesPerChannel(0);
 }    
 
