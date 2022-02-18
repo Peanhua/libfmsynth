@@ -158,12 +158,7 @@ bool Blueprint::Load(const json11::Json & json)
           auto to_node   = FindNodeById(l["to"].string_value());
           if(from_node && to_node)
             {
-              Node::Channel channel;
-              auto to_channel = l["to_channel"].string_value();
-              if(     to_channel == "Amplitude") channel = Node::Channel::Amplitude;
-              else if(to_channel == "Form")      channel = Node::Channel::Form;
-              else if(to_channel == "Aux")       channel = Node::Channel::Aux;
-
+              auto channel = Node::StringToChannel(l["to_channel"].string_value());
               to_node->AddInputNode(channel, from_node);
             }
         }

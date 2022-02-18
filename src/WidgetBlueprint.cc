@@ -597,12 +597,7 @@ void WidgetBlueprint::Load(const json11::Json & json)
       auto from_node = FindNodeById(l["from"].string_value());
       auto to_node   = FindNodeById(l["to"].string_value());
 
-      fmsynth::Node::Channel channel;
-      auto to_channel = l["to_channel"].string_value();
-      if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
-      else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
-      else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
-      
+      auto channel = fmsynth::Node::StringToChannel(l["to_channel"].string_value());
       AddLink(from_node, to_node, channel);
     }
 

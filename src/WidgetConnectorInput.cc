@@ -33,13 +33,8 @@ WidgetConnectorInput::WidgetConnectorInput(QWidget * parent)
           [this](const QPoint & pos)
           {
             auto blueprint = GetBlueprint();
-            auto node    = GetNode(this);
-            auto channel = property("Channel").toString().toStdString();
-            fmsynth::Node::Channel chnl;
-            if(channel == "Amplitude") chnl = fmsynth::Node::Channel::Amplitude;
-            else if(channel == "Form") chnl = fmsynth::Node::Channel::Form;
-            else if(channel == "Aux")  chnl = fmsynth::Node::Channel::Aux;
-            else assert(false);
+            auto node      = GetNode(this);
+            auto chnl      = fmsynth::Node::StringToChannel(property("Channel").toString().toStdString());
             
             if(blueprint->CountInputLinks(node, chnl) <= 1)
               return;
@@ -113,15 +108,10 @@ void WidgetConnectorInput::dropEvent(QDropEvent *event)
   if(from_node == to_node || from_node->DependsOn(to_node))
     return;
   
-  auto blueprint = GetBlueprint();
+  auto blueprint  = GetBlueprint();
   auto to_channel = property("Channel").toString().toStdString();
-  auto output = property("NodeId").toString().toStdString() + "/" + to_channel;
-
-  fmsynth::Node::Channel channel;
-  if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
-  else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
-  else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
-  else assert(false);
+  auto output     = property("NodeId").toString().toStdString() + "/" + to_channel;
+  auto channel    = fmsynth::Node::StringToChannel(to_channel);
     
   blueprint->AddLink(from_node, to_node, channel);
   blueprint->PostEdit({from_node, to_node});
@@ -131,15 +121,9 @@ void WidgetConnectorInput::dropEvent(QDropEvent *event)
 
 void WidgetConnectorInput::mousePressEvent([[maybe_unused]] QMouseEvent * event)
 {
-  auto blueprint  = GetBlueprint();
-  auto node       = GetNode(this);
-  auto to_channel = property("Channel").toString().toStdString();
-
-  fmsynth::Node::Channel channel;
-  if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
-  else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
-  else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
-  else assert(false);
+  auto blueprint = GetBlueprint();
+  auto node      = GetNode(this);
+  auto channel   = fmsynth::Node::StringToChannel(property("Channel").toString().toStdString());
 
   if(blueprint->CountInputLinks(node, channel) == 1)
     blueprint->DeleteInputLink(node, channel);

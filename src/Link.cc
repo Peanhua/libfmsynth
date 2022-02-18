@@ -98,16 +98,9 @@ fmsynth::Node::Channel Link::GetToChannel() const
 
 json11::Json Link::to_json() const
 {
-  std::string to_channel;
-  switch(_to_channel)
-    {
-    case fmsynth::Node::Channel::Amplitude: to_channel = "Amplitude"; break;
-    case fmsynth::Node::Channel::Form:      to_channel = "Form";      break;
-    case fmsynth::Node::Channel::Aux:       to_channel = "Aux";       break;
-    }
   return json11::Json::object {
-    { "from",       _from_node->GetNodeId() },
-    { "to",         _to_node->GetNodeId()   },
-    { "to_channel", to_channel              }
+    { "from",       _from_node->GetNodeId()                     },
+    { "to",         _to_node->GetNodeId()                       },
+    { "to_channel", fmsynth::Node::ChannelToString(_to_channel) }
   };
 }

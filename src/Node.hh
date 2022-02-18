@@ -19,6 +19,7 @@
 // End of "do not edit".
 
 #include "Input.hh"
+#include <cassert>
 #include <map>
 #include <memory>
 #include <set>
@@ -37,11 +38,32 @@ namespace fmsynth
         Form,
         Aux
       };
-    
-    Node(const std::string & type);
-    virtual ~Node();
 
     static Node * Create(const json11::Json & json);
+
+    static std::string ChannelToString(Channel channel)
+    {
+      switch(channel)
+        {
+        case Channel::Amplitude: return "Amplitude";
+        case Channel::Form:      return "Form";
+        case Channel::Aux:       return "Aux";
+        }
+      assert(false);
+      return "FATAL ERROR, ILLEGAL CHANNEL ENUM";
+    }
+    static Channel StringToChannel(const std::string & string)
+    {
+      if(string == "Amplitude") return Channel::Amplitude;
+      else if(string == "Form") return Channel::Form;
+      else if(string == "Aux")  return Channel::Aux;
+      assert(false);
+      return Channel::Aux;
+    }
+
+
+    Node(const std::string & type);
+    virtual ~Node();
 
     const std::string & GetType() const;
     const std::string & GetId()   const;
