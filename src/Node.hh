@@ -31,6 +31,13 @@ namespace fmsynth
   class Node
   {
   public:
+    enum class Channel
+      {
+        Amplitude,
+        Form,
+        Aux
+      };
+    
     Node(const std::string & type);
     virtual ~Node();
 
@@ -39,25 +46,17 @@ namespace fmsynth
     const std::string & GetType() const;
     const std::string & GetId()   const;
     void                SetId(const std::string & id);
-  
-    void    AddAmplitudeInputNode(Node * node);
-    void    AddFormInputNode(Node * node);
-    void    AddAuxInputNode(Node * node);
-    void    RemoveAmplitudeInputNode(Node * node);
-    void    RemoveFormInputNode(Node * node);
-    void    RemoveAuxInputNode(Node * node);
 
-    virtual Input::Range GetAmplitudeInputRange() const;
-    Input::Range         GetFormInputRange()      const;
-    virtual Input::Range GetAuxInputRange()       const;
+    void AddInputNode(Channel channel, Node * node);
+    void RemoveInputNode(Channel channel, Node * node);
+
+    virtual Input::Range GetInputRange(Channel channel) const;
     virtual Input::Range GetFormOutputRange()     const;
 
     void         SetSamplesPerSecond(unsigned int samples_per_second);
     unsigned int GetSamplesPerSecond() const;
 
-    void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
-    void    PushFormInput(long time_index, Node * pusher, double form);
-    void    PushAuxInput(long time_index, Node * pusher, double value);
+    void    PushInput(long time_index, Node * pusher, Channel channel, double value);
 
 #if LIBFMSYNTH_ENABLE_NODETESTING
     double  GetLastFrame() const;
@@ -82,10 +81,8 @@ namespace fmsynth
     virtual void   OnEOF();
 
     void          SetPreprocessAmplitude();
-    const Input * GetAmplitudeInput() const;
-    const Input * GetFormInput()      const;
-    Input *       GetFormInput();
-    Input *       GetAuxInput();
+    const Input * GetInput(Channel channel) const;
+    Input *       GetInput(Channel channel);
 
   private:
     static unsigned int _next_id;
@@ -104,6 +101,17 @@ namespace fmsynth
     double       _last_frame;
 #endif
     void FinishFrame(long time_index);
+
+    void    AddAmplitudeInputNode(Node * node);
+    void    AddFormInputNode(Node * node);
+    void    AddAuxInputNode(Node * node);
+    void    RemoveAmplitudeInputNode(Node * node);
+    void    RemoveFormInputNode(Node * node);
+    void    RemoveAuxInputNode(Node * node);
+
+    void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
+    void    PushFormInput(long time_index, Node * pusher, double form);
+    void    PushAuxInput(long time_index, Node * pusher, double value);
   };
 }
 

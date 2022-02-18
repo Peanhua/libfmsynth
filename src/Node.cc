@@ -83,6 +83,28 @@ void Node::OnInputConnected(Node * from)
 }
 
 
+void Node::AddInputNode(Channel channel, Node * node)
+{
+  switch(channel)
+    {
+    case Channel::Amplitude: AddAmplitudeInputNode(node); break;
+    case Channel::Form:      AddFormInputNode(node);      break;
+    case Channel::Aux:       AddAuxInputNode(node);       break;
+    }
+}
+
+
+void Node::RemoveInputNode(Channel channel, Node * node)
+{
+  switch(channel)
+    {
+    case Channel::Amplitude: RemoveAmplitudeInputNode(node); break;
+    case Channel::Form:      RemoveFormInputNode(node);      break;
+    case Channel::Aux:       RemoveAuxInputNode(node);       break;
+    }
+}
+
+
 void Node::AddAmplitudeInputNode(Node * node)
 {
   _amplitude.AddInputNode(node);
@@ -138,6 +160,17 @@ void Node::PushAmplitudeInput(long time_index, Node * pusher, double amplitude)
     }
 }
 
+void Node::PushInput(long time_index, Node * pusher, Channel channel, double value)
+{
+  switch(channel)
+    {
+    case Channel::Amplitude: PushAmplitudeInput(time_index, pusher, value); break;
+    case Channel::Form:      PushFormInput(time_index, pusher, value);      break;
+    case Channel::Aux:       PushAuxInput(time_index, pusher, value);       break;
+    }
+}
+
+  
 void Node::PushFormInput(long time_index, Node * pusher, double form)
 {
   if(_enabled)
@@ -256,27 +289,29 @@ void Node::OnEOF()
 }
 
 
-const Input * Node::GetAmplitudeInput() const
+Input * Node::GetInput(Channel channel)
 {
-  return &_amplitude;
+  switch(channel)
+    {
+    case Channel::Amplitude: return &_amplitude;
+    case Channel::Form:      return &_form;
+    case Channel::Aux:       return &_aux;
+    }
+  assert(false);
+  return nullptr;
 }
 
 
-Input * Node::GetFormInput()
+const Input * Node::GetInput(Channel channel) const
 {
-  return &_form;
-}
-
-
-const Input * Node::GetFormInput() const
-{
-  return &_form;
-}
-
-
-Input * Node::GetAuxInput()
-{
-  return &_aux;
+  switch(channel)
+    {
+    case Channel::Amplitude: return &_amplitude;
+    case Channel::Form:      return &_form;
+    case Channel::Aux:       return &_aux;
+    }
+  assert(false);
+  return nullptr;
 }
 
 
@@ -327,21 +362,16 @@ void Node::OnEnabled()
 }
 
 
-Input::Range Node::GetAmplitudeInputRange() const
+Input::Range Node::GetInputRange(Channel channel) const
 {
+  switch(channel)
+    {
+    case Channel::Amplitude: return _amplitude.GetInputRange();
+    case Channel::Form:      return _form.GetInputRange();
+    case Channel::Aux:       return _aux.GetInputRange();
+    }
+  assert(false);
   return Input::Range::Zero_One;
-}
-
-
-Input::Range Node::GetFormInputRange() const
-{
-  return _form.GetInputRange();
-}
-
-
-Input::Range Node::GetAuxInputRange() const
-{
-  return _aux.GetInputRange();
 }
 
 

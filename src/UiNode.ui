@@ -471,7 +471,7 @@
               <property name="flat">
                <bool>true</bool>
               </property>
-              <property name="InputChannel" stdset="0">
+              <property name="Channel" stdset="0">
                <string>Amplitude</string>
               </property>
              </widget>
@@ -514,7 +514,7 @@
               <property name="flat">
                <bool>true</bool>
               </property>
-              <property name="InputChannel" stdset="0">
+              <property name="Channel" stdset="0">
                <string>Form</string>
               </property>
              </widget>
@@ -557,7 +557,7 @@
               <property name="flat">
                <bool>true</bool>
               </property>
-              <property name="InputChannel" stdset="0">
+              <property name="Channel" stdset="0">
                <string>Aux</string>
               </property>
              </widget>
@@ -633,6 +633,9 @@
               </property>
               <property name="flat">
                <bool>true</bool>
+              </property>
+              <property name="Channel" stdset="0">
+               <string>Form</string>
               </property>
              </widget>
             </item>

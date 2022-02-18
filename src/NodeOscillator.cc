@@ -24,7 +24,7 @@ NodeOscillator::NodeOscillator()
     _random_generator(0),
     _rdist(0, 1)
 {
-  GetFormInput()->SetOutputRange(Input::Range::MinusOne_One);
+  GetInput(Channel::Form)->SetOutputRange(Input::Range::MinusOne_One);
 }
 
 
@@ -91,7 +91,7 @@ double NodeOscillator::ProcessInput(double time, double form)
     case Type::PULSE:
       {
         double duty;
-        auto aux = GetAuxInput();
+        auto aux = GetInput(Channel::Aux);
         if(aux->GetInputNodes().size() > 0)
           duty = (aux->GetValue() - 0.5) * 2.0;
         else

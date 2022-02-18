@@ -24,7 +24,7 @@ WidgetNodeAverage::WidgetNodeAverage(QWidget * parent)
     _ui_node_average(new Ui::NodeAverage)
 {
   SetNodeType("Average");
-  SetIsMultiInput("Form");
+  SetIsMultiInput(fmsynth::Node::Channel::Form);
   _ui_node->_input_amplitude->setVisible(false);
   SetConnectorsRanges();
 

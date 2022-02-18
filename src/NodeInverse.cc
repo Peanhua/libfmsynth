@@ -24,7 +24,7 @@ NodeInverse::NodeInverse()
 
 double NodeInverse::ProcessInput([[maybe_unused]] double time, double form)
 {
-  switch(GetFormInput()->GetInputRange())
+  switch(GetInput(Channel::Form)->GetInputRange())
     {
     case Input::Range::Inf_Inf:
     case Input::Range::MinusOne_One:
@@ -39,5 +39,5 @@ double NodeInverse::ProcessInput([[maybe_unused]] double time, double form)
 
 Input::Range NodeInverse::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }

@@ -18,13 +18,13 @@ using namespace fmsynth;
 NodeAverage::NodeAverage()
   : Node("Average")
 {
-  GetFormInput()->SetDefaultValue(1);
+  GetInput(Channel::Form)->SetDefaultValue(1);
 }
 
 
 double NodeAverage::ProcessInput([[maybe_unused]] double time, double form)
 {
-  auto n = static_cast<double>(GetFormInput()->GetInputNodes().size());
+  auto n = static_cast<double>(GetInput(Channel::Form)->GetInputNodes().size());
   if(n > 1)
     return form / n;
   else
@@ -34,5 +34,5 @@ double NodeAverage::ProcessInput([[maybe_unused]] double time, double form)
 
 Input::Range NodeAverage::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }

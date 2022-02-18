@@ -243,14 +243,14 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
 }
 
 
-void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel)
+void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel)
 {
   if(!to_node->IsMultiInput(to_channel))
-    DeleteLink(to_node, to_channel);
+    DeleteInputLink(to_node, to_channel);
 
   {
     std::lock_guard lock(_blueprint->GetLockMutex());
-    _blueprint->AddLink(from_node->GetNode(), to_node->GetNode(), to_channel);
+    to_node->GetNode()->AddInputNode(to_channel, from_node->GetNode());
   }
   
   _links.push_back(new Link(this, from_node, to_node, to_channel));
@@ -274,10 +274,10 @@ void WidgetBlueprint::DeleteNode(WidgetNode * node)
   if(!node)
     return;
 
-  DeleteLink(node, "");
-  DeleteLink(node, "Amplitude");
-  DeleteLink(node, "Form");
-  DeleteLink(node, "Aux");
+  DeleteOutputLink(node, fmsynth::Node::Channel::Form);
+  DeleteInputLink(node, fmsynth::Node::Channel::Amplitude);
+  DeleteInputLink(node, fmsynth::Node::Channel::Form);
+  DeleteInputLink(node, fmsynth::Node::Channel::Aux);
 
   {
     std::lock_guard lock(_blueprint->GetLockMutex());
@@ -295,29 +295,25 @@ void WidgetBlueprint::DeleteNode(WidgetNode * node)
 }
 
 
-void WidgetBlueprint::DeleteLink(WidgetNode * node, const std::string & channel)
+void WidgetBlueprint::DeleteLink(std::function<bool(const Link *)> match_callback)
 {
-  if(!node)
-    return;
-
+  std::set<QWidget *> edited_nodes;
   std::lock_guard lock(_blueprint->GetLockMutex());
 
-  std::set<QWidget *> edited_nodes { node };
-  
   for(unsigned int i = 0; i < _links.size(); i++)
     {
       auto link = _links[i];
-      if(link && link->Match(node, channel))
+      if(link && match_callback(link))
         {
           auto from_node = link->GetFromNode();
-          auto to_node   = link->GetToNode();
+          auto to_node = link->GetToNode();
 
           delete link;
           _links[i] = nullptr;
 
           from_node->UpdateConnectorStates();
           to_node->UpdateConnectorStates();
-
+          
           edited_nodes.insert(from_node);
           edited_nodes.insert(to_node);
         }
@@ -325,40 +321,65 @@ void WidgetBlueprint::DeleteLink(WidgetNode * node, const std::string & channel)
   PostEdit(edited_nodes);
 }
 
-void WidgetBlueprint::DeleteLink(WidgetNode * node, const std::string & channel, WidgetNode * other)
-{
-  std::lock_guard lock(_blueprint->GetLockMutex());
-  
-  for(unsigned int i = 0; i < _links.size(); i++)
-    {
-      auto link = _links[i];
-      if(link)
-        if(link->Match(node, channel) || link->Match(other, channel))
-          {
-            auto from_node = link->GetFromNode();
-            auto to_node = link->GetToNode();
-            if((from_node == node && to_node == other) ||
-               (from_node == other && to_node == node))
-              {
-                delete link;
-                _links[i] = nullptr;
-              }
-          }
-    }
-  node->UpdateConnectorStates();
-  other->UpdateConnectorStates();
 
-  PostEdit({node, other});
+void WidgetBlueprint::DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel)
+{
+  DeleteLink([this, node, channel](const Link * link)
+  {
+    return
+      node    == link->GetToNode() &&
+      channel == link->GetToChannel();
+  });
 }
 
 
-unsigned int WidgetBlueprint::CountLinks(WidgetNode * node, const std::string & channel) const
+void WidgetBlueprint::DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel, WidgetNode * other)
+{
+  DeleteLink([this, node, channel, other](const Link * link)
+  {
+    return
+      node    == link->GetToNode() &&
+      channel == link->GetToChannel() &&
+      other   == link->GetFromNode();
+  });
+}
+
+
+void WidgetBlueprint::DeleteOutputLink(WidgetNode * node, fmsynth::Node::Channel channel)
+{
+  assert(channel == fmsynth::Node::Channel::Form);
+
+  DeleteLink([this, node, channel](const Link * link)
+  {
+    return
+      node    == link->GetFromNode() &&
+      channel == fmsynth::Node::Channel::Form; // todo: From -channel is not currently recorded in the link data, will need to add it before having multiple output nodes.
+  });
+}
+
+
+unsigned int WidgetBlueprint::CountInputLinks(WidgetNode * to_node, fmsynth::Node::Channel to_channel) const
 { // todo: stl algorithm?
   unsigned int count = 0;
 
   for(auto l : _links)
-    if(l && l->Match(node, channel))
-      count++;
+    if(l)
+      if(to_node == l->GetToNode() && to_channel == l->GetToChannel())
+        count++;
+  
+  return count;
+}
+
+
+unsigned int WidgetBlueprint::CountOutputLinks(WidgetNode * from_node, fmsynth::Node::Channel from_channel) const
+{
+  assert(from_channel == fmsynth::Node::Channel::Form);
+  unsigned int count = 0;
+
+  for(auto l : _links)
+    if(l)
+      if(from_node == l->GetFromNode() && from_channel == fmsynth::Node::Channel::Form)
+        count++;
   
   return count;
 }
@@ -575,8 +596,14 @@ void WidgetBlueprint::Load(const json11::Json & json)
     {
       auto from_node = FindNodeById(l["from"].string_value());
       auto to_node   = FindNodeById(l["to"].string_value());
+
+      fmsynth::Node::Channel channel;
       auto to_channel = l["to_channel"].string_value();
-      AddLink(from_node, to_node, to_channel);
+      if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
+      else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
+      else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
+      
+      AddLink(from_node, to_node, channel);
     }
 
   _loading = false;
@@ -709,12 +736,25 @@ void WidgetBlueprint::Redo()
 }
 
 
-std::vector<Link *> WidgetBlueprint::GetLinks(const WidgetNode * node, const std::string & channel) const
+std::vector<Link *> WidgetBlueprint::GetInputLinks(const WidgetNode * to_node, fmsynth::Node::Channel to_channel) const
 {
   std::vector<Link *> rv;
   for(auto link : _links)
     if(link)
-      if(link->Match(node, channel))
+      if(to_node == link->GetToNode() && to_channel == link->GetToChannel())
+        rv.push_back(link);
+  
+  return rv;
+}
+
+
+std::vector<Link *> WidgetBlueprint::GetOutputLinks(const WidgetNode * from_node, fmsynth::Node::Channel from_channel) const
+{
+  assert(from_channel == fmsynth::Node::Channel::Form);
+  std::vector<Link *> rv;
+  for(auto link : _links)
+    if(link)
+      if(from_node == link->GetFromNode() && from_channel == fmsynth::Node::Channel::Form)
         rv.push_back(link);
   
   return rv;

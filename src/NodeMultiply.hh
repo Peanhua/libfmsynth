@@ -25,7 +25,6 @@ namespace fmsynth
     double GetMultiplier() const;
     void   SetMultiplier(double multiplier);
 
-    Input::Range GetAmplitudeInputRange() const override;
     Input::Range GetFormOutputRange()     const override;
 
     json11::Json to_json() const                        override;

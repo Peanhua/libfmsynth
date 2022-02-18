@@ -18,7 +18,7 @@ static void Test()
   {
     fmsynth::NodeAdd node;
     node.SetSamplesPerSecond(300);
-    node.AddFormInputNode(nullptr);
+    node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
     node.SetValue(3);
 
     unsigned int ind = 0;
@@ -41,7 +41,7 @@ static void Test()
       };
     for(auto v : values)
       {
-        node.PushFormInput(ind++, nullptr, v);
+        node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
         auto expecting = node.GetValue() + v;
         auto result = node.GetLastFrame();
         testComment << "expecting=" << expecting << ", result=" << result << "\n";

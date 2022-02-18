@@ -23,16 +23,16 @@ static void Test()
     fmsynth::NodeOscillator o;
     o.SetSamplesPerSecond(sps);
     o.SetType(fmsynth::NodeOscillator::Type::SINE);
-    o.AddFormInputNode(nullptr);
+    o.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
 
     unsigned int ind = 0;
-    o.PushFormInput(ind++, nullptr, hz.GetValue());
+    o.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
     auto first = o.GetLastFrame();
     auto prevval = first;
     unsigned int changes = 0;
     for(unsigned int i = 0; i < sps; i++)
       {
-        o.PushFormInput(ind++, nullptr, hz.GetValue());
+        o.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
 
         auto v = o.GetLastFrame();
         if(v != prevval)

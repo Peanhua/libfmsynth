@@ -19,7 +19,7 @@
 #include <cassert>
 
 
-Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel)
+Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel)
   : _blueprint(blueprint),
     _from_node(from_node),
     _to_node(to_node),
@@ -37,14 +37,7 @@ Link::~Link()
 {
   auto nfrom = _from_node->GetNode();
   auto nto   = _to_node->GetNode();
-  if(_to_channel == "Amplitude")
-    nto->RemoveAmplitudeInputNode(nfrom);
-  else if(_to_channel == "Form")
-    nto->RemoveFormInputNode(nfrom);
-  else if(_to_channel == "Aux")
-    nto->RemoveAuxInputNode(nfrom);
-  else
-    assert(false);
+  nto->RemoveInputNode(_to_channel, nfrom);
   
   delete _line;
 }
@@ -70,7 +63,7 @@ static QPoint GetGlobalPos(QWidget * for_widget)
 
 QPoint Link::GetFromPosition() const
 {
-  auto connector = _from_node->GetWidgetConnector("");
+  auto connector = _from_node->GetOutputWidgetConnector(fmsynth::Node::Channel::Form);
   auto halfsize = connector->size() / 2;
   QPoint center(halfsize.width(), halfsize.height());
 
@@ -79,22 +72,12 @@ QPoint Link::GetFromPosition() const
 
 QPoint Link::GetToPosition() const
 {
-  auto connector = _to_node->GetWidgetConnector(_to_channel);
+  auto connector = _to_node->GetInputWidgetConnector(_to_channel);
+
   auto halfsize = connector->size() / 2;
   QPoint center(halfsize.width(), halfsize.height());
 
   return GetGlobalPos(connector) - GetGlobalPos(_blueprint) + center;
-}
-
-
-
-bool Link::Match(const WidgetNode * node, const std::string & channel) const
-{
-  if(node == _from_node && channel == "")
-    return true;
-  if(node == _to_node && channel == _to_channel)
-    return true;
-  return false;
 }
 
 
@@ -108,16 +91,23 @@ WidgetNode * Link::GetToNode() const
   return _to_node;
 }
 
-const std::string & Link::GetToChannel() const
+fmsynth::Node::Channel Link::GetToChannel() const
 {
   return _to_channel;
 }
 
 json11::Json Link::to_json() const
 {
+  std::string to_channel;
+  switch(_to_channel)
+    {
+    case fmsynth::Node::Channel::Amplitude: to_channel = "Amplitude"; break;
+    case fmsynth::Node::Channel::Form:      to_channel = "Form";      break;
+    case fmsynth::Node::Channel::Aux:       to_channel = "Aux";       break;
+    }
   return json11::Json::object {
     { "from",       _from_node->GetNodeId() },
     { "to",         _to_node->GetNodeId()   },
-    { "to_channel", _to_channel             }
+    { "to_channel", to_channel              }
   };
 }

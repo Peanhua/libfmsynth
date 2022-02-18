@@ -12,6 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "Node.hh"
 #include <set>
 #include <vector>
 #include <json11.hpp>
@@ -22,7 +23,6 @@
 namespace fmsynth
 {
   class Blueprint;
-  class Node;
 }
 class Link;
 class QScrollArea;
@@ -56,12 +56,15 @@ public:
   
   fmsynth::Blueprint * GetBlueprint() const;
   WidgetNode *         AddNode(int x, int y, const std::string & node_type);
-  void                 AddLink(WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel);
+  void                 AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel);
   void                 DeleteNode(WidgetNode * node);
-  void                 DeleteLink(WidgetNode * node, const std::string & channel);
-  void                 DeleteLink(WidgetNode * node, const std::string & channel, WidgetNode * other);
-  unsigned int         CountLinks(WidgetNode * node, const std::string & channel) const;
-  std::vector<Link *>  GetLinks(const WidgetNode * node, const std::string & channel) const;
+  void                 DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel);
+  void                 DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel, WidgetNode * other);
+  void                 DeleteOutputLink(WidgetNode * node, fmsynth::Node::Channel channel);
+  unsigned int         CountInputLinks(WidgetNode * to_node, fmsynth::Node::Channel to_channel)          const;
+  unsigned int         CountOutputLinks(WidgetNode * from_node, fmsynth::Node::Channel from_channel)     const;
+  std::vector<Link *>  GetInputLinks(const WidgetNode * to_node, fmsynth::Node::Channel to_channel)      const;
+  std::vector<Link *>  GetOutputLinks(const WidgetNode * from_node, fmsynth::Node::Channel from_channel) const;
   void                 UpdateLinks(const WidgetNode * node);
   bool                 CanRun() const;
   fmsynth::Blueprint * Build() const;
@@ -111,6 +114,8 @@ private:
   
   std::set<WidgetNode *> _selected_nodes;
   void NodeSelectionUpdated();
+
+  void DeleteLink(std::function<bool(const Link *)> match_callback);
 };
 
 #endif

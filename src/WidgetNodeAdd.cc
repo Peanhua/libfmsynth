@@ -24,7 +24,7 @@ WidgetNodeAdd::WidgetNodeAdd(QWidget * parent)
     _ui_node_add(new Ui::NodeAdd)
 {
   SetNodeType("Add");
-  SetIsMultiInput("Form");
+  SetIsMultiInput(fmsynth::Node::Channel::Form);
   _ui_node->_input_amplitude->setVisible(false);
   SetConnectorsRanges();
 

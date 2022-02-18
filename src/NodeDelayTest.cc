@@ -21,7 +21,7 @@ static void Test()
     
     fmsynth::NodeDelay node;
     node.SetSamplesPerSecond(sps);
-    node.AddFormInputNode(nullptr);
+    node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
     node.SetDelayTime(delay);
 
     double v = 123.456;
@@ -29,13 +29,13 @@ static void Test()
     double result = 0;
     for(unsigned int i = 0; i < delay * sps; i++)
       {
-        node.PushFormInput(ind++, nullptr, v);
+        node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
         result += node.GetLastFrame();
       }
     testComment << "result=" << result << "\n";
     testAssert("First " + std::to_string(delay) + "s of output is silence.", result < 0.0001);
 
-    node.PushFormInput(ind++, nullptr, v);
+    node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
     testComment << "value input = " << v << ", value after silence = " << node.GetLastFrame() << "\n";
     testAssert("The value input is returned after silence.", std::abs(node.GetLastFrame() - v) < 0.0001);
   }

@@ -12,6 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "Node.hh"
 #include <json11.hpp>
 #include "QtIncludeBegin.hh"
 #include <QtCore/QPoint>
@@ -25,24 +26,23 @@ class WidgetLine;
 class Link
 {
 public:
-  Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, const std::string & to_channel);
+  Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel);
   ~Link();
 
   void Update(const WidgetNode * node);
-  bool Match(const WidgetNode * node, const std::string & channel) const;
 
-  WidgetNode *        GetFromNode()     const;
-  WidgetNode *        GetToNode()       const;
-  const std::string & GetToChannel()    const;
+  WidgetNode *           GetFromNode()  const;
+  WidgetNode *           GetToNode()    const;
+  fmsynth::Node::Channel GetToChannel() const;
   
   json11::Json to_json() const;
   
 private:
-  WidgetBlueprint * _blueprint;
-  WidgetNode *      _from_node;
-  WidgetNode *      _to_node;
-  std::string       _to_channel;
-  WidgetLine *      _line;
+  WidgetBlueprint *      _blueprint;
+  WidgetNode *           _from_node;
+  WidgetNode *           _to_node;
+  fmsynth::Node::Channel _to_channel;
+  WidgetLine *           _line;
 
   QPoint              GetFromPosition() const;
   QPoint              GetToPosition()   const;

@@ -213,40 +213,38 @@ WidgetBlueprint * WidgetNode::GetWidgetBlueprint() const
 }
 
 
-void WidgetNode::SetIsMultiInput(const std::string & channel)
+void WidgetNode::SetIsMultiInput(fmsynth::Node::Channel channel)
 {
   QWidget * w = nullptr;
-  if(channel == "Amplitude")
+  switch(channel)
     {
+    case fmsynth::Node::Channel::Amplitude:
       _multi_input_amplitude = true;
       w = _ui_node->_input_amplitude;
-    }
-  else if(channel == "Form")
-    {
+      break;
+    case fmsynth::Node::Channel::Form:
       _multi_input_form = true;
       w = _ui_node->_input_form;
-    }
-  else if(channel == "Aux")
-    {
+      break;
+    case fmsynth::Node::Channel::Aux:
       _multi_input_aux = true;
       w = _ui_node->_input_aux;
+      break;
+    default:
+      assert(false);
     }
-  else
-    assert(false);
-
   w->setToolTip("Values in (1 or more)");
 }
 
 
-bool WidgetNode::IsMultiInput(const std::string & channel)
+bool WidgetNode::IsMultiInput(fmsynth::Node::Channel channel)
 {
-  if(channel == "Amplitude")
-    return _multi_input_amplitude;
-  else if(channel == "Form")
-    return _multi_input_form;
-  else if(channel == "Aux")
-    return _multi_input_aux;
-
+  switch(channel)
+    {
+    case fmsynth::Node::Channel::Amplitude: return _multi_input_amplitude;
+    case fmsynth::Node::Channel::Form:      return _multi_input_form;
+    case fmsynth::Node::Channel::Aux:       return _multi_input_aux;
+    }
   assert(false);
   return false;
 }
@@ -269,13 +267,13 @@ void WidgetNode::SetConnectorsRanges()
   auto r = node->GetFormOutputRange();
   _ui_node->_output->SetRangeFilename(r2s(r));
 
-  r = node->GetAmplitudeInputRange();
+  r = node->GetInputRange(fmsynth::Node::Channel::Amplitude);
   _ui_node->_input_amplitude->SetRangeFilename(r2s(r));
 
-  r = node->GetFormInputRange();
+  r = node->GetInputRange(fmsynth::Node::Channel::Form);
   _ui_node->_input_form->SetRangeFilename(r2s(r));
 
-  r = node->GetAuxInputRange();
+  r = node->GetInputRange(fmsynth::Node::Channel::Aux);
   _ui_node->_input_aux->SetRangeFilename(r2s(r));
 }
 
@@ -285,7 +283,7 @@ void WidgetNode::SetConnectorsRangesRecursively()
   SetConnectorsRanges();
 
   auto bp = GetWidgetBlueprint();
-  for(auto l : bp->GetLinks(this, ""))
+  for(auto l : bp->GetOutputLinks(this, fmsynth::Node::Channel::Form))
     l->GetToNode()->SetConnectorsRangesRecursively();
 }
 
@@ -294,10 +292,10 @@ void WidgetNode::UpdateConnectorStates()
 {
   auto bp = GetWidgetBlueprint();
   
-  auto amplitude_input_count = bp->CountLinks(this, "Amplitude");
-  auto form_input_count      = bp->CountLinks(this, "Form");
-  auto aux_input_count       = bp->CountLinks(this, "Aux");
-  auto output_count          = bp->CountLinks(this, "");
+  auto amplitude_input_count = bp->CountInputLinks(this, fmsynth::Node::Channel::Amplitude);
+  auto form_input_count      = bp->CountInputLinks(this, fmsynth::Node::Channel::Form);
+  auto aux_input_count       = bp->CountInputLinks(this, fmsynth::Node::Channel::Aux);
+  auto output_count          = bp->CountOutputLinks(this, fmsynth::Node::Channel::Form);
   
   _ui_node->_input_amplitude->SetIsConnected(amplitude_input_count > 0);
   _ui_node->_input_form->SetIsConnected(form_input_count > 0);
@@ -369,18 +367,23 @@ void WidgetNode::SetNodeType(const std::string & type, const std::string & icon_
 }
 
 
-WidgetConnector * WidgetNode::GetWidgetConnector(const std::string & channel)
+WidgetConnector * WidgetNode::GetInputWidgetConnector(fmsynth::Node::Channel channel)
 {
-  if(channel == "")
-    return _ui_node->_output;
-  else if(channel == "Amplitude")
-    return _ui_node->_input_amplitude;
-  else if(channel == "Form")
-    return _ui_node->_input_form;
-  else if(channel == "Aux")
-    return _ui_node->_input_aux;
+  switch(channel)
+    {
+    case fmsynth::Node::Channel::Amplitude: return _ui_node->_input_amplitude;
+    case fmsynth::Node::Channel::Form:      return _ui_node->_input_form;
+    case fmsynth::Node::Channel::Aux:       return _ui_node->_input_aux;
+    }
   assert(false);
   return nullptr;
+}
+
+
+WidgetConnector * WidgetNode::GetOutputWidgetConnector(fmsynth::Node::Channel channel)
+{
+  assert(channel == fmsynth::Node::Channel::Form);
+  return _ui_node->_output;
 }
 
 
@@ -506,9 +509,9 @@ bool WidgetNode::DependsOn(const WidgetNode * node) const
       if(cur == node)
         return true;
 
-      std::array<std::string, 3> channels { "Amplitude", "Form", "Aux" };
+      std::array channels { fmsynth::Node::Channel::Amplitude, fmsynth::Node::Channel::Form, fmsynth::Node::Channel::Aux };
       for(auto channel : channels)
-        for(auto link : blueprint->GetLinks(cur, channel))
+        for(auto link : blueprint->GetInputLinks(cur, channel))
           work.push_back(link->GetFromNode());
     }
   return false;

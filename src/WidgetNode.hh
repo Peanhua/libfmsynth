@@ -12,6 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "Node.hh"
 #include "Ui.hh"
 #include <json11.hpp>
 #include "QtIncludeBegin.hh"
@@ -19,10 +20,6 @@
 #include <QtCore/QPoint>
 #include "QtIncludeEnd.hh"
 
-namespace fmsynth
-{
-  class Node;
-}
 class WidgetBlueprint;
 class WidgetConnector;
 
@@ -44,8 +41,9 @@ public:
   void                 SetNodeId(const std::string & id);
   void                 UpdateNodeId();
   WidgetBlueprint *    GetWidgetBlueprint() const;
-  bool                 IsMultiInput(const std::string & channel);
-  WidgetConnector *    GetWidgetConnector(const std::string & channel);
+  bool                 IsMultiInput(fmsynth::Node::Channel channel);
+  WidgetConnector *    GetInputWidgetConnector(fmsynth::Node::Channel channel);
+  WidgetConnector *    GetOutputWidgetConnector(fmsynth::Node::Channel channel);
 
   void                 SetSelectedVisuals(bool is_selected);
   
@@ -69,7 +67,7 @@ protected:
 
   void AddAuxInput();
   void SetNodeType(const std::string & type, const std::string & icon_filename = "");
-  void SetIsMultiInput(const std::string & channel);
+  void SetIsMultiInput(fmsynth::Node::Channel channel);
   void SetConnectorsRanges();
   void SetConnectorsRangesRecursively();
 

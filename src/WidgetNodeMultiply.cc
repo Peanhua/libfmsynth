@@ -24,7 +24,7 @@ WidgetNodeMultiply::WidgetNodeMultiply(QWidget * parent)
     _ui_node_multiply(new Ui::NodeMultiply)
 {
   SetNodeType("Multiply");
-  SetIsMultiInput("Amplitude");
+  SetIsMultiInput(fmsynth::Node::Channel::Amplitude);
   _ui_node->_input_amplitude->setToolTip("Values in (1 or more)");
   _ui_node->_input_form->setVisible(false);
   _ui_node->_input_form->SetIsOptional();

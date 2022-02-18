@@ -19,7 +19,7 @@ NodeAdd::NodeAdd()
   : Node("Add"),
     _value(0)
 {
-  GetFormInput()->SetDefaultValue(1);
+  GetInput(Channel::Form)->SetDefaultValue(1);
 }
 
 

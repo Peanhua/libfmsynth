@@ -59,5 +59,5 @@ void NodeMemoryBuffer::ResetTime()
 
 Input::Range NodeMemoryBuffer::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }

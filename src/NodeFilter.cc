@@ -53,7 +53,7 @@ void NodeFilter::SetFilterValue(double value)
 double NodeFilter::ProcessInput([[maybe_unused]] double time, double form)
 {
   auto filter = _filter;
-  auto aux = GetAuxInput();
+  auto aux = GetInput(Channel::Aux);
   if(aux->GetInputNodes().size() > 0)
     filter = aux->GetValue();
 
@@ -100,15 +100,18 @@ double NodeFilter::HighPass(double filter, double input)
 }
 
 
-Input::Range NodeFilter::GetAuxInputRange() const
+Input::Range NodeFilter::GetInputRange(Channel channel) const
 {
-  return Input::Range::Zero_One;
+  if(channel == Channel::Aux)
+    return Input::Range::Zero_One;
+  else
+    return Node::GetInputRange(channel);
 }
 
 
 Input::Range NodeFilter::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }
 
 

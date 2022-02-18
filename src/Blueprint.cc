@@ -24,7 +24,7 @@ Blueprint::Blueprint()
     _samples_per_second(44100)
 {
   _root->GetValue() = ConstantValue(1, ConstantValue::Unit::Absolute);
-  _root->AddFormInputNode(nullptr);
+  _root->AddInputNode(Node::Channel::Form, nullptr);
   _root->SetSamplesPerSecond(_samples_per_second);
 }
 
@@ -40,7 +40,7 @@ void Blueprint::AddNode(Node * node)
     return;
   
   if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
-    node->AddFormInputNode(_root);
+    node->AddInputNode(Node::Channel::Form, _root);
   
   _nodes.push_back(node);
   node->SetSamplesPerSecond(_samples_per_second);
@@ -56,20 +56,6 @@ void Blueprint::RemoveNode(Node * node)
         return;
       }
 }
-
-
-void Blueprint::AddLink(Node * from, Node * to, const std::string & channel)
-{
-  if(channel == "Amplitude")
-    to->AddAmplitudeInputNode(from);
-  else if(channel == "Form")
-    to->AddFormInputNode(from);
-  else if(channel == "Aux")
-    to->AddAuxInputNode(from);
-  else
-    assert(false);
-}
-
 
 
 void Blueprint::ResetTime()
@@ -133,7 +119,7 @@ void Blueprint::Tick(long samples)
   assert(samples > 0);
   for(int i = 0; !IsFinished() && i < samples; i++)
     {
-      _root->PushFormInput(_time_index, nullptr, 1);
+      _root->PushInput(_time_index, nullptr, Node::Channel::Form, 1);
       _time_index++;
     }
 }
@@ -172,8 +158,13 @@ bool Blueprint::Load(const json11::Json & json)
           auto to_node   = FindNodeById(l["to"].string_value());
           if(from_node && to_node)
             {
+              Node::Channel channel;
               auto to_channel = l["to_channel"].string_value();
-              AddLink(from_node, to_node, to_channel);
+              if(     to_channel == "Amplitude") channel = Node::Channel::Amplitude;
+              else if(to_channel == "Form")      channel = Node::Channel::Form;
+              else if(to_channel == "Aux")       channel = Node::Channel::Aux;
+
+              to_node->AddInputNode(channel, from_node);
             }
         }
     }

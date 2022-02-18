@@ -64,7 +64,7 @@ void NodeDelay::ResetTime()
 
 Input::Range NodeDelay::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }
 
 

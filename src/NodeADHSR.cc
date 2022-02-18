@@ -182,5 +182,5 @@ void NodeADHSR::SetFromJson(const json11::Json & json)
 
 Input::Range NodeADHSR::GetFormOutputRange() const
 {
-  return GetFormInput()->GetInputRange();
+  return GetInput(Channel::Form)->GetInputRange();
 }

@@ -32,7 +32,7 @@ namespace fmsynth
     void   SetType(Type type);
     void   SetFilterValue(double value);
 
-    Input::Range GetAuxInputRange()   const override;
+    Input::Range GetInputRange(Channel channel) const override;
     Input::Range GetFormOutputRange() const override;
 
     json11::Json to_json() const                        override;

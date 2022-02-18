@@ -32,18 +32,18 @@ static void Test()
       { { -1, 1 }, { -2, 2 } },
       { { -2, 2 }, { -1, 1 } },
     };
-  for(std::pair<fmsynth::Range, fmsynth::Range> & r : ranges)
+  for(auto r : ranges)
     {
       fmsynth::NodeRangeConvert node;
       node.SetSamplesPerSecond(30000);
-      node.AddFormInputNode(nullptr);
+      node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
       node.SetFrom(r.first);
       node.SetTo(r.second);
 
       unsigned int ind = 0;
 
       auto input = r.first.GetMin();
-      node.PushFormInput(ind++, nullptr, input);
+      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
       auto expecting = r.second.GetMin();
       auto result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
@@ -53,7 +53,7 @@ static void Test()
                  " result is correct.", result == expecting);
 
       input = r.first.GetMax();
-      node.PushFormInput(ind++, nullptr, input);
+      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
       expecting = r.second.GetMax();
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
@@ -63,7 +63,7 @@ static void Test()
                  " result is correct.", result == expecting);
 
       input = (r.first.GetMin() + r.first.GetMax()) / 2.0;
-      node.PushFormInput(ind++, nullptr, input);
+      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
       expecting = (r.second.GetMin() + r.second.GetMax()) / 2.0;
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";

@@ -34,12 +34,18 @@ WidgetConnectorInput::WidgetConnectorInput(QWidget * parent)
           {
             auto blueprint = GetBlueprint();
             auto node    = GetNode(this);
-            auto channel = property("InputChannel").toString().toStdString();
-            if(blueprint->CountLinks(node, channel) <= 1)
+            auto channel = property("Channel").toString().toStdString();
+            fmsynth::Node::Channel chnl;
+            if(channel == "Amplitude") chnl = fmsynth::Node::Channel::Amplitude;
+            else if(channel == "Form") chnl = fmsynth::Node::Channel::Form;
+            else if(channel == "Aux")  chnl = fmsynth::Node::Channel::Aux;
+            else assert(false);
+            
+            if(blueprint->CountInputLinks(node, chnl) <= 1)
               return;
             
             auto menu = new QMenu;
-            for(auto link : blueprint->GetLinks(node, channel))
+            for(auto link : blueprint->GetInputLinks(node, chnl))
               {
                 auto other = link->GetFromNode();
                 if(other == node)
@@ -48,9 +54,9 @@ WidgetConnectorInput::WidgetConnectorInput(QWidget * parent)
                 auto action = menu->addAction(QString::fromStdString("Delete link to " + other->GetNodeId() + " (" + other->GetNodeType() + ")"));
                 action->setIcon(QIcon::fromTheme("edit-delete"));
                 connect(action, &QAction::triggered,
-                        [this, node, channel, other]([[maybe_unused]] bool checked)
+                        [this, node, chnl, other]([[maybe_unused]] bool checked)
                         {
-                          GetBlueprint()->DeleteLink(node, channel, other);
+                          GetBlueprint()->DeleteInputLink(node, chnl, other);
                         });
               }
             menu->addSeparator();
@@ -58,9 +64,9 @@ WidgetConnectorInput::WidgetConnectorInput(QWidget * parent)
               auto action = menu->addAction(QString::fromStdString("Delete all links"));
               action->setIcon(QIcon::fromTheme("edit-delete"));
               connect(action, &QAction::triggered,
-                      [this, node, channel]([[maybe_unused]] bool checked)
+                      [this, node, chnl]([[maybe_unused]] bool checked)
                       {
-                        GetBlueprint()->DeleteLink(node, channel);
+                        GetBlueprint()->DeleteInputLink(node, chnl);
                       });
             }
             menu->exec(mapToGlobal(pos));
@@ -108,9 +114,16 @@ void WidgetConnectorInput::dropEvent(QDropEvent *event)
     return;
   
   auto blueprint = GetBlueprint();
-  auto to_channel = property("InputChannel").toString().toStdString();
+  auto to_channel = property("Channel").toString().toStdString();
   auto output = property("NodeId").toString().toStdString() + "/" + to_channel;
-  blueprint->AddLink(from_node, to_node, to_channel);
+
+  fmsynth::Node::Channel channel;
+  if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
+  else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
+  else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
+  else assert(false);
+    
+  blueprint->AddLink(from_node, to_node, channel);
   blueprint->PostEdit({from_node, to_node});
 }
 
@@ -118,11 +131,18 @@ void WidgetConnectorInput::dropEvent(QDropEvent *event)
 
 void WidgetConnectorInput::mousePressEvent([[maybe_unused]] QMouseEvent * event)
 {
-  auto blueprint = GetBlueprint();
-  auto node      = GetNode(this);
-  auto channel   = property("InputChannel").toString().toStdString();
-  if(blueprint->CountLinks(node, channel) == 1)
-    blueprint->DeleteLink(node, channel);
+  auto blueprint  = GetBlueprint();
+  auto node       = GetNode(this);
+  auto to_channel = property("Channel").toString().toStdString();
+
+  fmsynth::Node::Channel channel;
+  if(     to_channel == "Amplitude") channel = fmsynth::Node::Channel::Amplitude;
+  else if(to_channel == "Form")      channel = fmsynth::Node::Channel::Form;
+  else if(to_channel == "Aux")       channel = fmsynth::Node::Channel::Aux;
+  else assert(false);
+
+  if(blueprint->CountInputLinks(node, channel) == 1)
+    blueprint->DeleteInputLink(node, channel);
 }
 
 

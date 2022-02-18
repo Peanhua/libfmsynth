@@ -19,7 +19,7 @@ NodeMultiply::NodeMultiply()
   : Node("Multiply"),
     _multiplier(1)
 {
-  GetFormInput()->SetDefaultValue(1);
+  GetInput(Channel::Form)->SetDefaultValue(1);
 }
 
 
@@ -41,15 +41,9 @@ double NodeMultiply::ProcessInput([[maybe_unused]] double time, double form)
 }
 
 
-Input::Range NodeMultiply::GetAmplitudeInputRange() const
-{
-  return GetAmplitudeInput()->GetInputRange();
-}
-
-
 Input::Range NodeMultiply::GetFormOutputRange() const
 {
-  return GetAmplitudeInput()->GetInputRange();
+  return GetInput(Channel::Amplitude)->GetInputRange();
 }
 
 

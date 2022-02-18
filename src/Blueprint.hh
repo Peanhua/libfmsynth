@@ -34,7 +34,6 @@ namespace fmsynth
     
     void AddNode(Node * node);
     void RemoveNode(Node * node);
-    void AddLink(Node * from, Node * to, const std::string & channel);
     
     void ResetTime();
     void Tick(long samples);
