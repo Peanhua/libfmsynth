@@ -21,8 +21,15 @@ Input::Input(double default_value)
   : _default_value(default_value),
     _value(0),
     _input_count(0),
+    _input_range(Range::Inf_Inf),
     _output_range(Range::Inf_Inf)
 {
+}
+
+
+void Input::SetInputRange(Range range)
+{
+  _input_range = range;
 }
 
 
@@ -109,14 +116,16 @@ void Input::RemoveOutputNode(Node * node)
 }
 
 
-void Input::InputAdd([[maybe_unused]] Node * source, double value)
+void Input::InputAdd(Node * source, double value)
 {
+  value = NormalizeInputValue(source, value);
   _value += value;
   _input_count++;
 }
 
-void Input::InputMultiply([[maybe_unused]] Node * source, double value)
+void Input::InputMultiply(Node * source, double value)
 {
+  value = NormalizeInputValue(source, value);
   if(_input_count == 0)
     _value = value;
   else
@@ -163,4 +172,36 @@ Input::Range Input::GetInputRange() const
 Input::Range Input::GetOutputRange() const
 {
   return _output_range;
+}
+
+
+double Input::NormalizeInputValue(Node * source, double value) const
+{
+  if(!source)
+    return value;
+  
+  switch(source->GetFormOutputRange())
+    {
+    case Range::Zero_One:
+      switch(_input_range)
+        {
+        case Range::Zero_One:     return value;
+        case Range::MinusOne_One: return value * 2.0 - 1.0;
+        case Range::Inf_Inf:      return value;
+        }
+      break;
+    case Range::MinusOne_One:
+      switch(_input_range)
+        {
+        case Range::Zero_One:     return value * 0.5 + 0.5;
+        case Range::MinusOne_One: return value;
+        case Range::Inf_Inf:      return value;
+        }
+      break;
+    case Range::Inf_Inf:
+      return value;
+    }
+
+  assert(false);
+  return value;
 }

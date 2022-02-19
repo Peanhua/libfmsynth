@@ -96,6 +96,9 @@ namespace fmsynth
     virtual json11::Json to_json() const;
     virtual void         SetFromJson(const json11::Json & json);
   
+    const Input * GetInput(Channel channel) const;
+    Input *       GetInput(Channel channel);
+
   protected:
     virtual void   OnInputConnected(Node * from);
     virtual double ProcessInput(double time, double form) = 0;
@@ -103,8 +106,6 @@ namespace fmsynth
     virtual void   OnEOF();
 
     void          SetPreprocessAmplitude();
-    const Input * GetInput(Channel channel) const;
-    Input *       GetInput(Channel channel);
 
   private:
     static unsigned int _next_id;

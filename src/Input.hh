@@ -31,6 +31,7 @@ namespace fmsynth
   
     Input(double default_value);
 
+    void SetInputRange(Range range);
     void SetOutputRange(Range range);
     void SetDefaultValue(double new_default_value);
   
@@ -57,7 +58,10 @@ namespace fmsynth
     double       _default_value;
     double       _value;
     unsigned int _input_count;
+    Range        _input_range;
     Range        _output_range;
+
+    double NormalizeInputValue(Node * source, double value) const;
   };
 }
 

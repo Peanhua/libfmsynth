@@ -21,6 +21,7 @@ NodeAudioDeviceOutput::NodeAudioDeviceOutput()
     _muted(false),
     _on_play_sample(nullptr)
 {
+  GetInput(Channel::Form)->SetInputRange(Input::Range::MinusOne_One);
   SetPreprocessAmplitude();
 }
 

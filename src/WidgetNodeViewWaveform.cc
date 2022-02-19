@@ -42,8 +42,11 @@ WidgetNodeViewWaveform::WidgetNodeViewWaveform(QWidget * parent)
     _ui_node_view_waveform(new Ui::NodeViewWaveform)
 {
   SetNodeType("ViewWaveform");
+  const auto range = fmsynth::Input::Range::MinusOne_One;
+  _node_memorybuffer->GetInput(fmsynth::Node::Channel::Form)->SetInputRange(range);
   _ui_node->_output_container->setVisible(false);
   _ui_node_view_waveform->setupUi(_ui_node->_content);
+  _ui_node_view_waveform->_graph->SetRange(range);
   SetConnectorsRanges();
 
   ListenWidgetChanges({
@@ -68,11 +71,12 @@ void WidgetNodeViewWaveform::timerEvent([[maybe_unused]] QTimerEvent * event)
 
 void WidgetNodeViewWaveform::Redraw()
 {
+  double length;
   {
     std::lock_guard lock(_node_memorybuffer->GetLockMutex());
-    double length = static_cast<double>(_node_memorybuffer->GetData().size()) / static_cast<double>(_node_memorybuffer->GetSamplesPerSecond());
-    _ui_node_view_waveform->_length_label->setText(QString::fromStdString(format("{:.1f}s", length)));
+    length = static_cast<double>(_node_memorybuffer->GetData().size()) / static_cast<double>(_node_memorybuffer->GetSamplesPerSecond());
   }
+  _ui_node_view_waveform->_length_label->setText(QString::fromStdString(format("{:.1f}s", length)));
 
   _ui_node_view_waveform->_graph->Update(_node_memorybuffer, _ui_node_view_waveform->_max_time->value());
 }

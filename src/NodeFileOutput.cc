@@ -22,6 +22,7 @@ NodeFileOutput::NodeFileOutput()
     _file(new AudioFile<double>()),
     _filename("")
 {
+  GetInput(Channel::Form)->SetInputRange(Input::Range::MinusOne_One);
   SetPreprocessAmplitude();
   _file->setNumChannels(1);
 }

@@ -12,6 +12,7 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "Input.hh"
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QWidget>
 #include <QtGui/QPainterPath>
@@ -28,16 +29,20 @@ class WidgetGraphWaveform : public QWidget
 public:
   WidgetGraphWaveform(QWidget * parent);
 
+  void SetRange(fmsynth::Input::Range range);
   void ForceRedraw();
   void Update(fmsynth::NodeMemoryBuffer * buffer, double length);
   
   void paintEvent(QPaintEvent * event) override;
   
 private:
-  QPainterPath        _path;
-  unsigned int        _last_draw_index;
-  bool                _force_redraw;
-  std::vector<double> _waveform;
+  QPainterPath          _path;
+  fmsynth::Input::Range _range;
+  unsigned int          _last_draw_index;
+  bool                  _force_redraw;
+  std::vector<double>   _waveform;
+
+  double Normalize(double value) const;
 };
 
 #endif

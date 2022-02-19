@@ -19,6 +19,7 @@
 
 WidgetGraphWaveform::WidgetGraphWaveform(QWidget * parent)
   : QWidget(parent),
+    _range(fmsynth::Input::Range::MinusOne_One),
     _last_draw_index(0),
     _force_redraw(false)
 {
@@ -31,6 +32,25 @@ void WidgetGraphWaveform::ForceRedraw()
 }
 
 
+void WidgetGraphWaveform::SetRange(fmsynth::Input::Range range)
+{
+  _range = range;
+}
+
+
+double WidgetGraphWaveform::Normalize(double value) const
+{
+  switch(_range)
+    {
+    case fmsynth::Input::Range::Zero_One:     return (value - 0.5) * 2.0;
+    case fmsynth::Input::Range::MinusOne_One: return value;
+    case fmsynth::Input::Range::Inf_Inf:      return 0;
+    }
+  assert(false);
+  return 0;
+}
+
+
 void WidgetGraphWaveform::Update(fmsynth::NodeMemoryBuffer * buffer, double length)
 {
   {
@@ -40,7 +60,7 @@ void WidgetGraphWaveform::Update(fmsynth::NodeMemoryBuffer * buffer, double leng
     if(wav.size() > 0)
       {
         double width = size().width();
-        double height = size().height() / 2.0;
+        double height = (size().height() - 1.0) / 2.0;
         double centery = height;
 
         if(_force_redraw || _last_draw_index > wav.size())
@@ -52,14 +72,14 @@ void WidgetGraphWaveform::Update(fmsynth::NodeMemoryBuffer * buffer, double leng
 #else
             _path = QPainterPath();
 #endif
-            _path.moveTo(QPoint(-1, static_cast<int>(centery + wav[0] * height)));
+            _path.moveTo(QPoint(-1, static_cast<int>(centery + Normalize(wav[0]) * height)));
           }
 
         auto samples_per_second = static_cast<double>(buffer->GetSamplesPerSecond());
         while(_last_draw_index < wav.size() && static_cast<double>(_last_draw_index) / samples_per_second < length)
           {
             double x = static_cast<double>(_last_draw_index) / (length * samples_per_second) * width;
-            double y = centery + wav[_last_draw_index] * -1.0 * height;
+            double y = centery + Normalize(wav[_last_draw_index]) * -1.0 * height;
             _path.lineTo(QPoint(static_cast<int>(x), static_cast<int>(y)));
             _last_draw_index++;
           }
