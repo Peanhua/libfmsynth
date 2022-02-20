@@ -85,7 +85,7 @@ pkginclude_HEADERS =			\
 
 lib_LTLIBRARIES = libfmsynth.la
 
-bin_PROGRAMS = fmsedit fmsplay
+bin_PROGRAMS = fmsedit fmsplay fmsbench
 
 
 # libfmsynth:
@@ -258,8 +258,8 @@ nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
 
 
 # fmsplay:
-fmsplay_CXXFLAGS = 			\
-	$(AM_CXXFLAGS)			\
+fmsplay_CXXFLAGS = 		\
+	$(AM_CXXFLAGS)		\
 	$(RTAUDIO_CFLAGS)		
 
 fmsplay_LDADD =		\
@@ -268,10 +268,19 @@ fmsplay_LDADD =		\
 	$(PTHREAD_LIBS)	\
 	$(RTAUDIO_LIBS)	
 
-fmsplay_SOURCES =			\
-	AudioDevice.cc			\
-	AudioDevice.hh			\
+fmsplay_SOURCES =	\
+	AudioDevice.cc	\
+	AudioDevice.hh	\
 	fmsplay.cc			
+
+
+# fmsbench:
+fmsbench_LDADD =	\
+	libfmsynth.la	\
+	$(JSON_LIBS)	
+
+fmsbench_SOURCES =	\
+	fmsbench.cc			
 
 
 # Clean & uninstall:

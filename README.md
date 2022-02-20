@@ -4,6 +4,7 @@ This is a C++ library to generate audio using frequency modulation synthesis (ht
 In addition to the library, some supporting executable programs are provided:
 * fmsedit - Editor, uses QT. <img align="right" src="images/screenshot1.png" width="200px">
 * fmsplay - Plays a single file.
+* fmsbench - Benchmark loading and playbacking a single blueprint file.
 
 The files used are named "*.sbp" (short from SynthBluePrint), and their contents are in JSON.
 

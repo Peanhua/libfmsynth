@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+src/fmsbench
 src/fmsedit
 src/fmsplay
 src/*Test
