@@ -3,6 +3,7 @@ examplefilesdir = $(pkgdatadir)/examples
 examplefiles_DATA = 		\
 	Echo.sbp		\
 	FallingBomb.sbp		\
+	HeartBeat.sbp		\
 	HelloWorld.sbp		\
 	HitExplosion.sbp	\
 	Quack.sbp		\

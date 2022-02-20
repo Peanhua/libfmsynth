@@ -57,6 +57,7 @@ static void Test()
       {
         { true,  "Echo.sbp"         },
         { true,  "FallingBomb.sbp"  },
+        { false, "HeartBeat.sbp"    },
         { false, "HelloWorld.sbp"   },
         { true,  "HitExplosion.sbp" },
         { true,  "Quack.sbp"        },
