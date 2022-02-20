@@ -46,6 +46,7 @@ namespace fmsynth
     std::mutex & GetLockMutex();
     Node *       GetRoot() const;
     Node *       GetNode(const std::string & id) const;
+    std::vector<Node *> GetAllNodes() const;
     std::vector<Node *> GetNodesByType(const std::string & type) const;
     
   private:

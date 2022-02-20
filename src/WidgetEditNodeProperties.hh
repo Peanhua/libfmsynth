@@ -30,6 +30,7 @@ private:
   WidgetNode *             _nodewidget;
   
   void ApplyChanges();
+  std::vector<std::string> GetExistingIds() const;
 };
 
 #endif

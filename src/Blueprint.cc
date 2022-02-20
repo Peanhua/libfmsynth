@@ -84,6 +84,18 @@ Node * Blueprint::GetNode(const std::string & id) const
 }
 
 
+std::vector<Node *> Blueprint::GetAllNodes() const
+{
+  std::vector<Node *> nodes;
+
+  for(auto n : _nodes)
+    if(n)
+      nodes.push_back(n);
+  
+  return nodes;
+}
+
+
 std::vector<Node *> Blueprint::GetNodesByType(const std::string & type) const
 {
   std::vector<Node *> nodes;
