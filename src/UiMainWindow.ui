@@ -471,6 +471,57 @@
                <number>0</number>
               </property>
               <item>
+               <widget class="WidgetAddNode" name="_oscillators_Noise">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Noise</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorNoise.png</normaloff>images/NodeOscillatorNoise.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Noise</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Pulse">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Pulse</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorPulse.png</normaloff>images/NodeOscillatorPulse.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Pulse</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_oscillators_Sawtooth">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Sawtooth</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeOscillatorSawtooth.png</normaloff>images/NodeOscillatorSawtooth.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Sawtooth</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="WidgetAddNode" name="_oscillators_Sine">
                 <property name="toolTip">
                  <string>Drag to blueprint to add </string>
@@ -501,57 +552,6 @@
                 </property>
                 <property name="NodeType" stdset="0">
                  <string notr="true">Triangle</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="WidgetAddNode" name="_oscillators_Sawtooth">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Sawtooth</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeOscillatorSawtooth.png</normaloff>images/NodeOscillatorSawtooth.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">Sawtooth</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="WidgetAddNode" name="_oscillators_Pulse">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Pulse</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeOscillatorPulse.png</normaloff>images/NodeOscillatorPulse.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">Pulse</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="WidgetAddNode" name="_oscillators_Noise">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Noise</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeOscillatorNoise.png</normaloff>images/NodeOscillatorNoise.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">Noise</string>
                 </property>
                </widget>
               </item>
@@ -1218,23 +1218,6 @@
                </widget>
               </item>
               <item>
-               <widget class="WidgetAddNode" name="_math_Multiply">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Multiply</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeMultiply.png</normaloff>images/NodeMultiply.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">Multiply</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="WidgetAddNode" name="_math_Average">
                 <property name="toolTip">
                  <string>Drag to blueprint to add </string>
@@ -1248,23 +1231,6 @@
                 </property>
                 <property name="NodeType" stdset="0">
                  <string notr="true">Average</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="WidgetAddNode" name="_math_RangeConvert">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Range convert</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeRangeConvert.png</normaloff>images/NodeRangeConvert.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">RangeConvert</string>
                 </property>
                </widget>
               </item>
@@ -1286,23 +1252,6 @@
                </widget>
               </item>
               <item>
-               <widget class="WidgetAddNode" name="_math_Reciprocal">
-                <property name="toolTip">
-                 <string>Drag to blueprint to add </string>
-                </property>
-                <property name="text">
-                 <string>Reciprocal</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeReciprocal.png</normaloff>images/NodeReciprocal.png</iconset>
-                </property>
-                <property name="NodeType" stdset="0">
-                 <string notr="true">Reciprocal</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="WidgetAddNode" name="_math_Inverse">
                 <property name="toolTip">
                  <string>Drag to blueprint to add </string>
@@ -1316,6 +1265,57 @@
                 </property>
                 <property name="NodeType" stdset="0">
                  <string notr="true">Inverse</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Multiply">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Multiply</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeMultiply.png</normaloff>images/NodeMultiply.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Multiply</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_RangeConvert">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Range convert</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeRangeConvert.png</normaloff>images/NodeRangeConvert.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">RangeConvert</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="WidgetAddNode" name="_math_Reciprocal">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Reciprocal</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeReciprocal.png</normaloff>images/NodeReciprocal.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Reciprocal</string>
                 </property>
                </widget>
               </item>
@@ -1750,19 +1750,19 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="WidgetAddNode" name="_outputs_ViewWaveform">
+               <widget class="WidgetAddNode" name="_outputs_AudioDeviceOutput">
                 <property name="toolTip">
                  <string>Drag to blueprint to add </string>
                 </property>
                 <property name="text">
-                 <string>View waveform</string>
+                 <string>Audio device</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>images/NodeViewWaveform.png</normaloff>images/NodeViewWaveform.png</iconset>
+                 <iconset theme="audio-card">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                 <property name="NodeType" stdset="0">
-                 <string notr="true">ViewWaveform</string>
+                 <string notr="true">AudioDeviceOutput</string>
                 </property>
                </widget>
               </item>
@@ -1784,19 +1784,19 @@
                </widget>
               </item>
               <item>
-               <widget class="WidgetAddNode" name="_outputs_AudioDeviceOutput">
+               <widget class="WidgetAddNode" name="_outputs_ViewWaveform">
                 <property name="toolTip">
                  <string>Drag to blueprint to add </string>
                 </property>
                 <property name="text">
-                 <string>Audio device</string>
+                 <string>View waveform</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="audio-card">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset>
+                  <normaloff>images/NodeViewWaveform.png</normaloff>images/NodeViewWaveform.png</iconset>
                 </property>
                 <property name="NodeType" stdset="0">
-                 <string notr="true">AudioDeviceOutput</string>
+                 <string notr="true">ViewWaveform</string>
                 </property>
                </widget>
               </item>
