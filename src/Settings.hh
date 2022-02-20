@@ -31,13 +31,14 @@ public:
   void Set(const std::string & name, double value);
   void Set(const std::string & name, const std::string & value);
 
-  bool   GetBool(const std::string & name) const;
-  int    GetInt(const std::string & name) const;
-  double GetDouble(const std::string & name) const;
+  bool                GetBool(const std::string & name)   const;
+  int                 GetInt(const std::string & name)    const;
+  double              GetDouble(const std::string & name) const;
   const std::string & GetString(const std::string & name) const;
   
 private:
   std::string                        _filename;
+  bool                               _dirty;
   std::map<std::string, bool>        _bools;
   std::map<std::string, int>         _ints;
   std::map<std::string, double>      _doubles;

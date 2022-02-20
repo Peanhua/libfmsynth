@@ -24,6 +24,7 @@
 Settings * UserSettings = nullptr;
 
 Settings::Settings()
+  : _dirty(false)
 {
   SetDefaults();
   _filename = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation).toStdString();
@@ -59,6 +60,9 @@ void Settings::SetDefaults()
 
 void Settings::Save()
 {
+  if(!_dirty)
+    return;
+
   std::ofstream file(_filename);
   if(!file)
     { // todo: Show the error in the GUI.
@@ -79,7 +83,8 @@ void Settings::Save()
   file << std::flush;
   // todo: Check for failure.
   // todo: Show the message in the GUI.
-  std::cout << "Saved settings " << _filename << "\n";  
+  std::cout << "Saved settings " << _filename << "\n";
+  _dirty = false;
 }
 
 
@@ -110,29 +115,39 @@ void Settings::Load()
   auto strings = json["strings"].object_items();
   for(auto & [k, v] : strings)
     _strings[k] = v.string_value();
+
+  _dirty = false;
 }
 
 
 void Settings::Set(const std::string & name, bool value)
 {
+  if(_bools[name] != value)
+    _dirty = true;
   _bools[name] = value;
 }
 
 
 void Settings::Set(const std::string & name, int value)
 {
+  if(_ints[name] != value)
+    _dirty = true;
   _ints[name] = value;
 }
 
 
 void Settings::Set(const std::string & name, double value)
 {
+  if(_doubles[name] != value)
+    _dirty = true;
   _doubles[name] = value;
 }
 
 
 void Settings::Set(const std::string & name, const std::string & value)
 {
+  if(_strings[name] != value)
+    _dirty = true;
   _strings[name] = value;
 }
 

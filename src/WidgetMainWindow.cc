@@ -376,14 +376,6 @@ void WidgetMainWindow::AddToRecentFiles(const std::string & filename)
       _recent_files[0] = filename;
     }
 
-  for(unsigned int i = 0; i < _recent_files.size(); i++)
-    {
-      auto r = _recent_files[i];
-      UserSettings->Set("recent_file_" + std::to_string(i), r);
-    }
-  UserSettings->Set("recent_files", static_cast<int>(_recent_files.size()));
-
-
   for(auto a : _recent_files_actions)
     _ui->menuRecentFiles->removeAction(a);
   _recent_files_actions.clear();
@@ -405,7 +397,6 @@ void WidgetMainWindow::ClearRecentFiles()
   for(auto a : _recent_files_actions)
     _ui->menuRecentFiles->removeAction(a);
   _recent_files_actions.clear();
-  UserSettings->Set("recent_files", static_cast<int>(_recent_files.size()));
 }
 
 
@@ -547,11 +538,15 @@ void WidgetMainWindow::closeEvent(QCloseEvent * event)
 
 void WidgetMainWindow::SaveWindowSettings()
 {
+  for(unsigned int i = 0; i < _recent_files.size(); i++)
+    UserSettings->Set("recent_file_" + std::to_string(i), _recent_files[i]);
+  UserSettings->Set("recent_files", static_cast<int>(_recent_files.size()));
+
   UserSettings->Set("window_x", pos().x());
   UserSettings->Set("window_y", pos().y());
   UserSettings->Set("window_width", size().width());
   UserSettings->Set("window_height", size().height());
-}  
+}
 
 
 void WidgetMainWindow::UpdateToolbarButtonStates()
