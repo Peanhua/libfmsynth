@@ -42,7 +42,12 @@ static int testid;
 
 int main()
 {
-  srcdir = std::getenv("srcdir");
+  auto sd = std::getenv("srcdir");
+  if(sd)
+    srcdir = sd;
+  else
+    srcdir = "src";
+  
   testid = 0;
   
   Test();
