@@ -51,12 +51,11 @@ void Blueprint::AddNode(Node * node)
 
 void Blueprint::RemoveNode(Node * node)
 {
-  for(auto it = _nodes.begin(); it != _nodes.end(); it++)
+  _root->RemoveOutputNode(Node::Channel::Form, node);
+
+  for(auto it = _nodes.begin(); node && it != _nodes.end(); it++)
     if(*it == node)
-      {
-        _nodes.erase(it);
-        return;
-      }
+      _nodes.erase(it);
 }
 
 

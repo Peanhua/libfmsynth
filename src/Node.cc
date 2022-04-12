@@ -105,6 +105,20 @@ void Node::RemoveInputNode(Channel channel, Node * node)
 }
 
 
+void Node::RemoveOutputNode(Channel channel, Node * node)
+{
+  if(!node)
+    return;
+  
+  switch(channel)
+    {
+    case Channel::Amplitude: _amplitude.RemoveOutputNode(node); break;
+    case Channel::Form:      _form.RemoveOutputNode(node);      break;
+    case Channel::Aux:       _aux.RemoveOutputNode(node);       break;
+    }
+}
+
+
 void Node::AddAmplitudeInputNode(Node * node)
 {
   _amplitude.AddInputNode(node);

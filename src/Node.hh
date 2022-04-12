@@ -71,6 +71,7 @@ namespace fmsynth
 
     void AddInputNode(Channel channel, Node * node);
     void RemoveInputNode(Channel channel, Node * node);
+    void RemoveOutputNode(Channel channel, Node * node);
 
     virtual Input::Range GetInputRange(Channel channel) const;
     virtual Input::Range GetFormOutputRange()     const;
