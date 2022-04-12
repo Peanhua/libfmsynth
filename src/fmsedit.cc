@@ -20,6 +20,7 @@
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QApplication>
 #include "QtIncludeEnd.hh"
+#include <cxxopts.hpp>
 #include <filesystem>
 #include <iostream>
 
@@ -30,9 +31,27 @@ int main(int argc, char *argv[])
     std::filesystem::current_path(DATADIR);
   } catch([[maybe_unused]] const std::exception & e)
     {
-      std::cout << argv[0] << ": Warning, installation directory " << DATADIR << " is not accessible, running from current directory." << std::endl;
+      std::cout << argv[0] << ": Warning, installation directory '" << DATADIR << "' is not accessible, running from current directory." << std::endl;
     }
   
+  cxxopts::Options options(argv[0], "Edit .sbp files.");
+  options.custom_help("[OPTION...] [filename]");
+  options.add_options()
+    ("h,help", "Print help (this text).")
+    ;
+  
+  auto cmdline = options.parse(argc, argv);
+
+  char * file_to_open = nullptr;
+  if(argc >= 2)
+    file_to_open = argv[1];
+
+  if(cmdline.count("help"))
+    {
+      std::cerr << options.help() << std::endl;
+      return EXIT_SUCCESS;
+    }
+
   Settings settings;
   UserSettings = &settings;
   settings.Load();
@@ -41,7 +60,7 @@ int main(int argc, char *argv[])
   p.Start();
   
   QApplication app(argc, argv);
-  WidgetMainWindow ui;
+  WidgetMainWindow ui(nullptr, file_to_open);
   ui.show();
   auto rv = app.exec();
   p.Stop();

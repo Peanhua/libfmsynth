@@ -23,7 +23,7 @@
 class WidgetMainWindow : public QMainWindow
 {
 public:
-  WidgetMainWindow(QWidget * parent = nullptr);
+  WidgetMainWindow(QWidget * parent = nullptr, const char * file_to_open = nullptr);
   ~WidgetMainWindow();
 
   void AddToRecentFiles(const std::string & filename);
