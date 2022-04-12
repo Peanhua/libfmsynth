@@ -93,6 +93,8 @@ void WidgetEditNodeProperties::ApplyChanges()
       std::lock_guard lock(bp->GetLockMutex());
       node->SetEnabled(bp->GetRoot(), _ui->_enabled->isChecked());
     }
+
+  _nodewidget->GetWidgetBlueprint()->SetDirty(true);
 }
 
 
