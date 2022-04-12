@@ -61,7 +61,7 @@ namespace fmsynth
     Range        _input_range;
     Range        _output_range;
 
-    double NormalizeInputValue(Node * source, double value) const;
+    double NormalizeInputValue(const Node * source, double value) const;
   };
 }
 

@@ -224,6 +224,12 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
 }
 
 
+WidgetMainWindow::~WidgetMainWindow()
+{
+  delete _ui;
+}
+
+
 void WidgetMainWindow::ThemeDefault()
 {
   UserSettings->Set("theme", 0);

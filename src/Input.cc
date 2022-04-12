@@ -175,7 +175,7 @@ Input::Range Input::GetOutputRange() const
 }
 
 
-double Input::NormalizeInputValue(Node * source, double value) const
+double Input::NormalizeInputValue(const Node * source, double value) const
 {
   if(!source)
     return value;

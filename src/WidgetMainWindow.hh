@@ -24,6 +24,7 @@ class WidgetMainWindow : public QMainWindow
 {
 public:
   WidgetMainWindow(QWidget * parent = nullptr);
+  ~WidgetMainWindow();
 
   void AddToRecentFiles(const std::string & filename);
   void ClearRecentFiles();
