@@ -53,9 +53,12 @@ void Blueprint::RemoveNode(Node * node)
 {
   _root->RemoveOutputNode(Node::Channel::Form, node);
 
-  for(auto it = _nodes.begin(); node && it != _nodes.end(); it++)
+  for(auto it = _nodes.begin(); it != _nodes.end(); it++)
     if(*it == node)
-      _nodes.erase(it);
+      {
+        _nodes.erase(it);
+        break;
+      }
 }
 
 
