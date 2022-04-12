@@ -36,6 +36,7 @@ namespace fmsynth
     void RemoveNode(Node * node);
     
     void ResetTime();
+    void ResetExecutionOrder();
     void Tick(long samples);
     void SetIsFinished();
     bool IsFinished() const;
@@ -49,9 +50,13 @@ namespace fmsynth
     std::vector<Node *> GetAllNodes() const;
     std::vector<Node *> GetNodesByType(const std::string & type) const;
     
+  protected:
+    void SortNodesToExecutionOrder();
+
   private:
     NodeConstant *      _root;
     std::vector<Node *> _nodes;
+    bool                _nodes_sorted;
     std::mutex          _lock_mutex;
     long                _time_index;
     unsigned int        _samples_per_second;

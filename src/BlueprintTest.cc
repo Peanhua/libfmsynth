@@ -12,6 +12,7 @@
 
 #include "Blueprint.hh"
 #include "NodeConstant.hh"
+#include "NodeInverse.hh"
 #include "Test.hh"
 #include "Util.hh"
 #include <vector>
@@ -34,9 +35,16 @@ static void Test()
 
   {
     fmsynth::Blueprint bp;
-    fmsynth::NodeConstant node;
-    bp.AddNode(&node);
-    testAssert("GetNodesByType() returns added node.", bp.GetNodesByType(node.GetType()).size() > 0);
+    {
+      fmsynth::NodeConstant node;
+      bp.AddNode(&node);
+      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node.GetType()).size() > 0);
+    }
+    {
+      fmsynth::NodeInverse node;
+      bp.AddNode(&node);
+      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node.GetType()).size() > 0);
+    }
   }
 
   {
@@ -48,24 +56,45 @@ static void Test()
   }
 
   {
+    struct OrderingInstruction
+    {
+      std::vector<std::string> node_ids;
+    };
     struct Example
     {
       bool        ends;
       std::string filename;
+      std::vector<OrderingInstruction> node_ordering_instructions;
     };
     std::vector<Example> examples
       {
-        { true,  "Echo.sbp"         },
-        { true,  "FallingBomb.sbp"  },
-        { false, "HeartBeat.sbp"    },
-        { false, "HelloWorld.sbp"   },
-        { true,  "HitExplosion.sbp" },
-        { true,  "Quack.sbp"        },
-        { false, "Tremolo.sbp"      },
-        { false, "Vibrato.sbp"      },
-        { true,  "Weapon1.sbp"      },
-        { false, "Weird1.sbp"       },
-        { false, "Weird2.sbp"       },
+        { true,  "Echo.sbp",         { }
+        },
+        { true,  "FallingBomb.sbp",  { }
+        },
+        { false, "HeartBeat.sbp",    { }
+        },
+        { false, "HelloWorld.sbp",   { }
+        },
+        { true,  "HitExplosion.sbp", { }
+        },
+        { true,  "Quack.sbp",        { }
+        },
+        { false, "Tremolo.sbp",      { }
+        },
+        { false, "Vibrato.sbp",      { }
+        },
+        { true,  "Weapon1.sbp",      { { { "amplitude_sine_hz",      "form_sawtooth_hz" } },
+                                       { { "amplitude_oscillator",   "form_oscillator"  } },
+                                       { { "amplitude_rangeconvert", "form_envelope"    } },
+                                       { { "amplitude_math1"                            } },
+                                       { { "amplitude_math2"                            } },
+                                       { { "output"                                     } } }
+        },
+        { false, "Weird1.sbp",       { }
+        },
+        { false, "Weird2.sbp",       { }
+        },
       };
     for(auto e : examples)
       {
@@ -159,6 +188,55 @@ static void Test()
             }
           else
             testSkip(testname, "Failed to load '" + e.filename + "'.");
+        }
+        {
+          testname = "Sorting the nodes of example '" + e.filename + "' produces the correct order.";
+
+          auto & instructions = e.node_ordering_instructions;
+          if(!instructions.empty())
+            {
+              class MyBlueprint : public fmsynth::Blueprint
+              {
+              public:
+                void PublicSortNodesToExecutionOrder() { SortNodesToExecutionOrder(); }
+              };
+              
+              MyBlueprint bp;
+              bool loaded = bp.Load(*json);
+              if(loaded)
+                {
+                  bp.PublicSortNodesToExecutionOrder();
+                  auto nodes = bp.GetAllNodes();
+                  bool success = true;
+                  unsigned int current_index = 0;
+                  for(auto instr : instructions)
+                    {
+                      for(auto id : instr.node_ids)
+                        {
+                          bool found = false;
+                          for(unsigned int i = 0; !found && i < instr.node_ids.size(); i++)
+                            {
+                              auto curind = current_index + i;
+                              if(nodes.size() > curind)
+                                if(id == nodes[curind]->GetId())
+                                  found = true;
+                            }
+                          if(!found)
+                            {
+                              testComment << "expected node(id=" << id << ") not found within nodes indices " << current_index << ".." << (static_cast<int>(current_index + instr.node_ids.size()) - 1) << "\n";
+                              success = false;
+                            }
+                        }
+                      current_index += static_cast<unsigned int>(instr.node_ids.size());
+                    }
+                  
+                  testAssert(testname, success);
+                }
+              else
+                testSkip(testname, "Failed to load '" + e.filename + "'.");
+            }
+          else
+            testSkip(testname, "No test data defined.");
         }
       }
   }

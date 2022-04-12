@@ -26,13 +26,15 @@ static void Test()
     o.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
 
     unsigned int ind = 0;
-    o.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
+    o.PushInput(nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
+    o.FinishFrame(ind++);
     auto first = o.GetLastFrame();
     auto prevval = first;
     unsigned int changes = 0;
     for(unsigned int i = 0; i < sps; i++)
       {
-        o.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
+        o.PushInput(nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
+        o.FinishFrame(ind++);
 
         auto v = o.GetLastFrame();
         if(v != prevval)

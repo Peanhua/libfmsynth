@@ -29,13 +29,16 @@ static void Test()
     double result = 0;
     for(unsigned int i = 0; i < delay * sps; i++)
       {
-        node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
+        node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
+        node.FinishFrame(ind++);
         result += node.GetLastFrame();
       }
     testComment << "result=" << result << "\n";
     testAssert("First " + std::to_string(delay) + "s of output is silence.", result < 0.0001);
 
-    node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
+    node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
+    node.FinishFrame(ind++);
+    
     testComment << "value input = " << v << ", value after silence = " << node.GetLastFrame() << "\n";
     testAssert("The value input is returned after silence.", std::abs(node.GetLastFrame() - v) < 0.0001);
   }

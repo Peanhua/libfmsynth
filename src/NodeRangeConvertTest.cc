@@ -43,7 +43,8 @@ static void Test()
       unsigned int ind = 0;
 
       auto input = r.first.GetMin();
-      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
+      node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
+      node.FinishFrame(ind++);
       auto expecting = r.second.GetMin();
       auto result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
@@ -53,7 +54,8 @@ static void Test()
                  " result is correct.", result == expecting);
 
       input = r.first.GetMax();
-      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
+      node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
+      node.FinishFrame(ind++);
       expecting = r.second.GetMax();
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
@@ -63,7 +65,8 @@ static void Test()
                  " result is correct.", result == expecting);
 
       input = (r.first.GetMin() + r.first.GetMax()) / 2.0;
-      node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, input);
+      node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
+      node.FinishFrame(ind++);
       expecting = (r.second.GetMin() + r.second.GetMax()) / 2.0;
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";

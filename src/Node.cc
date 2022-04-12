@@ -110,7 +110,7 @@ void Node::AddAmplitudeInputNode(Node * node)
   _amplitude.AddInputNode(node);
   if(node)
     node->_amplitude.AddOutputNode(this);
-  OnInputConnected(node);
+  OnInputConnected(node); // todo: These calls can be moved to AddInputNode().
 }
 
 void Node::AddFormInputNode(Node * node)
@@ -151,78 +151,66 @@ void Node::RemoveAuxInputNode(Node * node)
 }
 
 
-void Node::PushAmplitudeInput(long time_index, Node * pusher, double amplitude)
+void Node::PushAmplitudeInput(Node * pusher, double amplitude)
 {
   if(_enabled)
-    {
       _amplitude.InputMultiply(pusher, amplitude);
-      FinishFrame(time_index);
-    }
 }
 
-void Node::PushInput(long time_index, Node * pusher, Channel channel, double value)
+void Node::PushInput(Node * pusher, Channel channel, double value)
 {
   switch(channel)
     {
-    case Channel::Amplitude: PushAmplitudeInput(time_index, pusher, value); break;
-    case Channel::Form:      PushFormInput(time_index, pusher, value);      break;
-    case Channel::Aux:       PushAuxInput(time_index, pusher, value);       break;
+    case Channel::Amplitude: PushAmplitudeInput(pusher, value); break;
+    case Channel::Form:      PushFormInput(pusher, value);      break;
+    case Channel::Aux:       PushAuxInput(pusher, value);       break;
     }
 }
 
   
-void Node::PushFormInput(long time_index, Node * pusher, double form)
+void Node::PushFormInput(Node * pusher, double form)
 {
   if(_enabled)
-    {
-      _form.InputAdd(pusher, form);
-      FinishFrame(time_index);
-    }
+    _form.InputAdd(pusher, form);
 }
 
-void Node::PushAuxInput(long time_index, Node * pusher, double value)
+void Node::PushAuxInput(Node * pusher, double value)
 {
   if(_enabled)
-    {
-      _aux.InputAdd(pusher, value); // todo: Allow toggling between add/multiply (if needed, this is only used by the filter node as of writing).
-      FinishFrame(time_index);
-    }
+    _aux.InputAdd(pusher, value); // todo: Allow toggling between add/multiply (if needed, this is only used by the filter node as of writing).
 }
 
 
 void Node::FinishFrame(long time_index)
 {
-  if(_amplitude.IsReady() && _form.IsReady() && _aux.IsReady())
-    {
-      auto amplitude = _amplitude.GetValueAndReset();
-      //   amplitude = std::clamp(amplitude, 0.0, 1.0);
+  auto amplitude = _amplitude.GetValueAndReset();
+  //   amplitude = std::clamp(amplitude, 0.0, 1.0);
       
-      auto form = _form.GetValueAndReset();
+  auto form = _form.GetValueAndReset();
 
-      assert(_samples_per_second > 0);
-      double time = static_cast<double>(time_index) / static_cast<double>(_samples_per_second);
+  assert(_samples_per_second > 0);
+  double time = static_cast<double>(time_index) / static_cast<double>(_samples_per_second);
 
-      double result;
-      if(_preprocess_amplitude)
-        result = ProcessInput(time, amplitude * form);
-      else
-        result = amplitude * ProcessInput(time, form);
+  double result;
+  if(_preprocess_amplitude)
+    result = ProcessInput(time, amplitude * form);
+  else
+    result = amplitude * ProcessInput(time, form);
 
-      _aux.Reset();
+  _aux.Reset();
       
-      for(auto o : _amplitude.GetOutputNodes())
-        o->PushAmplitudeInput(time_index, this, result);
+  for(auto o : _amplitude.GetOutputNodes())
+    o->PushAmplitudeInput(this, result);
       
-      for(auto o : _form.GetOutputNodes())
-        o->PushFormInput(time_index, this, result);
+  for(auto o : _form.GetOutputNodes())
+    o->PushFormInput(this, result);
 
-      for(auto o : _aux.GetOutputNodes())
-        o->PushAuxInput(time_index, this, result);
+  for(auto o : _aux.GetOutputNodes())
+    o->PushAuxInput(this, result);
 
 #if LIBFMSYNTH_ENABLE_NODETESTING
-      _last_frame = result;
+  _last_frame = result;
 #endif
-    }
 }
 
 

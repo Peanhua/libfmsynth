@@ -78,7 +78,8 @@ namespace fmsynth
     void         SetSamplesPerSecond(unsigned int samples_per_second);
     unsigned int GetSamplesPerSecond() const;
 
-    void    PushInput(long time_index, Node * pusher, Channel channel, double value);
+    void    PushInput(Node * pusher, Channel channel, double value);
+    void    FinishFrame(long time_index);
 
 #if LIBFMSYNTH_ENABLE_NODETESTING
     double  GetLastFrame() const;
@@ -123,7 +124,6 @@ namespace fmsynth
 #if LIBFMSYNTH_ENABLE_NODETESTING
     double       _last_frame;
 #endif
-    void FinishFrame(long time_index);
 
     void    AddAmplitudeInputNode(Node * node);
     void    AddFormInputNode(Node * node);
@@ -132,9 +132,9 @@ namespace fmsynth
     void    RemoveFormInputNode(Node * node);
     void    RemoveAuxInputNode(Node * node);
 
-    void    PushAmplitudeInput(long time_index, Node * pusher, double amplitude);
-    void    PushFormInput(long time_index, Node * pusher, double form);
-    void    PushAuxInput(long time_index, Node * pusher, double value);
+    void    PushAmplitudeInput(Node * pusher, double amplitude);
+    void    PushFormInput(Node * pusher, double form);
+    void    PushAuxInput(Node * pusher, double value);
   };
 }
 

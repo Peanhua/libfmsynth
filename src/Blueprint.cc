@@ -14,12 +14,14 @@
 #include "NodeConstant.hh"
 #include "NodeGrowth.hh"
 #include <cassert>
+#include <queue>
 
 using namespace fmsynth;
 
 
 Blueprint::Blueprint()
   : _root(new NodeConstant),
+    _nodes_sorted(false),
     _time_index(0),
     _samples_per_second(44100)
 {
@@ -66,6 +68,12 @@ void Blueprint::ResetTime()
   for(auto n : _nodes)
     if(n)
       n->ResetTime();
+}
+
+
+void Blueprint::ResetExecutionOrder()
+{
+  _nodes_sorted = false;
 }
 
 
@@ -129,9 +137,15 @@ std::mutex & Blueprint::GetLockMutex()
 void Blueprint::Tick(long samples)
 {
   assert(samples > 0);
+  SortNodesToExecutionOrder();
   for(int i = 0; !IsFinished() && i < samples; i++)
     {
-      _root->PushInput(_time_index, nullptr, Node::Channel::Form, 1);
+      _root->PushInput(nullptr, Node::Channel::Form, 1);
+      _root->FinishFrame(_time_index);
+
+      for(auto node : _nodes)
+        node->FinishFrame(_time_index);
+      
       _time_index++;
     }
 }
@@ -200,3 +214,59 @@ unsigned int Blueprint::GetSamplesPerSecond() const
   return _samples_per_second;
 }
 
+
+void Blueprint::SortNodesToExecutionOrder()
+{
+  if(_nodes_sorted)
+    return;
+
+  // Topological sort using Kahn's algorithm (https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm).
+  std::vector<Node *> result;
+
+  std::vector<int> nodes_input_counts; // Index in this vector match with _nodes index.
+  for(auto node : _nodes)
+    {
+      auto c =
+        node->GetInput(Node::Channel::Amplitude)->GetInputNodes().size() +
+        node->GetInput(Node::Channel::Form)->GetInputNodes().size()      +
+        node->GetInput(Node::Channel::Aux)->GetInputNodes().size();
+      nodes_input_counts.push_back(static_cast<int>(c));
+    }
+  
+  std::queue<Node *> work;
+  
+  for(auto node : _root->GetInput(Node::Channel::Form)->GetOutputNodes())
+    work.push(node);
+
+  while(!work.empty())
+    {
+      auto node = work.front();
+      work.pop();
+
+      result.push_back(node);
+
+      for(unsigned int i = 0; i < _nodes.size(); i++)
+        {
+          auto VectorContains = [](const std::vector<Node *> & v, Node * n)
+          {
+            return std::find(v.cbegin(), v.cend(), n) != v.cend();
+          };
+          
+          auto cur = _nodes[i];
+          if(VectorContains(node->GetInput(Node::Channel::Amplitude)->GetOutputNodes(), cur) ||
+             VectorContains(node->GetInput(Node::Channel::Form)->GetOutputNodes(),      cur) ||
+             VectorContains(node->GetInput(Node::Channel::Aux)->GetOutputNodes(),       cur)    )
+            {
+              nodes_input_counts[i]--;
+              assert(nodes_input_counts[i] >= 0);
+
+              if(nodes_input_counts[i] == 0)
+                work.push(cur);
+            }
+        }
+    }
+
+  assert(result.size() == _nodes.size());
+  _nodes = result;
+  _nodes_sorted = true;
+}

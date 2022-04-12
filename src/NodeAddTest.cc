@@ -41,7 +41,8 @@ static void Test()
       };
     for(auto v : values)
       {
-        node.PushInput(ind++, nullptr, fmsynth::Node::Channel::Form, v);
+        node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
+        node.FinishFrame(ind++);
         auto expecting = node.GetValue() + v;
         auto result = node.GetLastFrame();
         testComment << "expecting=" << expecting << ", result=" << result << "\n";
