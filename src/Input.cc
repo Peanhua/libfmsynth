@@ -44,17 +44,17 @@ void Input::SetDefaultValue(double new_default_value)
   _default_value = new_default_value;
 }
 
-/*
+
 bool Input::IsReady() const
 {
   assert(_input_count <= _input_nodes.size());
   return _input_count == _input_nodes.size();
 }
-*/
+
 
 double Input::GetValueAndReset()
 {
-  //  assert(IsReady());
+  assert(IsReady());
 
   auto rv = GetValue();
   Reset();
@@ -64,7 +64,7 @@ double Input::GetValueAndReset()
 
 double Input::GetValue() const
 {
-  //  assert(IsReady());
+  assert(IsReady());
 
   if(_input_nodes.size() > 0)
     return _value;
@@ -74,7 +74,7 @@ double Input::GetValue() const
 
 void Input::Reset()
 {
-  //  assert(IsReady());
+  assert(IsReady());
   _value = 0;
   _input_count = 0;
 }

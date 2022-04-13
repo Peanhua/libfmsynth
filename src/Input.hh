@@ -42,7 +42,6 @@ namespace fmsynth
 
     void   InputAdd(Node * source, double value);
     void   InputMultiply(Node * source, double value);
-    bool   IsReady()        const;
     double GetValueAndReset();
     double GetValue()       const;
     Range  GetInputRange()  const;
@@ -62,6 +61,7 @@ namespace fmsynth
     Range        _output_range;
 
     double NormalizeInputValue(const Node * source, double value) const;
+    bool   IsReady()                                              const;
   };
 }
 
