@@ -26,30 +26,6 @@ UiNodeReciprocal.hh		: UiNodeReciprocal.ui
 UiNodeViewWaveform.hh		: UiNodeViewWaveform.ui
 
 
-if FMSEDIT
-BUILT_SOURCES = 			\
-	UiEditNodeProperties.hh		\
-	UiHelpAbout.hh			\
-	UiMainWindow.hh			\
-	UiNode.hh			\
-	UiNodeADHSR.hh			\
-	UiNodeAdd.hh			\
-	UiNodeAudioDeviceOutput.hh	\
-	UiNodeAverage.hh		\
-	UiNodeClamp.hh			\
-	UiNodeComment.hh		\
-	UiNodeConstant.hh		\
-	UiNodeDelay.hh			\
-	UiNodeFileOutput.hh		\
-	UiNodeFilter.hh			\
-	UiNodeGrowth.hh			\
-	UiNodeInverse.hh		\
-	UiNodeMultiply.hh		\
-	UiNodeOscillator.hh		\
-	UiNodeRangeConvert.hh		\
-	UiNodeReciprocal.hh		\
-	UiNodeViewWaveform.hh		
-endif
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
@@ -86,11 +62,11 @@ pkginclude_HEADERS =			\
 
 lib_LTLIBRARIES = libfmsynth.la
 
-if FMSEDIT
-bin_PROGRAMS = fmsplay fmsbench fmsedit
-else
 bin_PROGRAMS = fmsplay fmsbench
-endif
+
+BUILT_SOURCES = 
+
+CLEANFILES = 
 
 
 # libfmsynth:
@@ -145,8 +121,34 @@ install-data-hook:
 	$(AM_V_GEN) $(SED) -i 's/define LIBFMSYNTH_ENABLE_NODETESTING 1/define LIBFMSYNTH_ENABLE_NODETESTING 0/' $(includedir)/libfmsynth/Node.hh
 endif
 
+
 # fmsedit:
 if FMSEDIT
+
+BUILT_SOURCES += 			\
+	UiEditNodeProperties.hh		\
+	UiHelpAbout.hh			\
+	UiMainWindow.hh			\
+	UiNode.hh			\
+	UiNodeADHSR.hh			\
+	UiNodeAdd.hh			\
+	UiNodeAudioDeviceOutput.hh	\
+	UiNodeAverage.hh		\
+	UiNodeClamp.hh			\
+	UiNodeComment.hh		\
+	UiNodeConstant.hh		\
+	UiNodeDelay.hh			\
+	UiNodeFileOutput.hh		\
+	UiNodeFilter.hh			\
+	UiNodeGrowth.hh			\
+	UiNodeInverse.hh		\
+	UiNodeMultiply.hh		\
+	UiNodeOscillator.hh		\
+	UiNodeRangeConvert.hh		\
+	UiNodeReciprocal.hh		\
+	UiNodeViewWaveform.hh		
+
+bin_PROGRAMS += fmsedit
 
 fmsedit_CXXFLAGS = 			\
 	$(AM_CXXFLAGS)			\
@@ -261,6 +263,8 @@ fmsedit_SOURCES =			\
 	fmsedit.cc				
 
 nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
+
+CLEANFILES += $(nodist_fmsedit_SOURCES)
 endif
 
 
@@ -290,13 +294,7 @@ fmsbench_SOURCES =	\
 	fmsbench.cc			
 
 
-# Clean & uninstall:
-
-if FMSEDIT
-CLEANFILES = $(nodist_fmsedit_SOURCES)
-endif
-
-
+# Uninstall:
 uninstall-hook:
 	-rmdir $(pkgincludedir)
 
