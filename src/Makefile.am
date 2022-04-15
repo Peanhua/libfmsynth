@@ -26,7 +26,7 @@ UiNodeReciprocal.hh		: UiNodeReciprocal.ui
 UiNodeViewWaveform.hh		: UiNodeViewWaveform.ui
 
 
-
+if FMSEDIT
 BUILT_SOURCES = 			\
 	UiEditNodeProperties.hh		\
 	UiHelpAbout.hh			\
@@ -49,6 +49,7 @@ BUILT_SOURCES = 			\
 	UiNodeRangeConvert.hh		\
 	UiNodeReciprocal.hh		\
 	UiNodeViewWaveform.hh		
+endif
 
 AM_CXXFLAGS =				\
 	-DDATADIR='"$(pkgdatadir)"'	\
@@ -85,7 +86,11 @@ pkginclude_HEADERS =			\
 
 lib_LTLIBRARIES = libfmsynth.la
 
-bin_PROGRAMS = fmsedit fmsplay fmsbench
+if FMSEDIT
+bin_PROGRAMS = fmsplay fmsbench fmsedit
+else
+bin_PROGRAMS = fmsplay fmsbench
+endif
 
 
 # libfmsynth:
@@ -141,6 +146,7 @@ install-data-hook:
 endif
 
 # fmsedit:
+if FMSEDIT
 
 fmsedit_CXXFLAGS = 			\
 	$(AM_CXXFLAGS)			\
@@ -255,6 +261,7 @@ fmsedit_SOURCES =			\
 	fmsedit.cc				
 
 nodist_fmsedit_SOURCES = $(BUILT_SOURCES)
+endif
 
 
 # fmsplay:
@@ -285,7 +292,10 @@ fmsbench_SOURCES =	\
 
 # Clean & uninstall:
 
+if FMSEDIT
 CLEANFILES = $(nodist_fmsedit_SOURCES)
+endif
+
 
 uninstall-hook:
 	-rmdir $(pkgincludedir)

@@ -18,6 +18,18 @@ AX_PTHREAD
 
 LT_INIT
 
+AC_ARG_ENABLE([fmsedit],
+  AS_HELP_STRING([--enable-fmsedit], [Build fmsedit.]),
+  [ case "${enableval}" in
+      yes) fmsedit=true ;;
+      no)  fmsedit=false ;;
+      *) AC_MSG_ERROR([bad value ${enableval} for --enable-fmsedit]) ;;
+    esac
+  ],
+  [fmsedit=true]
+)
+AM_CONDITIONAL([FMSEDIT], [test "x$fmsedit" = "xtrue"])
+
 AC_LANG_PUSH([C++])
 AC_CHECK_HEADER([format], [], [
   PKG_CHECK_MODULES([FMT], [fmt], [AC_DEFINE([HAVE_FMT], [1], [Use fmt])])
@@ -29,21 +41,23 @@ AC_LANG_POP
 PKG_CHECK_MODULES([JSON],    [json11])
 PKG_CHECK_MODULES([RTAUDIO], [rtaudio])
 
-PRE512QT=0
-PKG_CHECK_MODULES([QT], [Qt5Core >= 5.12 Qt5Widgets], [], [
-  PKG_CHECK_MODULES([QT], [Qt5Core Qt5Widgets])
-  PRE512QT=1
-])
-AC_SUBST(PRE512QT)
+AS_IF([test "x$fmsedit" = "xtrue"], [
+  PRE512QT=0
+  PKG_CHECK_MODULES([QT], [Qt5Core >= 5.12 Qt5Widgets], [], [
+    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Widgets])
+    PRE512QT=1
+  ])
+  AC_SUBST(PRE512QT)
 
-PKG_CHECK_VAR([QT_CONFIG], [Qt5Core], [qt_config])
-QT_REDUCE_RELOCATIONS=`[echo "x $QT_CONFIG" | $GREP reduce_relocations]`
-AS_IF([test "x$QT_REDUCE_RELOCATIONS" != "x"], [
-  AC_MSG_RESULT([Qt is configured with 'reduce_relocations' and requires to compile with PIC, forcing PIC on for fmsedit.])
-  AC_SUBST([EXTRA_FMSEDIT_QT_CXXFLAGS], $lt_prog_compiler_pic)
-])
+  PKG_CHECK_VAR([QT_CONFIG], [Qt5Core], [qt_config])
+  QT_REDUCE_RELOCATIONS=`[echo "x $QT_CONFIG" | $GREP reduce_relocations]`
+  AS_IF([test "x$QT_REDUCE_RELOCATIONS" != "x"], [
+    AC_MSG_RESULT([Qt is configured with 'reduce_relocations' and requires to compile with PIC, forcing PIC on for fmsedit.])
+    AC_SUBST([EXTRA_FMSEDIT_QT_CXXFLAGS], $lt_prog_compiler_pic)
+  ])
 
-AC_CHECK_PROGS([QT_UIC], [uic-qt5 uic])
+  AC_CHECK_PROGS([QT_UIC], [uic-qt5 uic])
+])
 
 AC_ARG_WITH([valgrind], AS_HELP_STRING([--with-valgrind], [Build with support for Valgrind.]))
 AS_IF([test "x$with_valgrind" = "xyes"], [
