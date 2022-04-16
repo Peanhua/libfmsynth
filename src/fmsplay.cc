@@ -107,8 +107,9 @@ int main(int argc, char * argv[])
       return EXIT_FAILURE;
     }
 
-  fmsynth::Blueprint blueprint;
-  auto loadok = blueprint.Load(*json);
+  auto bp = std::make_shared<fmsynth::Blueprint>();
+  auto blueprint = bp.get();
+  auto loadok = blueprint->Load(*json);
   if(!loadok)
     return EXIT_FAILURE;
 
@@ -121,7 +122,7 @@ int main(int argc, char * argv[])
       return EXIT_FAILURE;
     }
   auto sample_rate = sr.value();
-  blueprint.SetSamplesPerSecond(sample_rate);
+  blueprint->SetSamplesPerSecond(sample_rate);
 
   if(config.output_filename.length() > 0)
     {
@@ -169,7 +170,7 @@ int main(int argc, char * argv[])
       done.count_down();
   });
   
-  adev.Play(&blueprint);
+  adev.Play(bp);
 
   if(config.verbose)
     {

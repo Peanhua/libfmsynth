@@ -56,9 +56,9 @@ void Player::Stop()
 }
 
 
-void Player::SetNextProgram(fmsynth::Blueprint * program)
+void Player::SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program)
 {
-  _is_playing = program;
+  _is_playing = program ? true : false;
   {
     std::lock_guard lock(_next_program_mutex);
     _next_program = std::make_optional(program);
@@ -69,7 +69,7 @@ void Player::SetNextProgram(fmsynth::Blueprint * program)
 
 void Player::TickProgramChange()
 {
-  fmsynth::Blueprint * newprog = nullptr;
+  std::shared_ptr<fmsynth::Blueprint> newprog;
   bool change = false;
   {
     std::lock_guard lock(_next_program_mutex);

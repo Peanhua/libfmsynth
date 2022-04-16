@@ -387,7 +387,7 @@ unsigned int WidgetBlueprint::CountOutputLinks(WidgetNode * from_node, fmsynth::
 }
 
 
-fmsynth::Blueprint * WidgetBlueprint::Build() const
+std::shared_ptr<fmsynth::Blueprint> WidgetBlueprint::Build() const
 {
   std::lock_guard lock(_blueprint->GetLockMutex());
   assert(CanRun());
@@ -402,7 +402,6 @@ void WidgetBlueprint::Reset()
 {
   ProgramPlayer->SetNextProgram(nullptr);
 
-  auto oldbp = _blueprint;
   {
     std::lock_guard lock(_blueprint->GetLockMutex());
 
@@ -414,7 +413,9 @@ void WidgetBlueprint::Reset()
         _undopos = 0;
         _undobuffer.clear();
       }
-  
+
+    _blueprint.reset(new fmsynth::Blueprint);
+
     for(auto l : _links)
       delete l;
     _links.clear();
@@ -423,8 +424,6 @@ void WidgetBlueprint::Reset()
       delete n;
     _nodes.clear();
 
-    _blueprint = new fmsynth::Blueprint;
-  
     SetDirty(false);
 
     if(!_loading)
@@ -433,7 +432,6 @@ void WidgetBlueprint::Reset()
         GetMainWindow()->UpdateToolbarButtonStates();
       }
   }
-  delete oldbp;
 }
 
 
@@ -905,7 +903,7 @@ void WidgetBlueprint::UpdateNodesData()
 }
 
 
-fmsynth::Blueprint * WidgetBlueprint::GetBlueprint() const
+std::shared_ptr<fmsynth::Blueprint> WidgetBlueprint::GetBlueprint() const
 {
   return _blueprint;
 }

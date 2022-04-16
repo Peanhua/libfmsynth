@@ -13,6 +13,7 @@
 */
 
 #include <functional>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -34,13 +35,13 @@ public:
   ~AudioDevice();
 
   void SetOnPostTick(on_post_tick_t callback);
-  void Play(fmsynth::Blueprint * blueprint);
+  void Play(std::shared_ptr<fmsynth::Blueprint> blueprint);
   void Stop();
 
   const std::string                                   GetDeviceName()  const;
   const std::vector<unsigned int> &                   GetSampleRates() const;
-  fmsynth::Blueprint *                                GetBlueprint();
-  const fmsynth::Blueprint *                          GetBlueprint()   const;
+  std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
+  const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()   const;
   const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()  const;
   
 private:
@@ -49,7 +50,7 @@ private:
   std::vector<unsigned int> _sample_rates;
   on_post_tick_t            _on_post_tick;
   double                    _current_sample;
-  fmsynth::Blueprint *                          _blueprint;
+  std::shared_ptr<fmsynth::Blueprint>           _blueprint;
   std::vector<fmsynth::NodeAudioDeviceOutput *> _nodes;
 
   void UpdateInputNodes();

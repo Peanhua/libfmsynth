@@ -133,13 +133,13 @@ void AudioDevice::Playback(double * output_buffer, unsigned int frame_count)
 }
 
 
-fmsynth::Blueprint * AudioDevice::GetBlueprint()
+std::shared_ptr<fmsynth::Blueprint> AudioDevice::GetBlueprint()
 {
   return _blueprint;
 }
 
 
-const fmsynth::Blueprint * AudioDevice::GetBlueprint() const
+const std::shared_ptr<fmsynth::Blueprint> AudioDevice::GetBlueprint() const
 {
   return _blueprint;
 }
@@ -151,7 +151,7 @@ void AudioDevice::SetOnPostTick(on_post_tick_t callback)
 }
 
 
-void AudioDevice::Play(fmsynth::Blueprint * blueprint)
+void AudioDevice::Play(std::shared_ptr<fmsynth::Blueprint> blueprint)
 {
   _blueprint = blueprint;
   UpdateInputNodes();

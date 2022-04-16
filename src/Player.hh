@@ -13,10 +13,9 @@
 */
 
 #include "AudioDevice.hh"
-#include <array>
+#include <memory>
 #include <mutex>
 #include <optional>
-#include <random>
 #include <string>
 #include <thread>
 #include <vector>
@@ -37,7 +36,7 @@ public:
 
   const AudioDevice * GetAudioDevice() const;
   bool IsPlaying() const;
-  void SetNextProgram(fmsynth::Blueprint * program);
+  void SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program);
 
 private:
   // Caller thread data:
@@ -45,12 +44,12 @@ private:
   bool           _is_playing;
 
   // Player thread data:
-  fmsynth::Blueprint *  _now_playing;
-  AudioDevice           _device;
+  std::shared_ptr<fmsynth::Blueprint> _now_playing;
+  AudioDevice                         _device;
 
   // Communication between threads:
-  std::optional<std::atomic<fmsynth::Blueprint *>> _next_program;
-  std::mutex                                       _next_program_mutex;
+  std::optional<std::shared_ptr<fmsynth::Blueprint>> _next_program;
+  std::mutex                                         _next_program_mutex;
 
   void   TickProgramChange();
 };

@@ -54,7 +54,7 @@ public:
   void Reset();
   const std::string & GetFilename() const;
   
-  fmsynth::Blueprint * GetBlueprint() const;
+  std::shared_ptr<fmsynth::Blueprint> GetBlueprint() const;
   WidgetNode *         AddNode(int x, int y, const std::string & node_type);
   void                 AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel);
   void                 DeleteNode(WidgetNode * node);
@@ -67,7 +67,7 @@ public:
   std::vector<Link *>  GetOutputLinks(const WidgetNode * from_node, fmsynth::Node::Channel from_channel) const;
   void                 UpdateLinks(const WidgetNode * node);
   bool                 CanRun() const;
-  fmsynth::Blueprint * Build() const;
+  std::shared_ptr<fmsynth::Blueprint> Build() const;
   bool                 IsDirty() const;
   void                 SetDirty(bool dirty);
   void                 UpdateWindowTitle();
@@ -98,8 +98,8 @@ public:
   json11::Json to_json();
   
 private:
-  std::string               _filename;
-  fmsynth::Blueprint *      _blueprint;
+  std::string                         _filename;
+  std::shared_ptr<fmsynth::Blueprint> _blueprint;
   std::vector<WidgetNode *> _nodes;
   std::vector<Link *>       _links;
   bool                      _dirty;
