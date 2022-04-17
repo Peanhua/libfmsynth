@@ -24,7 +24,7 @@ NodeOscillator::NodeOscillator()
     _random_generator(0),
     _rdist(0, 1)
 {
-  GetInput(Channel::Form)->SetOutputRange(Input::Range::MinusOne_One);
+  SetOutputRange(Input::Range::MinusOne_One);
 }
 
 

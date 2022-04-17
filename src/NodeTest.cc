@@ -69,13 +69,13 @@ static void Test()
 
   {
     fmsynth::NodeOscillator node;
-    testAssert("New node does not have any output nodes connected to it.", node.GetAllConnectedNodes().empty());
+    testAssert("New node does not have any output nodes connected to it.", node.GetAllOutputNodes().empty());
   }
   {
     fmsynth::NodeOscillator o1, o2;
-    o2.AddInputNode(fmsynth::Node::Channel::Form, &o1);
-    testAssert("After adding input node, the node can be seen in the other node as output node.", o1.GetAllConnectedNodes().contains(&o2));
-    o2.RemoveInputNode(fmsynth::Node::Channel::Form, &o1);
-    testAssert("After removing input node, the node can no longer be seen in the other node as output node.", !o1.GetAllConnectedNodes().contains(&o2));
+    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, &o1, fmsynth::Node::Channel::Form, &o2);;
+    testAssert("After connecting two nodes, the node can be seen in the other node as output node.", o1.GetAllOutputNodes().contains(&o2));
+    fmsynth::Node::Disconnect(fmsynth::Node::Channel::Form, &o1, fmsynth::Node::Channel::Form, &o2);;
+    testAssert("After disconnecting two nodes, the node can no longer be seen in the other node as output node.", !o1.GetAllOutputNodes().contains(&o2));
   }
 }

@@ -22,6 +22,11 @@ public:
     : Node("Mock")
   {
   }
+
+  void PublicSetOutputRange(fmsynth::Input::Range range)
+  {
+    SetOutputRange(range);
+  }
   
 protected:
   double ProcessInput([[maybe_unused]] double time, double form)
@@ -47,21 +52,24 @@ static std::string RangeToString(fmsynth::Input::Range range)
 static void Test()
 {
   {
-    fmsynth::Input inp{42};
+    fmsynth::Input inp;
+    inp.SetDefaultValue(42);
     double v = 3.0;
     inp.AddInputNode(nullptr);
     inp.InputAdd(nullptr, v);
     testAssert("GetValue() returns the value added with InputAdd().", inp.GetValue() == v);
   }
   {
-    fmsynth::Input inp{42};
+    fmsynth::Input inp;
+    inp.SetDefaultValue(42);
     double v = 3.0;
     inp.AddInputNode(nullptr);
     inp.InputAdd(nullptr, v);
     testAssert("GetValue() returns the value added with InputMultiply().", inp.GetValue() == v);
   }
   {
-    fmsynth::Input inp{42};
+    fmsynth::Input inp;
+    inp.SetDefaultValue(42);
     MockNode node;
     double v1 = 3.0;
     double v2 = 4.0;
@@ -72,7 +80,8 @@ static void Test()
     testAssert("GetValue() returns the two values added with InputAdd().", inp.GetValue() == v1 + v2);
   }
   {
-    fmsynth::Input inp{42};
+    fmsynth::Input inp;
+    inp.SetDefaultValue(42);
     MockNode node;
     double v1 = 3.0;
     double v2 = 4.0;
@@ -101,8 +110,9 @@ static void Test()
     for(auto [outrange, inrange, input, expected] : values)
       {
         MockNode node;
-        node.GetInput(fmsynth::Node::Channel::Form)->SetOutputRange(outrange);
-        fmsynth::Input inp{42};
+        node.PublicSetOutputRange(outrange);
+        fmsynth::Input inp;
+        inp.SetDefaultValue(42);
         inp.SetInputRange(inrange);
         inp.AddInputNode(&node);
         inp.InputAdd(&node, input);

@@ -29,15 +29,18 @@ Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_
   assert(blueprint);
   assert(from_node);
   assert(to_node);
+
+  fmsynth::Node::Connect(fmsynth::Node::Channel::Form, from_node->GetNode(),
+                         to_channel,                   to_node->GetNode()   );
+  
   Update(from_node);
 }
 
 
 Link::~Link()
 {
-  auto nfrom = _from_node->GetNode();
-  auto nto   = _to_node->GetNode();
-  nto->RemoveInputNode(_to_channel, nfrom);
+  fmsynth::Node::Disconnect(fmsynth::Node::Channel::Form, _from_node->GetNode(),
+                            _to_channel,                  _to_node->GetNode()   );
   
   delete _line;
 }

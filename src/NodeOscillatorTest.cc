@@ -23,7 +23,7 @@ static void Test()
     fmsynth::NodeOscillator o;
     o.SetSamplesPerSecond(sps);
     o.SetType(fmsynth::NodeOscillator::Type::SINE);
-    o.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
+    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &o);
 
     unsigned int ind = 0;
     o.PushInput(nullptr, fmsynth::Node::Channel::Form, hz.GetValue());

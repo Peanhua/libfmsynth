@@ -19,6 +19,7 @@
 // End of "do not edit".
 
 #include "Input.hh"
+#include "Output.hh"
 #include <cassert>
 #include <map>
 #include <memory>
@@ -40,6 +41,9 @@ namespace fmsynth
       };
 
     static Node * Create(const json11::Json & json);
+    static void Connect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node);
+    static void Disconnect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node);
+    
 
     static std::string ChannelToString(Channel channel)
     {
@@ -69,10 +73,6 @@ namespace fmsynth
     const std::string & GetId()   const;
     void                SetId(const std::string & id);
 
-    void AddInputNode(Channel channel, Node * node);
-    void RemoveInputNode(Channel channel, Node * node);
-    void RemoveOutputNode(Channel channel, Node * node);
-
     virtual Input::Range GetInputRange(Channel channel) const;
     virtual Input::Range GetFormOutputRange()     const;
 
@@ -92,7 +92,7 @@ namespace fmsynth
     bool    IsFinished() const;
     void    SetIsFinished();
 
-    std::set<Node *> GetAllConnectedNodes() const; // todo: Rename to match the behavior: This currently returns all output nodes.
+    std::set<Node *> GetAllOutputNodes() const;
     virtual void     ResetTime();
 
     virtual json11::Json to_json() const;
@@ -108,6 +108,7 @@ namespace fmsynth
     virtual void   OnEOF();
 
     void          SetPreprocessAmplitude();
+    void          SetOutputRange(Input::Range range);
 
   private:
     static unsigned int _next_id;
@@ -119,23 +120,18 @@ namespace fmsynth
     bool         _enabled;
     unsigned int _samples_per_second;
     bool         _finished;
-    Input        _amplitude;
-    Input        _form;
-    Input        _aux;
+    std::map<Channel, Input>  _inputs;
+    std::map<Channel, Output> _outputs;
+    
+    Input::Range _output_range;
 #if LIBFMSYNTH_ENABLE_NODETESTING
     double       _last_frame;
 #endif
 
-    void    AddAmplitudeInputNode(Node * node);
-    void    AddFormInputNode(Node * node);
-    void    AddAuxInputNode(Node * node);
-    void    RemoveAmplitudeInputNode(Node * node);
-    void    RemoveFormInputNode(Node * node);
-    void    RemoveAuxInputNode(Node * node);
-
-    void    PushAmplitudeInput(Node * pusher, double amplitude);
-    void    PushFormInput(Node * pusher, double form);
-    void    PushAuxInput(Node * pusher, double value);
+    void AddInputNode(Channel from_channel, Node * from_node);
+    void AddOutputNode(Channel to_channel, Node * to_node);
+    void RemoveInputNode(Channel channel, Node * node);
+    void RemoveOutputNode(Channel channel, Node * node);
   };
 }
 

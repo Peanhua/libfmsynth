@@ -29,37 +29,28 @@ namespace fmsynth
         Zero_One
       };
   
-    Input(double default_value);
-
     void SetInputRange(Range range);
-    void SetOutputRange(Range range);
     void SetDefaultValue(double new_default_value);
   
     void AddInputNode(Node * node);
-    void AddOutputNode(Node * node);
     void RemoveInputNode(Node * node);
-    void RemoveOutputNode(Node * node);
 
     void   InputAdd(Node * source, double value);
     void   InputMultiply(Node * source, double value);
     double GetValueAndReset();
     double GetValue()       const;
     Range  GetInputRange()  const;
-    Range  GetOutputRange() const;
     void   Reset();
 
     const std::vector<Node *> & GetInputNodes()  const;
-    const std::vector<Node *> & GetOutputNodes() const;
 
   private:
     std::vector<Node *> _input_nodes;
-    std::vector<Node *> _output_nodes;
-    double       _default_value;
-    double       _value;
-    unsigned int _input_count;
-    Range        _input_range;
-    Range        _output_range;
-
+    double       _default_value = 0;
+    double       _value         = 0;
+    unsigned int _input_count   = 0;
+    Range        _input_range   = Range::Inf_Inf;
+ 
     double NormalizeInputValue(const Node * source, double value) const;
     bool   IsReady()                                              const;
   };

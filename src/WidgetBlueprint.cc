@@ -250,12 +250,10 @@ void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsy
 
   {
     std::lock_guard lock(_blueprint->GetLockMutex());
-    to_node->GetNode()->AddInputNode(to_channel, from_node->GetNode());
+    _links.push_back(new Link(this, from_node, to_node, to_channel));
     _blueprint->ResetExecutionOrder();
   }
   
-  _links.push_back(new Link(this, from_node, to_node, to_channel));
-
   // todo: Update only the connectors that actually change, not all connectors of both nodes.
   from_node->UpdateConnectorStates();
   to_node->UpdateConnectorStates();

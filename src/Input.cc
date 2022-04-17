@@ -17,25 +17,9 @@
 using namespace fmsynth;
 
 
-Input::Input(double default_value)
-  : _default_value(default_value),
-    _value(0),
-    _input_count(0),
-    _input_range(Range::Inf_Inf),
-    _output_range(Range::Inf_Inf)
-{
-}
-
-
 void Input::SetInputRange(Range range)
 {
   _input_range = range;
-}
-
-
-void Input::SetOutputRange(Range range)
-{
-  _output_range = range;
 }
 
 
@@ -84,38 +68,19 @@ void Input::AddInputNode(Node * node)
   _input_nodes.push_back(node);
 }
 
-void Input::AddOutputNode(Node * node)
-{
-  assert(node);
-  _output_nodes.push_back(node);
-}
-
 
 void Input::RemoveInputNode(Node * node)
 {
-  for(auto it = _input_nodes.begin(); it != _input_nodes.end(); it++)
-    if(*it == node)
-      {
-        _input_nodes.erase(it);
-        return;
-      }
-  assert(false);
-}
-
-
-void Input::RemoveOutputNode(Node * node)
-{
-  for(auto it = _output_nodes.begin(); it != _output_nodes.end(); it++)
-    if(*it == node)
-      {
-        _output_nodes.erase(it);
-        return;
-      }
+  auto it = std::find(_input_nodes.cbegin(), _input_nodes.cend(), node);
+  assert(it != _input_nodes.cend());
+  if(it != _input_nodes.cend())
+    _input_nodes.erase(it);
 }
 
 
 void Input::InputAdd(Node * source, double value)
 {
+  assert(std::find(_input_nodes.cbegin(), _input_nodes.cend(), source) != _input_nodes.cend());
   value = NormalizeInputValue(source, value);
   _value += value;
   _input_count++;
@@ -123,6 +88,7 @@ void Input::InputAdd(Node * source, double value)
 
 void Input::InputMultiply(Node * source, double value)
 {
+  assert(std::find(_input_nodes.cbegin(), _input_nodes.cend(), source) != _input_nodes.cend());
   value = NormalizeInputValue(source, value);
   if(_input_count == 0)
     _value = value;
@@ -135,11 +101,6 @@ void Input::InputMultiply(Node * source, double value)
 const std::vector<Node *> & Input::GetInputNodes() const
 {
   return _input_nodes;
-}
-
-const std::vector<Node *> & Input::GetOutputNodes() const
-{
-  return _output_nodes;
 }
 
 
@@ -164,12 +125,6 @@ Input::Range Input::GetInputRange() const
           }
       }
   return range;
-}
-
-
-Input::Range Input::GetOutputRange() const
-{
-  return _output_range;
 }
 
 

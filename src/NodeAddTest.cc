@@ -18,7 +18,7 @@ static void Test()
   {
     fmsynth::NodeAdd node;
     node.SetSamplesPerSecond(300);
-    node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
+    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
     node.SetValue(3);
 
     unsigned int ind = 0;

@@ -26,28 +26,28 @@ Node::Node(const std::string & type)
     _enabled(true),
     _samples_per_second(0),
     _finished(false),
-    _amplitude(1),
-    _form(0),
-    _aux(0)
+    _output_range(Input::Range::Inf_Inf)
 #if LIBFMSYNTH_ENABLE_NODETESTING
   , _last_frame(0)
 #endif
 {
+  _inputs[Channel::Amplitude].SetDefaultValue(1);
+
   _next_id++;
 }
 
 
 Node::~Node()
 {
-  for(auto n : _amplitude.GetInputNodes())
-    if(n)
-      RemoveAmplitudeInputNode(n);
-  for(auto n : _form.GetInputNodes())
-    if(n)
-      RemoveFormInputNode(n);
-  for(auto n : _aux.GetInputNodes())
-    if(n)
-      RemoveAuxInputNode(n);
+  for(const auto & [channel, input] : _inputs)
+    for(auto n : input.GetInputNodes())
+      if(n)
+        Disconnect(Channel::Form, n, channel, this);
+
+  for(const auto & [channel, output] : _outputs)
+    for(auto n : output.GetOutputNodes())
+      if(n)
+        Disconnect(Channel::Form, this, channel, n);
 }
 
 
@@ -83,124 +83,48 @@ void Node::OnInputConnected(Node * from)
 }
 
 
-void Node::AddInputNode(Channel channel, Node * node)
+void Node::AddInputNode(Channel from_channel, Node * from_node)
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: AddAmplitudeInputNode(node); break;
-    case Channel::Form:      AddFormInputNode(node);      break;
-    case Channel::Aux:       AddAuxInputNode(node);       break;
-    }
+  _inputs[from_channel].AddInputNode(from_node);
 }
 
 
-void Node::RemoveInputNode(Channel channel, Node * node)
+void Node::RemoveInputNode(Channel from_channel, Node * from_node)
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: RemoveAmplitudeInputNode(node); break;
-    case Channel::Form:      RemoveFormInputNode(node);      break;
-    case Channel::Aux:       RemoveAuxInputNode(node);       break;
-    }
+  _inputs[from_channel].RemoveInputNode(from_node);
 }
 
 
-void Node::RemoveOutputNode(Channel channel, Node * node)
+void Node::AddOutputNode(Channel to_channel, Node * to_node)
 {
-  if(!node)
-    return;
-  
-  switch(channel)
-    {
-    case Channel::Amplitude: _amplitude.RemoveOutputNode(node); break;
-    case Channel::Form:      _form.RemoveOutputNode(node);      break;
-    case Channel::Aux:       _aux.RemoveOutputNode(node);       break;
-    }
+  _outputs[to_channel].AddOutputNode(to_node);
 }
 
 
-void Node::AddAmplitudeInputNode(Node * node)
+void Node::RemoveOutputNode(Channel to_channel, Node * to_node)
 {
-  _amplitude.AddInputNode(node);
-  if(node)
-    node->_amplitude.AddOutputNode(this);
-  OnInputConnected(node); // todo: These calls can be moved to AddInputNode().
+  _outputs[to_channel].RemoveOutputNode(to_node);
 }
 
-void Node::AddFormInputNode(Node * node)
-{
-  _form.AddInputNode(node);
-  if(node)
-    node->_form.AddOutputNode(this);
-  OnInputConnected(node);
-}
-
-void Node::AddAuxInputNode(Node * node)
-{
-  _aux.AddInputNode(node);
-  if(node)
-    node->_aux.AddOutputNode(this);
-  OnInputConnected(node);
-}
-
-void Node::RemoveAmplitudeInputNode(Node * node)
-{
-  _amplitude.RemoveInputNode(node);
-  if(node)
-    node->_amplitude.RemoveOutputNode(this);
-}
-
-void Node::RemoveFormInputNode(Node * node)
-{
-  _form.RemoveInputNode(node);
-  if(node)
-    node->_form.RemoveOutputNode(this);
-}
-  
-void Node::RemoveAuxInputNode(Node * node)
-{
-  _aux.RemoveInputNode(node);
-  if(node)
-    node->_aux.RemoveOutputNode(this);
-}
-
-
-void Node::PushAmplitudeInput(Node * pusher, double amplitude)
-{
-  if(_enabled)
-      _amplitude.InputMultiply(pusher, amplitude);
-}
 
 void Node::PushInput(Node * pusher, Channel channel, double value)
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: PushAmplitudeInput(pusher, value); break;
-    case Channel::Form:      PushFormInput(pusher, value);      break;
-    case Channel::Aux:       PushAuxInput(pusher, value);       break;
-    }
-}
-
-  
-void Node::PushFormInput(Node * pusher, double form)
-{
   if(_enabled)
-    _form.InputAdd(pusher, form);
-}
-
-void Node::PushAuxInput(Node * pusher, double value)
-{
-  if(_enabled)
-    _aux.InputAdd(pusher, value); // todo: Allow toggling between add/multiply (if needed, this is only used by the filter node as of writing).
+    switch(channel)
+      {
+      case Channel::Amplitude: _inputs[Channel::Amplitude].InputMultiply(pusher, value); break;
+      case Channel::Form:      _inputs[Channel::Form].InputAdd(pusher, value);           break;
+      case Channel::Aux:       _inputs[Channel::Aux].InputAdd(pusher, value);            break;
+      }
 }
 
 
 void Node::FinishFrame(long time_index)
 {
-  auto amplitude = _amplitude.GetValueAndReset();
+  auto amplitude = _inputs[Channel::Amplitude].GetValueAndReset();
   //   amplitude = std::clamp(amplitude, 0.0, 1.0);
       
-  auto form = _form.GetValueAndReset();
+  auto form = _inputs[Channel::Form].GetValueAndReset();
 
   assert(_samples_per_second > 0);
   double time = static_cast<double>(time_index) / static_cast<double>(_samples_per_second);
@@ -211,16 +135,11 @@ void Node::FinishFrame(long time_index)
   else
     result = amplitude * ProcessInput(time, form);
 
-  _aux.Reset();
-      
-  for(auto o : _amplitude.GetOutputNodes())
-    o->PushAmplitudeInput(this, result);
-      
-  for(auto o : _form.GetOutputNodes())
-    o->PushFormInput(this, result);
+  _inputs[Channel::Aux].Reset();
 
-  for(auto o : _aux.GetOutputNodes())
-    o->PushAuxInput(this, result);
+  for(const auto & [channel, output] : _outputs)
+    for(auto o : output.GetOutputNodes())
+      o->PushInput(this, channel, result);
 
 #if LIBFMSYNTH_ENABLE_NODETESTING
   _last_frame = result;
@@ -244,20 +163,16 @@ void Node::SetIsFinished()
   _finished = true;
 
   std::set<Node *> connected;
-  std::array<Input *, 3> inputs {
-    &_amplitude,
-    &_form,
-    &_aux
-  };
-  for(auto i : inputs)
-    {
-      for(auto n : i->GetInputNodes())
-        if(n)
-          connected.insert(n);
-      for(auto n : i->GetOutputNodes())
-        if(n)
-          connected.insert(n);
-    }
+
+  for(const auto & [channel, input] : _inputs)
+    for(auto n : input.GetInputNodes())
+      if(n)
+        connected.insert(n);
+
+  for(const auto & [channel, output] : _outputs)
+    for(auto n : output.GetOutputNodes())
+      if(n)
+        connected.insert(n);
 
   for(auto n : connected)
     n->SetIsFinished();
@@ -272,16 +187,13 @@ bool Node::IsFinished() const
 }
 
 
-std::set<Node *> Node::GetAllConnectedNodes() const
+std::set<Node *> Node::GetAllOutputNodes() const
 {
   std::set<Node *> rv;
 
-  for(auto n : _amplitude.GetOutputNodes())
-    rv.insert(n);
-  for(auto n : _form.GetOutputNodes())
-    rv.insert(n);
-  for(auto n : _aux.GetOutputNodes())
-    rv.insert(n);
+  for(const auto & [channel, output] : _outputs)
+    for(auto n : output.GetOutputNodes())
+      rv.insert(n);
 
   return rv;
 }
@@ -293,27 +205,14 @@ void Node::OnEOF()
 
 Input * Node::GetInput(Channel channel)
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: return &_amplitude;
-    case Channel::Form:      return &_form;
-    case Channel::Aux:       return &_aux;
-    }
-  assert(false);
-  return nullptr;
+  return &_inputs[channel];
 }
 
 
 const Input * Node::GetInput(Channel channel) const
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: return &_amplitude;
-    case Channel::Form:      return &_form;
-    case Channel::Aux:       return &_aux;
-    }
-  assert(false);
-  return nullptr;
+  assert(_inputs.contains(channel));
+  return &_inputs.at(channel);
 }
 
 
@@ -366,20 +265,20 @@ void Node::OnEnabled()
 
 Input::Range Node::GetInputRange(Channel channel) const
 {
-  switch(channel)
-    {
-    case Channel::Amplitude: return _amplitude.GetInputRange();
-    case Channel::Form:      return _form.GetInputRange();
-    case Channel::Aux:       return _aux.GetInputRange();
-    }
-  assert(false);
-  return Input::Range::Zero_One;
+  assert(_inputs.contains(channel));
+  return _inputs.at(channel).GetInputRange();
+}
+
+
+void Node::SetOutputRange(Input::Range range)
+{
+  _output_range = range;
 }
 
 
 Input::Range Node::GetFormOutputRange() const
 {
-  return _form.GetOutputRange();
+  return _output_range;
 }
 
 
@@ -394,3 +293,22 @@ unsigned int Node::GetSamplesPerSecond() const
   return _samples_per_second;
 }
 
+
+void Node::Connect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node)
+{
+  assert(from_channel == Channel::Form);
+  to_node->AddInputNode(to_channel, from_node);
+  if(from_node)
+    from_node->AddOutputNode(to_channel, to_node);
+
+  to_node->OnInputConnected(from_node);
+}
+
+
+void Node::Disconnect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node)
+{
+  assert(from_channel == Channel::Form);
+  to_node->RemoveInputNode(to_channel, from_node);
+  if(from_node)
+    from_node->RemoveOutputNode(to_channel, to_node);
+}

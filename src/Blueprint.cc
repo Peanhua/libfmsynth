@@ -26,7 +26,7 @@ Blueprint::Blueprint()
     _samples_per_second(44100)
 {
   _root->GetValue() = ConstantValue(1, ConstantValue::Unit::Absolute);
-  _root->AddInputNode(Node::Channel::Form, nullptr);
+  Node::Connect(Node::Channel::Form, nullptr, Node::Channel::Form, _root);
   _root->SetSamplesPerSecond(_samples_per_second);
 }
 
@@ -42,7 +42,7 @@ void Blueprint::AddNode(Node * node)
     return;
   
   if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
-    node->AddInputNode(Node::Channel::Form, _root);
+    Node::Connect(Node::Channel::Form, _root, Node::Channel::Form, node);
   
   _nodes.push_back(node);
   node->SetSamplesPerSecond(_samples_per_second);
@@ -51,14 +51,9 @@ void Blueprint::AddNode(Node * node)
 
 void Blueprint::RemoveNode(Node * node)
 {
-  _root->RemoveOutputNode(Node::Channel::Form, node);
-
-  for(auto it = _nodes.begin(); it != _nodes.end(); it++)
-    if(*it == node)
-      {
-        _nodes.erase(it);
-        break;
-      }
+  auto it = std::find(_nodes.cbegin(), _nodes.cend(), node);
+  if(it != _nodes.cend())
+    _nodes.erase(it);
 }
 
 
@@ -185,10 +180,8 @@ bool Blueprint::Load(const json11::Json & json)
           auto from_node = FindNodeById(l["from"].string_value());
           auto to_node   = FindNodeById(l["to"].string_value());
           if(from_node && to_node)
-            {
-              auto channel = Node::StringToChannel(l["to_channel"].string_value());
-              to_node->AddInputNode(channel, from_node);
-            }
+            Node::Connect(Node::Channel::Form,                                   from_node,
+                          Node::StringToChannel(l["to_channel"].string_value()), to_node);
         }
     }
 
@@ -237,7 +230,7 @@ void Blueprint::SortNodesToExecutionOrder()
   
   std::queue<Node *> work;
   
-  for(auto node : _root->GetInput(Node::Channel::Form)->GetOutputNodes())
+  for(auto node : _root->GetAllOutputNodes())
     work.push(node);
 
   while(!work.empty())
@@ -249,15 +242,11 @@ void Blueprint::SortNodesToExecutionOrder()
 
       for(unsigned int i = 0; i < _nodes.size(); i++)
         {
-          auto VectorContains = [](const std::vector<Node *> & v, Node * n)
-          {
-            return std::find(v.cbegin(), v.cend(), n) != v.cend();
-          };
-          
           auto cur = _nodes[i];
-          if(VectorContains(node->GetInput(Node::Channel::Amplitude)->GetOutputNodes(), cur) ||
-             VectorContains(node->GetInput(Node::Channel::Form)->GetOutputNodes(),      cur) ||
-             VectorContains(node->GetInput(Node::Channel::Aux)->GetOutputNodes(),       cur)    )
+          auto all = node->GetAllOutputNodes();
+          auto edge_exists = std::find(all.cbegin(), all.cend(), cur) != all.cend();
+
+          if(edge_exists)
             {
               nodes_input_counts[i]--;
               assert(nodes_input_counts[i] >= 0);

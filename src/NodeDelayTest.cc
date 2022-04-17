@@ -21,7 +21,7 @@ static void Test()
     
     fmsynth::NodeDelay node;
     node.SetSamplesPerSecond(sps);
-    node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
+    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
     node.SetDelayTime(delay);
 
     double v = 123.456;

@@ -56,6 +56,7 @@ pkginclude_HEADERS =			\
 	NodeOscillator.hh		\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.hh		\
+	Output.hh			\
 	Util.hh
 
 
@@ -112,6 +113,8 @@ libfmsynth_la_SOURCES =			\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.cc		\
 	NodeReciprocal.hh		\
+	Output.cc			\
+	Output.hh			\
 	Util.cc				\
 	Util.hh
 
