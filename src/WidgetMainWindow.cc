@@ -562,7 +562,6 @@ void WidgetMainWindow::UpdateToolbarButtonStates()
 {
   auto bp = _ui->_blueprint;
   _ui->actionMenuSave->setEnabled(bp->IsDirty());
-  _ui->actionMenuSaveAs->setEnabled(bp->IsDirty());
   _ui->actionUndo->setEnabled(bp->CanUndo());
   _ui->actionRedo->setEnabled(bp->CanRedo());
   _ui->actionMenuPlay->setEnabled(bp->CanRun());
