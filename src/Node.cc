@@ -32,6 +32,8 @@ Node::Node(const std::string & type)
 #endif
 {
   _inputs[Channel::Amplitude].SetDefaultValue(1);
+  _inputs.emplace(Channel::Form, Input {});
+  _inputs.emplace(Channel::Aux, Input {});
 
   _next_id++;
 }
