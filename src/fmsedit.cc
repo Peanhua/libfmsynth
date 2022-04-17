@@ -27,6 +27,8 @@
 
 int main(int argc, char *argv[])
 {
+  auto cwd = std::filesystem::current_path();
+  
   try {
     std::filesystem::current_path(DATADIR);
   } catch([[maybe_unused]] const std::exception & e)
@@ -42,9 +44,13 @@ int main(int argc, char *argv[])
   
   auto cmdline = options.parse(argc, argv);
 
-  char * file_to_open = nullptr;
+  std::filesystem::path path_to_open;
   if(argc >= 2)
-    file_to_open = argv[1];
+    {
+      path_to_open = std::filesystem::path(argv[1]);
+      if(path_to_open.is_relative())
+        path_to_open = cwd / path_to_open;
+    }
 
   if(cmdline.count("help"))
     {
@@ -60,7 +66,7 @@ int main(int argc, char *argv[])
   p.Start();
   
   QApplication app(argc, argv);
-  WidgetMainWindow ui(nullptr, file_to_open);
+  WidgetMainWindow ui(nullptr, path_to_open.empty() ? nullptr : path_to_open.c_str());
   ui.show();
   auto rv = app.exec();
   p.Stop();
