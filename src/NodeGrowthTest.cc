@@ -28,6 +28,8 @@ static void Test()
     node.ParamEndAction()     = fmsynth::NodeGrowth::EndAction::NoEnd;
     bp.AddNode(&node);
 
+    std::string test_name = "Linear-NoEnd grows expectedly.";
+#if LIBFMSYNTH_ENABLE_NODETESTING
     bool success = true;
     for(int i = 0; success && i < 100; i++)
       {
@@ -35,7 +37,10 @@ static void Test()
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
         testComment << "i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert("Linear-NoEnd grows expectedly.", success);
+    testAssert(test_name, success);
+#else
+    testSkip(test_name, "NodeTesting is disabled.");
+#endif
   }
 
   {
@@ -50,6 +55,8 @@ static void Test()
     node.ParamEndValue()      = { 1, fmsynth::ConstantValue::Unit::Absolute };
     bp.AddNode(&node);
 
+    std::string test_name = "Linear-RepeatLast grows expectedly.";
+#if LIBFMSYNTH_ENABLE_NODETESTING
     bool success = true;
     for(int i = 0; success && i < 10; i++)
       {
@@ -57,8 +64,13 @@ static void Test()
         success = std::abs(node.GetLastFrame() - static_cast<double>(i) / 10.0) < 0.1;
         testComment << "i=" << i << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert("Linear-RepeatLast grows expectedly.", success);
+    testAssert(test_name, success);
+#else
+    testSkip(test_name, "NodeTesting is disabled.");
+#endif
 
+    test_name = "Linear-RepeatLast stays same after end.";
+#if LIBFMSYNTH_ENABLE_NODETESTING
     success = true;
     for(int i = 0; success && i < 100; i++)
       {
@@ -66,6 +78,9 @@ static void Test()
         success = std::abs(node.GetLastFrame() - 1.0) < 0.1;
         testComment << "i=" << (10 + i) << ", NodeGrowth.GetLastFrame()=" << node.GetLastFrame() << " : " << success << "\n";
       }
-    testAssert("Linear-RepeatLast stays same after end.", success);
+    testAssert(test_name, success);
+#else
+    testSkip(test_name, "NodeTesting is disabled.");
+#endif
   }
 }

@@ -46,33 +46,51 @@ static void Test()
       node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
       node.FinishFrame(ind++);
       auto expecting = r.second.GetMin();
+      std::string test_name =
+        "From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
+        " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
+        " with input " + std::to_string(input) +
+        " result is correct (" + std::to_string(expecting) + ")";
+#if LIBFMSYNTH_ENABLE_NODETESTING
       auto result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
-      testAssert("From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
-                 " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
-                 " with input " + std::to_string(input) +
-                 " result is correct.", result == expecting);
+      testAssert(test_name, result == expecting);
+#else
+      testSkip(test_name, "NodeTesting is disabled.");
+#endif
 
       input = r.first.GetMax();
       node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
       node.FinishFrame(ind++);
       expecting = r.second.GetMax();
+      test_name =
+        "From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
+        " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
+        " with input " + std::to_string(input) +
+        " result is correct (" + std::to_string(expecting) + ")";
+#if LIBFMSYNTH_ENABLE_NODETESTING
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
-      testAssert("From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
-                 " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
-                 " with input " + std::to_string(input) +
-                 " result is correct.", result == expecting);
+      testAssert(test_name, result == expecting);
+#else
+      testSkip(test_name, "NodeTesting is disabled.");
+#endif
 
       input = (r.first.GetMin() + r.first.GetMax()) / 2.0;
       node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
       node.FinishFrame(ind++);
       expecting = (r.second.GetMin() + r.second.GetMax()) / 2.0;
+      test_name =
+        "From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
+        " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
+        " with input " + std::to_string(input) +
+        " result is correct (" + std::to_string(expecting) + ")";
+#if LIBFMSYNTH_ENABLE_NODETESTING
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
-      testAssert("From [" + std::to_string(r.first.GetMin()) + "," + std::to_string(r.first.GetMax()) + "]" +
-                 " to [" + std::to_string(r.second.GetMin()) + "," + std::to_string(r.second.GetMax()) + "]" +
-                 " with input " + std::to_string(input) +
-                 " result is correct.", result == expecting);
+      testAssert(test_name, result == expecting);
+#else
+      testSkip(test_name, "NodeTesting is disabled.");
+#endif
     }
 }

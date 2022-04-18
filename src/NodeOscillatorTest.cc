@@ -16,6 +16,7 @@
 
 static void Test()
 {
+#if LIBFMSYNTH_ENABLE_NODETESTING
   {
     const unsigned int sps = 50000;
     fmsynth::ConstantValue hz { 1, fmsynth::ConstantValue::Unit::Hertz };
@@ -46,4 +47,8 @@ static void Test()
     testAssert("Oscillator node returns nearly the same value after 1 second with 1Hz sine wave.", std::abs(first - o.GetLastFrame()) < 0.0001);
     testAssert("Oscillator node returns different values for most timesteps.", changes > sps / 2);
   }
+#else
+  testSkip("Oscillator node returns nearly the same value after 1 second with 1Hz sine wave.", "NodeTesting is disabled.");
+  testSkip("Oscillator node returns different values for most timesteps.", "NodeTesting is disabled.");
+#endif
 }

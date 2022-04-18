@@ -44,9 +44,14 @@ static void Test()
         node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
         node.FinishFrame(ind++);
         auto expecting = node.GetValue() + v;
+        std::string test_name = std::to_string(node.GetValue()) + " + " + std::to_string(v) + " = " + std::to_string(expecting);
+#if LIBFMSYNTH_ENABLE_NODETESTING
         auto result = node.GetLastFrame();
         testComment << "expecting=" << expecting << ", result=" << result << "\n";
-        testAssert(std::to_string(node.GetValue()) + " + " + std::to_string(v) + " = " + std::to_string(expecting), result == expecting);
+        testAssert(test_name, result == expecting);
+#else
+        testSkip(test_name, "NodeTesting is disabled.");
+#endif
       }
   }
 }

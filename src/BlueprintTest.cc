@@ -168,6 +168,8 @@ static void Test()
               
               if(outputnode)
                 {
+                  testname = "Playbacking example '" + e.filename + "' provides some variation in output within the first 10 seconds.";
+#if LIBFMSYNTH_ENABLE_NODETESTING
                   unsigned int variationcount = 0;
                   double lastval = 0;
                   for(unsigned int i = 0; !bp.IsFinished() && i < 10 * bp.GetSamplesPerSecond(); i++)
@@ -181,7 +183,10 @@ static void Test()
                           lastval = v;
                         }
                     }
-                  testAssert("Playbacking example '" + e.filename + "' provides some variation in output within the first 10 seconds.", variationcount > 100);
+                  testAssert(testname, variationcount > 100);
+#else
+                  testSkip(testname, "NodeTesting is disabled.");
+#endif
                 }
               else
                 testSkip(testname, "No audio device output node present in the example.");

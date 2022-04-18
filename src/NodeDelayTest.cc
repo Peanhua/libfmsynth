@@ -23,9 +23,10 @@ static void Test()
     node.SetSamplesPerSecond(sps);
     fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
     node.SetDelayTime(delay);
-
+    std::string test_name = "First " + std::to_string(delay) + "s of output is silence.";
     double v = 123.456;
     unsigned int ind = 0;
+#if LIBFMSYNTH_ENABLE_NODETESTING
     double result = 0;
     for(unsigned int i = 0; i < delay * sps; i++)
       {
@@ -34,12 +35,20 @@ static void Test()
         result += node.GetLastFrame();
       }
     testComment << "result=" << result << "\n";
-    testAssert("First " + std::to_string(delay) + "s of output is silence.", result < 0.0001);
+    testAssert(test_name, result < 0.0001);
+#else
+    testSkip(test_name, "NodeTesting is disabled.");
+#endif
 
     node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
     node.FinishFrame(ind++);
-    
+
+    test_name = "The value input is returned after silence.";
+#if LIBFMSYNTH_ENABLE_NODETESTING
     testComment << "value input = " << v << ", value after silence = " << node.GetLastFrame() << "\n";
-    testAssert("The value input is returned after silence.", std::abs(node.GetLastFrame() - v) < 0.0001);
+    testAssert(test_name, std::abs(node.GetLastFrame() - v) < 0.0001);
+#else
+    testSkip(test_name, "NodeTesting is disabled.");
+#endif
   }
 }
