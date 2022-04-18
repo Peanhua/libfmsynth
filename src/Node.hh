@@ -39,6 +39,7 @@ namespace fmsynth
         Form,
         Aux
       };
+    static constexpr std::array AllChannels { Channel::Amplitude, Channel::Form, Channel::Aux };
 
     static Node * Create(const json11::Json & json);
     static void Connect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node);
@@ -100,6 +101,7 @@ namespace fmsynth
   
     const Input * GetInput(Channel channel) const;
     Input *       GetInput(Channel channel);
+    Output *      GetOutput(Channel channel);
 
   protected:
     virtual void   OnInputConnected(Node * from);
@@ -120,8 +122,8 @@ namespace fmsynth
     bool         _enabled;
     unsigned int _samples_per_second;
     bool         _finished;
-    std::map<Channel, Input>  _inputs;
-    std::map<Channel, Output> _outputs;
+    std::array<Input,  AllChannels.size()> _inputs;
+    std::array<Output, AllChannels.size()> _outputs;
     
     Input::Range _output_range;
 #if LIBFMSYNTH_ENABLE_NODETESTING
