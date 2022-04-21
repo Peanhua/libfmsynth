@@ -251,7 +251,6 @@ void WidgetBlueprint::AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsy
   {
     std::lock_guard lock(_blueprint->GetLockMutex());
     _links.push_back(new Link(this, from_node, to_node, to_channel));
-    _blueprint->ResetExecutionOrder();
   }
   
   // todo: Update only the connectors that actually change, not all connectors of both nodes.
@@ -317,7 +316,7 @@ void WidgetBlueprint::DeleteLink(std::function<bool(const Link *)> match_callbac
           edited_nodes.insert(to_node);
         }
     }
-  _blueprint->ResetExecutionOrder();
+
   PostEdit(edited_nodes);
 }
 
@@ -390,7 +389,6 @@ std::shared_ptr<fmsynth::Blueprint> WidgetBlueprint::Build() const
   std::lock_guard lock(_blueprint->GetLockMutex());
   assert(CanRun());
   _blueprint->ResetTime();
-  _blueprint->ResetExecutionOrder();
   return _blueprint;
 }
 

@@ -11,6 +11,7 @@
 */
 
 #include "Link.hh"
+#include "Blueprint.hh"
 #include "Node.hh"
 #include "WidgetBlueprint.hh"
 #include "WidgetConnector.hh"
@@ -30,8 +31,8 @@ Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_
   assert(from_node);
   assert(to_node);
 
-  fmsynth::Node::Connect(fmsynth::Node::Channel::Form, from_node->GetNode(),
-                         to_channel,                   to_node->GetNode()   );
+  _blueprint->GetBlueprint()->ConnectNodes(fmsynth::Node::Channel::Form, from_node->GetNode(),
+                                           to_channel,                   to_node->GetNode()   );
   
   Update(from_node);
 }
@@ -39,8 +40,8 @@ Link::Link(WidgetBlueprint * blueprint, WidgetNode * from_node, WidgetNode * to_
 
 Link::~Link()
 {
-  fmsynth::Node::Disconnect(fmsynth::Node::Channel::Form, _from_node->GetNode(),
-                            _to_channel,                  _to_node->GetNode()   );
+  _blueprint->GetBlueprint()->DisconnectNodes(fmsynth::Node::Channel::Form, _from_node->GetNode(),
+                                              _to_channel,                  _to_node->GetNode()   );
   
   delete _line;
 }

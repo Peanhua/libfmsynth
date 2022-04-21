@@ -41,13 +41,11 @@ Node::~Node()
 {
   for(auto channel : AllChannels)
     for(auto n : GetInput(channel)->GetInputNodes())
-      if(n)
-        Disconnect(Channel::Form, n, channel, this);
+      RemoveInputNode(channel, n);
 
   for(auto channel : AllChannels)
     for(auto n : GetOutput(channel)->GetOutputNodes())
-      if(n)
-        Disconnect(Channel::Form, this, channel, n);
+      RemoveOutputNode(channel, n);
 }
 
 
@@ -87,6 +85,7 @@ void Node::OnInputConnected(Node * from)
 void Node::AddInputNode(Channel from_channel, Node * from_node)
 {
   GetInput(from_channel)->AddInputNode(from_node);
+  OnInputConnected(from_node);
 }
 
 
@@ -307,24 +306,4 @@ void Node::SetSamplesPerSecond(unsigned int samples_per_second)
 unsigned int Node::GetSamplesPerSecond() const
 {
   return _samples_per_second;
-}
-
-
-void Node::Connect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node)
-{
-  assert(from_channel == Channel::Form);
-  to_node->AddInputNode(to_channel, from_node);
-  if(from_node)
-    from_node->AddOutputNode(to_channel, to_node);
-
-  to_node->OnInputConnected(from_node);
-}
-
-
-void Node::Disconnect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node)
-{
-  assert(from_channel == Channel::Form);
-  to_node->RemoveInputNode(to_channel, from_node);
-  if(from_node)
-    from_node->RemoveOutputNode(to_channel, to_node);
 }

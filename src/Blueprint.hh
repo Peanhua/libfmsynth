@@ -12,14 +12,12 @@
   Complete license can be found in the LICENSE file.
 */
 
+#include "Node.hh"
 #include <mutex>
-#include <string>
 #include <vector>
-#include <json11.hpp>
 
 namespace fmsynth
 {
-  class Node;
   class NodeConstant;
 
 
@@ -34,9 +32,11 @@ namespace fmsynth
     
     void AddNode(Node * node);
     void RemoveNode(Node * node);
+
+    void ConnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node);
+    void DisconnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node);
     
     void ResetTime();
-    void ResetExecutionOrder();
     void Tick(long samples);
     void SetIsFinished();
     bool IsFinished() const;
@@ -61,6 +61,8 @@ namespace fmsynth
     std::mutex          _lock_mutex;
     long                _time_index;
     unsigned int        _samples_per_second;
+
+    void ResetExecutionOrder();
   };
 }
 

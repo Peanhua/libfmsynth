@@ -42,8 +42,6 @@ namespace fmsynth
     static constexpr std::array AllChannels { Channel::Amplitude, Channel::Form, Channel::Aux };
 
     static Node * Create(const json11::Json & json);
-    static void Connect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node);
-    static void Disconnect(Channel from_channel, Node * from_node, Channel to_channel, Node * to_node);
     
 
     static std::string ChannelToString(Channel channel)
@@ -103,6 +101,11 @@ namespace fmsynth
     Input *       GetInput(Channel channel);
     Output *      GetOutput(Channel channel);
 
+    void AddInputNode(Channel from_channel, Node * from_node);
+    void AddOutputNode(Channel to_channel, Node * to_node);
+    void RemoveInputNode(Channel channel, Node * node);
+    void RemoveOutputNode(Channel channel, Node * node);
+    
   protected:
     virtual void   OnInputConnected(Node * from);
     virtual double ProcessInput(double time, double form) = 0;
@@ -131,10 +134,6 @@ namespace fmsynth
 #endif
 
     void UpdateNextId();
-    void AddInputNode(Channel from_channel, Node * from_node);
-    void AddOutputNode(Channel to_channel, Node * to_node);
-    void RemoveInputNode(Channel channel, Node * node);
-    void RemoveOutputNode(Channel channel, Node * node);
   };
 }
 

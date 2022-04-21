@@ -25,7 +25,7 @@ Blueprint::Blueprint()
     _samples_per_second(44100)
 {
   _root->GetValue() = ConstantValue(1, ConstantValue::Unit::Absolute);
-  Node::Connect(Node::Channel::Form, nullptr, Node::Channel::Form, _root);
+  ConnectNodes(Node::Channel::Form, nullptr, Node::Channel::Form, _root);
   _root->SetSamplesPerSecond(_samples_per_second);
 }
 
@@ -41,7 +41,7 @@ void Blueprint::AddNode(Node * node)
     return;
   
   if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
-    Node::Connect(Node::Channel::Form, _root, Node::Channel::Form, node);
+    ConnectNodes(Node::Channel::Form, _root, Node::Channel::Form, node);
   
   _nodes.push_back(node);
   node->SetSamplesPerSecond(_samples_per_second);
@@ -53,6 +53,8 @@ void Blueprint::RemoveNode(Node * node)
   auto it = std::find(_nodes.cbegin(), _nodes.cend(), node);
   if(it != _nodes.cend())
     _nodes.erase(it);
+
+  ResetExecutionOrder();
 }
 
 
@@ -179,8 +181,8 @@ bool Blueprint::Load(const json11::Json & json)
           auto from_node = FindNodeById(l["from"].string_value());
           auto to_node   = FindNodeById(l["to"].string_value());
           if(from_node && to_node)
-            Node::Connect(Node::Channel::Form,                                   from_node,
-                          Node::StringToChannel(l["to_channel"].string_value()), to_node);
+            ConnectNodes(Node::Channel::Form,                                   from_node,
+                         Node::StringToChannel(l["to_channel"].string_value()), to_node);
         }
     }
 
@@ -257,4 +259,26 @@ void Blueprint::SortNodesToExecutionOrder()
     }
 
   _nodes_sorted = true;
+}
+
+
+void Blueprint::ConnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
+{
+  assert(from_channel == Node::Channel::Form);
+  to_node->AddInputNode(to_channel, from_node);
+  if(from_node)
+    from_node->AddOutputNode(to_channel, to_node);
+
+  ResetExecutionOrder();
+}
+
+
+void Blueprint::DisconnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
+{
+  assert(from_channel == Node::Channel::Form);
+  to_node->RemoveInputNode(to_channel, from_node);
+  if(from_node)
+    from_node->RemoveOutputNode(to_channel, to_node);
+
+  ResetExecutionOrder();
 }
