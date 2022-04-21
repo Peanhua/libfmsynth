@@ -21,7 +21,6 @@ using namespace fmsynth;
 
 Blueprint::Blueprint()
   : _root(new NodeConstant),
-    _nodes_sorted(false),
     _time_index(0),
     _samples_per_second(44100)
 {
@@ -140,7 +139,7 @@ void Blueprint::Tick(long samples)
       _root->PushInput(nullptr, Node::Channel::Form, 1);
       _root->FinishFrame(_time_index);
 
-      for(auto node : _nodes)
+      for(auto node : _exec_nodes)
         node->FinishFrame(_time_index);
       
       _time_index++;
@@ -215,9 +214,9 @@ void Blueprint::SortNodesToExecutionOrder()
   if(_nodes_sorted)
     return;
 
-  // Topological sort using Kahn's algorithm (https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm).
-  std::vector<Node *> result;
+  _exec_nodes.clear();
 
+  // Topological sort using Kahn's algorithm (https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm).
   std::vector<int> nodes_input_counts; // Index in this vector match with _nodes index.
   for(auto node : _nodes)
     {
@@ -238,7 +237,7 @@ void Blueprint::SortNodesToExecutionOrder()
       auto node = work.front();
       work.pop();
 
-      result.push_back(node);
+      _exec_nodes.push_back(node);
 
       for(unsigned int i = 0; i < _nodes.size(); i++)
         {
@@ -257,7 +256,5 @@ void Blueprint::SortNodesToExecutionOrder()
         }
     }
 
-  assert(result.size() == _nodes.size());
-  _nodes = result;
   _nodes_sorted = true;
 }

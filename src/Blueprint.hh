@@ -56,6 +56,7 @@ namespace fmsynth
   private:
     NodeConstant *      _root;
     std::vector<Node *> _nodes;
+    std::vector<Node *> _exec_nodes;
     bool                _nodes_sorted;
     std::mutex          _lock_mutex;
     long                _time_index;
