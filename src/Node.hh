@@ -130,6 +130,7 @@ namespace fmsynth
     double       _last_frame;
 #endif
 
+    void UpdateNextId();
     void AddInputNode(Channel from_channel, Node * from_node);
     void AddOutputNode(Channel to_channel, Node * to_node);
     void RemoveInputNode(Channel channel, Node * node);

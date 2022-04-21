@@ -33,7 +33,7 @@ Node::Node(const std::string & type)
 {
   GetInput(Channel::Amplitude)->SetDefaultValue(1);
 
-  _next_id++;
+  UpdateNextId();
 }
 
 
@@ -66,6 +66,7 @@ const std::string & Node::GetId() const
 void Node::SetId(const std::string & id)
 {
   _id = id;
+  UpdateNextId();
 }
 
 
@@ -243,6 +244,16 @@ void Node::SetFromJson(const json11::Json & json)
   // assert(_type == json["node_type"].string_value()); Does not hold because the WidgetNode overwrites node_type.
   _id      = json["node_id"].string_value();
   _enabled = json["enabled"].bool_value();
+  UpdateNextId();
+}
+
+
+void Node::UpdateNextId()
+{
+  auto intid = static_cast<unsigned int>(std::stoul(_id));
+  if(intid >= _next_id)
+    _next_id = intid + 1;
+  assert(_next_id > 0);
 }
 
 
