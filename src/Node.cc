@@ -249,7 +249,7 @@ void Node::SetFromJson(const json11::Json & json)
 
 void Node::UpdateNextId()
 {
-  auto intid = static_cast<unsigned int>(std::stoul(_id));
+  auto intid = static_cast<unsigned int>(std::strtoul(_id.c_str(), nullptr, 0));
   if(intid >= _next_id)
     _next_id = intid + 1;
   assert(_next_id > 0);
