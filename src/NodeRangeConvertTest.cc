@@ -36,7 +36,7 @@ static void Test()
     {
       fmsynth::NodeRangeConvert node;
       node.SetSamplesPerSecond(30000);
-      fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
+      node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
       node.SetFrom(r.first);
       node.SetTo(r.second);
 

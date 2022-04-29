@@ -21,7 +21,7 @@ static void Test()
     
     fmsynth::NodeDelay node;
     node.SetSamplesPerSecond(sps);
-    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
+    node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
     node.SetDelayTime(delay);
     std::string test_name = "First " + std::to_string(delay) + "s of output is silence.";
     double v = 123.456;

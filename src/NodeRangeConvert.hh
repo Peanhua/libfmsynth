@@ -38,7 +38,7 @@ namespace fmsynth
   public:
     NodeRangeConvert();
 
-    const Range & GetFrom() const;
+    const Range & GetFrom() const; // todo: Add the "Range" word to these method names: "GetRangeFrom()" etc.
     const Range & GetTo()   const;
     void          SetFrom(const Range & range);
     void          SetTo(const Range & range);

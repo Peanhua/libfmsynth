@@ -15,43 +15,41 @@
 
 static void Test()
 {
-  {
-    fmsynth::NodeAdd node;
-    node.SetSamplesPerSecond(300);
-    fmsynth::Node::Connect(fmsynth::Node::Channel::Form, nullptr, fmsynth::Node::Channel::Form, &node);
-    node.SetValue(3);
+  fmsynth::NodeAdd node;
+  node.SetSamplesPerSecond(300);
+  node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
+  node.SetValue(3);
 
-    unsigned int ind = 0;
-    std::array values
-      {
-        -99999999.0,
-        -1.0,
-        -0.321,
-        -0.01,
-        0.0,
-        0.01,
-        0.123,
-        1.0,
-        4.0,
-        7.0,
-        42.0,
-        69.0,
-        420.0,
-        99999999.0,
-      };
-    for(auto v : values)
-      {
-        node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
-        node.FinishFrame(ind++);
-        auto expecting = node.GetValue() + v;
-        std::string test_name = std::to_string(node.GetValue()) + " + " + std::to_string(v) + " = " + std::to_string(expecting);
+  unsigned int ind = 0;
+  std::array values
+    {
+      -99999999.0,
+      -1.0,
+      -0.321,
+      -0.01,
+      0.0,
+      0.01,
+      0.123,
+      1.0,
+      4.0,
+      7.0,
+      42.0,
+      69.0,
+      420.0,
+      99999999.0,
+    };
+  for(auto v : values)
+    {
+      node.PushInput(nullptr, fmsynth::Node::Channel::Form, v);
+      node.FinishFrame(ind++);
+      auto expecting = node.GetValue() + v;
+      std::string test_name = std::to_string(node.GetValue()) + " + " + std::to_string(v) + " = " + std::to_string(expecting);
 #if LIBFMSYNTH_ENABLE_NODETESTING
-        auto result = node.GetLastFrame();
-        testComment << "expecting=" << expecting << ", result=" << result << "\n";
-        testAssert(test_name, result == expecting);
+      auto result = node.GetLastFrame();
+      testComment << "expecting=" << expecting << ", result=" << result << "\n";
+      testAssert(test_name, result == expecting);
 #else
-        testSkip(test_name, "NodeTesting is disabled.");
+      testSkip(test_name, "NodeTesting is disabled.");
 #endif
-      }
-  }
+    }
 }

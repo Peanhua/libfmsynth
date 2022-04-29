@@ -94,7 +94,7 @@ std::vector<Node *> Blueprint::GetAllNodes() const
 {
   std::vector<Node *> nodes;
 
-  for(auto n : _nodes)
+  for(auto n : _exec_nodes)
     if(n)
       nodes.push_back(n);
   
