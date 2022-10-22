@@ -13,6 +13,7 @@
 #include "Blueprint.hh"
 #include "NodeConstant.hh"
 #include "NodeGrowth.hh"
+#include <algorithm>
 #include <cassert>
 #include <queue>
 

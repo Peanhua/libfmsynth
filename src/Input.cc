@@ -12,6 +12,7 @@
 
 #include "Input.hh"
 #include "Node.hh"
+#include <algorithm>
 #include <cassert>
 
 using namespace fmsynth;

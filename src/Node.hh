@@ -20,6 +20,7 @@
 
 #include "Input.hh"
 #include "Output.hh"
+#include <array>
 #include <cassert>
 #include <map>
 #include <memory>

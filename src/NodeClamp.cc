@@ -11,6 +11,7 @@
 */
 
 #include "NodeClamp.hh"
+#include <algorithm>
 
 using namespace fmsynth;
 

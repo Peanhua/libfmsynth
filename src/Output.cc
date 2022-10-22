@@ -11,6 +11,7 @@
 */
 
 #include "Output.hh"
+#include <algorithm>
 #include <cassert>
 
 using namespace fmsynth;
