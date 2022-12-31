@@ -22,6 +22,7 @@
 
 namespace fmsynth
 {
+  class AudioDevice;
   class Blueprint;
 }
 
@@ -34,6 +35,7 @@ public:
   void Start();
   void Stop();
 
+  void                SetAudioDevice(int device_id);
   const AudioDevice * GetAudioDevice() const;
   bool IsPlaying() const;
   void SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program);

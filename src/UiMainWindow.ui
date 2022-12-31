@@ -1937,9 +1937,15 @@
       <string>Sample rate</string>
      </property>
     </widget>
+    <widget class="QMenu" name="_menu_settings_playback_device">
+     <property name="title">
+      <string>Playback device</string>
+     </property>
+    </widget>
     <addaction name="menuTheme"/>
     <addaction name="actionSnapToGrid"/>
     <addaction name="_menu_settings_samplerate"/>
+    <addaction name="_menu_settings_playback_device"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">

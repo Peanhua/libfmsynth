@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
   
   Player p;
   p.Start();
+  p.SetAudioDevice(UserSettings->GetInt("playback_device"));
   
   QApplication app(argc, argv);
   WidgetMainWindow ui(nullptr, path_to_open.empty() ? nullptr : path_to_open.c_str());

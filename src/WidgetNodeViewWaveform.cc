@@ -10,22 +10,9 @@
   Complete license can be found in the LICENSE file.
 */
 
-#ifdef HAVE_CONFIG_H
-# include "../config.h"
-#endif
-
-#if __has_cpp_attribute(_cpp_lib_format)
-# include <format>
-using std::format;
-#elif defined(HAVE_FMT)
-# include <fmt/format.h>
-using fmt::format;
-#else
-# error "Unable to find format library."
-#endif
-
 #include "WidgetNodeViewWaveform.hh"
 #include "NodeMemoryBuffer.hh"
+#include "StdFormat.hh"
 #include <cassert>
 #include "QtIncludeBegin.hh"
 #include "UiNode.hh"

@@ -31,22 +31,26 @@ class AudioDevice
 public:
   typedef std::function<void(double sample)> on_post_tick_t;
 
-  AudioDevice(int device_id); // -1 for the default device
+  AudioDevice(int device_id);
   ~AudioDevice();
 
+  void SetDeviceId(int device_id); // -1 for the default device
   void SetOnPostTick(on_post_tick_t callback);
   void Play(std::shared_ptr<fmsynth::Blueprint> blueprint);
   void Stop();
 
-  const std::string                                   GetDeviceName()  const;
-  const std::vector<unsigned int> &                   GetSampleRates() const;
+  const std::string                                   GetDeviceName()      const;
+  const std::vector<std::string> &                    GetDeviceNames()     const;
+  unsigned int                                        GetDefaultDeviceId() const;
+  const std::vector<unsigned int> &                   GetSampleRates()     const;
   std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
-  const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()   const;
-  const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()  const;
-  
+  const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()       const;
+  const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()      const;
+
 private:
   RtAudio *                 _dac;
   unsigned int              _device_id;
+  std::vector<std::string>  _device_names;
   std::vector<unsigned int> _sample_rates;
   on_post_tick_t            _on_post_tick;
   double                    _current_sample;
@@ -54,6 +58,7 @@ private:
   std::vector<fmsynth::NodeAudioDeviceOutput *> _nodes;
 
   void UpdateInputNodes();
+  void UpdateDeviceNames();
   void Playback(double * output_buffer, unsigned int frame_count);
 };
 

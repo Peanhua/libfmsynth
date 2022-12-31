@@ -57,6 +57,24 @@ void Player::Stop()
 }
 
 
+void Player::SetAudioDevice(int device_id)
+{
+  if(ProgramPlayer == this)
+    {
+      Stop();
+      SetNextProgram(nullptr);
+    }
+
+  _device.SetDeviceId(device_id);
+
+  if(ProgramPlayer == this)
+    {
+      ProgramPlayer = nullptr;
+      Start();
+    }
+}
+
+
 void Player::SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program)
 {
   _is_playing = program ? true : false;

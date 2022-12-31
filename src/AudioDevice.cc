@@ -16,7 +16,7 @@
 #include "RtAudio.hh"
 
 
-static RtAudio * GetDAC()
+static RtAudio * GetSystemDAC()
 {
   auto getit = [](RtAudio::Api api) -> RtAudio *
   {
@@ -69,31 +69,23 @@ AudioDevice::AudioDevice(int device_id)
   : _on_post_tick(nullptr),
     _blueprint(nullptr)    
 {
-  _dac = GetDAC();
+  _dac = GetSystemDAC();
+  UpdateDeviceNames();
+  SetDeviceId(device_id);
+}
 
-  if(_dac)
-    {
-      if(device_id >= 0)
-        _device_id = device_id;
-      else
-        {
-          _device_id = _dac->getDefaultOutputDevice();
-          // Try to fix case when _dac->getDefaultOutputDevice() sometimes incorrectly returns 0:
-          for(unsigned int i = 0; _device_id == 0 && i < _dac->getDeviceCount(); i++)
-            try
-              {
-                auto info = _dac->getDeviceInfo(i);
-                if(info.outputChannels > 0)
-                  _device_id = i;
-              }
-            catch(const std::exception & e)
-              {
-              }
-        }
 
-      auto deviceinfo = _dac->getDeviceInfo(_device_id);
-      _sample_rates = deviceinfo.sampleRates;
-    }
+void AudioDevice::SetDeviceId(int device_id)
+{
+  assert(_dac);
+
+  if(device_id >= 0)
+    _device_id = static_cast<unsigned int>(device_id);
+  else
+    _device_id = _dac->getDefaultOutputDevice();
+  
+  auto deviceinfo = _dac->getDeviceInfo(_device_id);
+  _sample_rates = deviceinfo.sampleRates;
 }
 
 
@@ -240,4 +232,30 @@ const std::string AudioDevice::GetDeviceName() const
 const std::vector<fmsynth::NodeAudioDeviceOutput *> AudioDevice::GetInputNodes() const
 {
   return _nodes;
+}
+
+
+const std::vector<std::string> & AudioDevice::GetDeviceNames() const
+{
+  return _device_names;
+}
+
+
+void AudioDevice::UpdateDeviceNames()
+{
+  _device_names.clear();
+  for(unsigned int i = 0; i < _dac->getDeviceCount(); i++)
+    {
+      auto info = _dac->getDeviceInfo(i);
+      if(info.probed)
+        _device_names.push_back(info.name);
+      else
+        _device_names.push_back("");
+    }
+}
+
+
+unsigned int AudioDevice::GetDefaultDeviceId() const
+{
+  return _dac->getDefaultOutputDevice();
 }

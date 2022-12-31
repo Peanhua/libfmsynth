@@ -178,6 +178,7 @@ fmsedit_SOURCES =			\
 	Player.hh			\
 	Settings.cc			\
 	Settings.hh			\
+	StdFormat.hh			\
 	QtIncludeBegin.hh		\
 	QtIncludeEnd.hh			\
 	Ui.hh				\

@@ -31,8 +31,8 @@ struct Configuration
   unsigned int        samples_per_second;
   std::string         filename;
   std::string         output_filename;
-  int                 output_device;
-  AudioFile<double> * output_file = nullptr;
+  int                 output_device = -1;
+  AudioFile<double> * output_file   = nullptr;
 };
 
 std::optional<Configuration> ParseCommandline(int argc, char * argv[])
@@ -55,13 +55,11 @@ std::optional<Configuration> ParseCommandline(int argc, char * argv[])
   
   rv.verbose            = cmdline["verbose"].as<bool>();
   rv.list_devices       = cmdline["list-devices"].as<bool>();
+  rv.output_device      = cmdline["device"].as<int>();
   rv.samples_per_second = cmdline["samples-per-second"].as<unsigned int>();
-
+  
   if(cmdline.count("output") > 0)
-    rv.output_filename = cmdline["output"].as<std::string>();
-
-  if(cmdline.count("device") > 0)
-    rv.output_device = cmdline["device"].as<int>();
+    rv.output_filename    = cmdline["output"].as<std::string>();
 
   if(cmdline.count("help"))
     {
@@ -102,13 +100,23 @@ int main(int argc, char * argv[])
 
   if(config.list_devices)
     {
-      std::cout << "id | name\n";
-      RtAudio audio;
-      for(unsigned int i = 0; i < audio.getDeviceCount(); i++)
+      if(config.verbose)
+        std::cout << "Id | Name\n";
+      AudioDevice adev {config.output_device};
+      const auto & names = adev.GetDeviceNames();
+      for(unsigned int i = 0; i < names.size(); i++)
         {
-          auto info = audio.getDeviceInfo(i);
-          if(info.probed)
-            std::cout << i << " | " << info.name << "\n";
+          auto name = names[i];
+          if(!name.empty())
+            {
+              if(i == adev.GetDefaultDeviceId())
+                std::cout << "*";
+              else
+                std::cout << " ";
+              std::cout << i;
+              std::cout << " | " << name;
+              std::cout << "\n";
+            }
         }
     }
 
@@ -130,6 +138,9 @@ int main(int argc, char * argv[])
       if(!loadok)
         return EXIT_FAILURE;
 
+      if(config.verbose)
+        std::cout << argv[0] << ": Using device id " << config.output_device << std::endl;
+
       AudioDevice adev {config.output_device};
       
       auto sr = GetSampleRate(config.samples_per_second, adev.GetSampleRates());
@@ -143,6 +154,8 @@ int main(int argc, char * argv[])
       
       if(config.output_filename.length() > 0)
         {
+          if(config.verbose)
+            std::cout << argv[0] << ": Writing to '" << config.output_filename << "'\n";
           config.output_file = new AudioFile<double>();
           assert(config.output_file);
           config.output_file->setSampleRate(config.samples_per_second);

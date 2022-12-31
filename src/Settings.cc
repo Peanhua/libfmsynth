@@ -35,6 +35,7 @@ void Settings::SetDefaults()
 {
   _ints["theme"] = 0;
   _ints["recent_files"] = 0;
+  _ints["playback_device"] = -1;
   _ints["sample_rate"] = 44100;
   _ints["window_x"] = -1;
   _ints["window_y"] = -1;

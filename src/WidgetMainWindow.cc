@@ -17,7 +17,9 @@
 #include "Blueprint.hh"
 #include "Node.hh"
 #include "Player.hh"
+#include "RtAudio.hh"
 #include "Settings.hh"
+#include "StdFormat.hh"
 #include "WidgetBlueprint.hh"
 #include "WidgetHelpAbout.hh"
 #include "QtIncludeBegin.hh"
@@ -37,27 +39,55 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent, const char * file_to_open)
   _default_palette = palette();
 
   assert(ProgramPlayer);
+  {
+    const auto rates = ProgramPlayer->GetAudioDevice()->GetSampleRates();
+    assert(rates.size() > 0);
+    unsigned int currate = static_cast<unsigned int>(UserSettings->GetInt("sample_rate"));
+    if(std::find(rates.cbegin(), rates.cend(), currate) == rates.cend())
+      currate = *std::max_element(rates.cbegin(), rates.cend());
 
-  const auto rates = ProgramPlayer->GetAudioDevice()->GetSampleRates();
-  assert(rates.size() > 0);
-  unsigned int currate = static_cast<unsigned int>(UserSettings->GetInt("sample_rate"));
-  if(std::find(rates.cbegin(), rates.cend(), currate) == rates.cend())
-    currate = *std::max_element(rates.cbegin(), rates.cend());
+    auto ag = new QActionGroup(_ui->_menu_settings_samplerate);
+    for(auto rate : rates)
+      {
+        auto action = new QAction(this);
+        action->setObjectName(QString::fromStdString(std::string("actionSampleRate") + std::to_string(rate)));
+        action->setCheckable(true);
+        if(rate == currate)
+          action->setChecked(true);
+        action->setText(QCoreApplication::translate("MainWindow", std::to_string(rate).c_str(), nullptr));
+        _ui->_menu_settings_samplerate->addAction(action);
+        ag->addAction(action);
+      }
+    ag->setExclusive(true);
+  }
+  {
+    const auto & names = ProgramPlayer->GetAudioDevice()->GetDeviceNames();
+    auto default_id = ProgramPlayer->GetAudioDevice()->GetDefaultDeviceId();
 
-  auto ag = new QActionGroup(_ui->_menu_settings_samplerate);
-  for(auto rate : rates)
-    {
-      auto action = new QAction(this);
-      action->setObjectName(QString::fromStdString(std::string("actionSampleRate") + std::to_string(rate)));
-      action->setCheckable(true);
-      if(rate == currate)
-        action->setChecked(true);
-      action->setText(QCoreApplication::translate("MainWindow", std::to_string(rate).c_str(), nullptr));
-      _ui->_menu_settings_samplerate->addAction(action);
-      ag->addAction(action);
-    }
-  ag->setExclusive(true);
-
+    std::vector<std::string> devices;
+    devices.push_back(format("DEFAULT: {}", names[default_id]));
+    for(auto d : names)
+      devices.push_back(d);
+    
+    auto ag = new QActionGroup(_ui->_menu_settings_playback_device);
+    int id = -1;
+    for(auto name : devices)
+      {
+        if(!name.empty())
+          {
+            auto action = new QAction(this);
+            action->setObjectName(QString::fromStdString(std::string("actionPlaybackDevice") + std::to_string(id)));
+            action->setCheckable(true);
+            if(id == UserSettings->GetInt("playback_device"))
+              action->setChecked(true);
+            action->setText(QCoreApplication::translate("MainWindow", name.c_str(), nullptr));
+            _ui->_menu_settings_playback_device->addAction(action);
+            ag->addAction(action);
+          }
+        id++;
+      }
+    ag->setExclusive(true);
+  }
   
   std::vector<std::string> cats {
     "inputs",
@@ -181,6 +211,12 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent, const char * file_to_open)
                     if(wasplaying)
                       ProgramPlayer->SetNextProgram(bp);
                   }
+              }
+            else if(a.starts_with("actionPlaybackDevice"))
+              {
+                auto device = std::stoi(a.substr(std::string("actionPlaybackDevice").length()));
+                UserSettings->Set("playback_device", device);
+                ProgramPlayer->SetAudioDevice(device);
               }
             else
               std::cerr << "Invalid action: " << a << std::endl;
