@@ -13,17 +13,7 @@
 #include "AudioDevice.hh"
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
-#include <cassert>
-#ifdef __GNUC__
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wold-style-cast"
-# pragma GCC diagnostic ignored "-Wdeprecated-copy"
-# pragma GCC diagnostic ignored "-Wconversion"
-#endif
-#include <RtAudio.h>
-#ifdef __GNUC__
-# pragma GCC diagnostic pop
-#endif
+#include "RtAudio.hh"
 
 
 static RtAudio * GetDAC()
@@ -75,7 +65,7 @@ static RtAudio * GetDAC()
 
 
 
-AudioDevice::AudioDevice()
+AudioDevice::AudioDevice(int device_id)
   : _on_post_tick(nullptr),
     _blueprint(nullptr)    
 {
@@ -83,18 +73,23 @@ AudioDevice::AudioDevice()
 
   if(_dac)
     {
-      _device_id = _dac->getDefaultOutputDevice();
-      // Try to fix case when _dac->getDefaultOutputDevice() sometimes incorrectly returns 0:
-      for(unsigned int i = 0; _device_id == 0 && i < _dac->getDeviceCount(); i++)
-        try
-          {
-            auto info = _dac->getDeviceInfo(i);
-            if(info.outputChannels > 0)
-              _device_id = i;
-          }
-        catch(const std::exception & e)
-          {
-          }
+      if(device_id >= 0)
+        _device_id = device_id;
+      else
+        {
+          _device_id = _dac->getDefaultOutputDevice();
+          // Try to fix case when _dac->getDefaultOutputDevice() sometimes incorrectly returns 0:
+          for(unsigned int i = 0; _device_id == 0 && i < _dac->getDeviceCount(); i++)
+            try
+              {
+                auto info = _dac->getDeviceInfo(i);
+                if(info.outputChannels > 0)
+                  _device_id = i;
+              }
+            catch(const std::exception & e)
+              {
+              }
+        }
 
       auto deviceinfo = _dac->getDeviceInfo(_device_id);
       _sample_rates = deviceinfo.sampleRates;

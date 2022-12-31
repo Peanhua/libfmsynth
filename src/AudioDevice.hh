@@ -31,7 +31,7 @@ class AudioDevice
 public:
   typedef std::function<void(double sample)> on_post_tick_t;
 
-  AudioDevice();
+  AudioDevice(int device_id); // -1 for the default device
   ~AudioDevice();
 
   void SetOnPostTick(on_post_tick_t callback);

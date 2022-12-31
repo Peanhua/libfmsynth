@@ -115,6 +115,7 @@ libfmsynth_la_SOURCES =			\
 	NodeReciprocal.hh		\
 	Output.cc			\
 	Output.hh			\
+	RtAudio.hh			\
 	Util.cc				\
 	Util.hh
 
