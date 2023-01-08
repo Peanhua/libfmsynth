@@ -87,7 +87,7 @@ int main(int argc, char * argv[])
   auto t = t_end - t_start;
   std::cout << argv[0] << ": Load '" << config.filename << "': " << std::chrono::duration<double>(t).count() << "s" << std::endl;
 
-  auto totalsamples = static_cast<unsigned int>(config.time * config.samples_per_second);
+  auto totalsamples = static_cast<long>(config.time * config.samples_per_second);
 
   t_start = clock.now();
   blueprint.Tick(totalsamples);

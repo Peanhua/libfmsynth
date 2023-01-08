@@ -20,7 +20,7 @@ static void Test()
   node.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
   node.SetValue(3);
 
-  unsigned int ind = 0;
+  long ind = 0;
   std::array values
     {
       -99999999.0,

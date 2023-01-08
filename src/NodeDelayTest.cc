@@ -25,7 +25,7 @@ static void Test()
     node.SetDelayTime(delay);
     std::string test_name = "First " + std::to_string(delay) + "s of output is silence.";
     double v = 123.456;
-    unsigned int ind = 0;
+    long ind = 0;
 #if LIBFMSYNTH_ENABLE_NODETESTING
     double result = 0;
     for(unsigned int i = 0; i < delay * sps; i++)

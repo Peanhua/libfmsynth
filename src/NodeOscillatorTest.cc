@@ -26,7 +26,7 @@ static void Test()
     o.SetType(fmsynth::NodeOscillator::Type::SINE);
     o.AddInputNode(fmsynth::Node::Channel::Form, nullptr);
 
-    unsigned int ind = 0;
+    long ind = 0;
     o.PushInput(nullptr, fmsynth::Node::Channel::Form, hz.GetValue());
     o.FinishFrame(ind++);
     auto first = o.GetLastFrame();

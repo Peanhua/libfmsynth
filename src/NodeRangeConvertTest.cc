@@ -40,7 +40,7 @@ static void Test()
       node.SetFrom(r.first);
       node.SetTo(r.second);
 
-      unsigned int ind = 0;
+      long ind = 0;
 
       auto input = r.first.GetMin();
       node.PushInput(nullptr, fmsynth::Node::Channel::Form, input);
