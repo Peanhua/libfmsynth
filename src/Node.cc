@@ -12,11 +12,12 @@
 
 #include "Node.hh"
 #include <cassert>
+#include <climits>
 
 using namespace fmsynth;
 
 
-unsigned int Node::_next_id = 1;
+unsigned long Node::_next_id = 1;
 
 
 Node::Node(const std::string & type)
@@ -249,8 +250,8 @@ void Node::SetFromJson(const json11::Json & json)
 
 void Node::UpdateNextId()
 {
-  auto intid = static_cast<unsigned int>(std::strtoul(_id.c_str(), nullptr, 0));
-  if(intid >= _next_id)
+  auto intid = std::strtoul(_id.c_str(), nullptr, 0);
+  if(intid < ULONG_MAX && intid >= _next_id)
     _next_id = intid + 1;
   assert(_next_id > 0);
 }

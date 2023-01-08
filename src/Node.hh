@@ -117,7 +117,7 @@ namespace fmsynth
     void          SetOutputRange(Input::Range range);
 
   private:
-    static unsigned int _next_id;
+    static unsigned long _next_id;
   
     std::string  _type;
     std::string  _id;
