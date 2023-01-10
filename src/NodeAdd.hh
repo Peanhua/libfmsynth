@@ -29,7 +29,7 @@ namespace fmsynth
     void         SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form);
+    double ProcessInput(double time, double form)       override;
   
   private:
     double _value;

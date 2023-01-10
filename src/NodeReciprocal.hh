@@ -23,7 +23,7 @@ namespace fmsynth
     NodeReciprocal();
   
   protected:
-    double ProcessInput(double time, double form);
+    double ProcessInput(double time, double form) override;
   };
 }
 

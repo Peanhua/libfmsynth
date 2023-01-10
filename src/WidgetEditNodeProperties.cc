@@ -31,7 +31,7 @@ public:
   {
   }
 
-  QValidator::State validate(QString & input, [[maybe_unused]] int & pos) const
+  QValidator::State validate(QString & input, [[maybe_unused]] int & pos) const override
   {
     if(input.toStdString().empty())
       return QValidator::State::Invalid;

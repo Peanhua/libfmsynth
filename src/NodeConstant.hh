@@ -26,13 +26,13 @@ namespace fmsynth
     ConstantValue &       GetValue();
     const ConstantValue & GetValue() const;
 
-    Input::Range GetFormOutputRange() const override;
+    Input::Range GetFormOutputRange() const             override;
 
     json11::Json to_json() const                        override;
     void         SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form);
+    double ProcessInput(double time, double form)       override;
   
   private:
     ConstantValue _value;

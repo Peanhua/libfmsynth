@@ -1,6 +1,5 @@
 #ifndef LIBFMSYNTH_RT_AUDIO_HH_
 #define LIBFMSYNTH_RT_AUDIO_HH_
-
 /*
   libfmsynth
   Copyright (C) 2021-2022  Steve Joni Yrjänä <joniyrjana@gmail.com>

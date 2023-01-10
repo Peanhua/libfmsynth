@@ -32,14 +32,14 @@ namespace fmsynth
     EndAction &     ParamEndAction()     { return _end_action;     }
     ConstantValue & ParamEndValue()      { return _end_value;      }
 
-    void         ResetTime()                override;
-    Input::Range GetFormOutputRange() const override;
+    void         ResetTime()                            override;
+    Input::Range GetFormOutputRange() const             override;
 
     json11::Json to_json() const                        override;
     void         SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form);
+    double ProcessInput(double time, double form)       override;
   
   private:
     ConstantValue _start_value;
