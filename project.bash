@@ -47,20 +47,53 @@ profileok=1
 CONFIGUREFLAGS=""
 case ${PROFILE} in
     dev)
-        CXXFLAGS="-g"
-        LDFLAGS="-g -fdiagnostics-color=always -Og -rdynamic"
+        CXX=g++
+        CXXFLAGS="-O0 -g3"
+        LDFLAGS="-O0 -g3" # -fsanitize=address"
+        ;;
+    clang-dev)
+        CXX=clang++
+        CXXFLAGS="-O0 -g3"
+        LDFLAGS="-O0 -g3"
         ;;
     optimized)
+        CXX=g++
         CXXFLAGS="-O3 -DNDEBUG -flto"
         LDFLAGS="-O3 -DNDEBUG -flto"
+        CONFIGUREFLAGS="--disable-nodetesting"
+        ;;
+    clang-optimized)
+        CXX=clang++
+        CXXFLAGS="-O3 -DNDEBUG -flto"
+        LDFLAGS="-O3 -DNDEBUG -flto"
+        CONFIGUREFLAGS="--disable-nodetesting"
         ;;
     valgrind)
-        CXXFLAGS="-O3 -g -DNDEBUG -Wno-unused"
-        LDFLAGS="-g -fdiagnostics-color=always -O3 -rdynamic -DNDEBUG"
+        CXX=g++
+        CXXFLAGS="-O3 -g3 -DNDEBUG -Wno-unused"
+        LDFLAGS="-g3 -O3 -DNDEBUG"
+        CONFIGUREFLAGS="--with-valgrind"
+        ;;
+    clang-valgrind)
+        CXX=clang++
+        CXXFLAGS="-O3 -g3 -DNDEBUG -Wno-unused"
+        LDFLAGS="-g3 -O3 -DNDEBUG"
+        CONFIGUREFLAGS="--with-valgrind"
+        ;;
+    valgrind-dev)
+        CXX=g++
+        CXXFLAGS="-Og -g3"
+        LDFLAGS="-g3 -Og"
+        CONFIGUREFLAGS="--with-valgrind"
+        ;;
+    clang-valgrind-dev)
+        CXX=clang++
+        CXXFLAGS="-Og -g3"
+        LDFLAGS="-g3 -Og"
         CONFIGUREFLAGS="--with-valgrind"
         ;;
     *)
-        echo "project.sh: Error, unknown profile '${PROFILE}'. Valid profiles: dev, optimized, valgrind"
+        echo "project.sh: Error, unknown profile '${PROFILE}'."
         profileok=0
         ;;
 esac
@@ -68,7 +101,11 @@ esac
 if [ ${profileok} -ne 0 ]; then
     echo "project.sh: Using profile: ${PROFILE}"
 
-    CXXFLAGS+=" -Wfatal-errors -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align=strict -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wduplicated-branches -Wduplicated-cond -Wlogical-op -Wuseless-cast -fdiagnostics-color=always"
+    if [ ${CXX} == "g++" ]; then
+        CXXFLAGS+=" -Wfatal-errors -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align=strict -Woverloaded-virtual -Wsuggest-override -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wduplicated-branches -Wduplicated-cond -Wlogical-op -Wuseless-cast -fdiagnostics-color=always"
+    elif [ ${CXX} == "clang++" ]; then
+        CXXFLAGS+=" -fgnuc-version=0 -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wlogical-op-parentheses"
+    fi
     
     USE_SANITIZERS=0
     if [ ${USE_SANITIZERS} -ne 0 ]; then
@@ -79,6 +116,7 @@ if [ ${profileok} -ne 0 ]; then
     CPPFLAGS+=" -I/usr/local/include"
     
     export CPPFLAGS
+    export CXX
     export CXXFLAGS
     export LDFLAGS
     
