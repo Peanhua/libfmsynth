@@ -9,7 +9,13 @@
 
   Complete license can be found in the LICENSE file.
 */
-#ifdef __GNUC__
+#if defined(__clang__)
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wsign-conversion"
+# pragma clang diagnostic ignored "-Wfloat-conversion"
+# pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+# pragma clang diagnostic ignored "-Wdeprecated-enum-enum-conversion"
+#elif defined(__GNUC__)
 # pragma GCC diagnostic push
 # pragma GCC diagnostic ignored "-Wold-style-cast"
 # pragma GCC diagnostic ignored "-Wuseless-cast"

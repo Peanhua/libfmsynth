@@ -104,7 +104,7 @@ if [ ${profileok} -ne 0 ]; then
     if [ ${CXX} == "g++" ]; then
         CXXFLAGS+=" -Wfatal-errors -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align=strict -Woverloaded-virtual -Wsuggest-override -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wduplicated-branches -Wduplicated-cond -Wlogical-op -Wuseless-cast -fdiagnostics-color=always"
     elif [ ${CXX} == "clang++" ]; then
-        CXXFLAGS+=" -fgnuc-version=0 -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wlogical-op-parentheses"
+        CXXFLAGS+=" -W -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat -Wlogical-op-parentheses"
     fi
     
     USE_SANITIZERS=0
