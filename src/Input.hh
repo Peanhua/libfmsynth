@@ -34,6 +34,7 @@ namespace fmsynth
   
     void AddInputNode(Node * node);
     void RemoveInputNode(Node * node);
+    void RemoveAllInputNodes();
 
     void   InputAdd(Node * source, double value);
     void   InputMultiply(Node * source, double value);

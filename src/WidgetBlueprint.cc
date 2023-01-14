@@ -235,7 +235,7 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
       {
         std::lock_guard lock(_blueprint->GetLockMutex());
         _nodes.push_back(nodewidget);
-        _blueprint->AddNode(nodewidget->GetNode());
+        _blueprint->AddNode(nodewidget->GetSharedNode());
       }
     }
 

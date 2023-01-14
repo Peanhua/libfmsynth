@@ -21,7 +21,7 @@
 
 
 WidgetNodeADHSR::WidgetNodeADHSR(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeADHSR, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeADHSR>(), true, true),
     _node_adhsr(dynamic_cast<fmsynth::NodeADHSR *>(GetNode())),
     _ui_node_adhsr(new Ui::NodeADHSR)
 {

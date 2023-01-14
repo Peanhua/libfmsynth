@@ -19,7 +19,7 @@
 
 
 WidgetNodeAdd::WidgetNodeAdd(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeAdd, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeAdd>(), true, true),
     _node_add(dynamic_cast<fmsynth::NodeAdd *>(GetNode())),
     _ui_node_add(new Ui::NodeAdd)
 {

@@ -21,7 +21,7 @@
 
 
 WidgetNodeFileOutput::WidgetNodeFileOutput(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeFileOutput, true, false),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeFileOutput>(), true, false),
     _node_file_output(dynamic_cast<fmsynth::NodeFileOutput *>(GetNode())),
     _ui_node_file_output(new Ui::NodeFileOutput)
 {

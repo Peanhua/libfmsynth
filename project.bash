@@ -49,7 +49,17 @@ case ${PROFILE} in
     dev)
         CXX=g++
         CXXFLAGS="-O0 -g3"
-        LDFLAGS="-O0 -g3" # -fsanitize=address"
+        LDFLAGS="-O0 -g3"
+        ;;
+    address-sanitizer)
+        CXX=g++
+        CXXFLAGS="-O0 -g3 -fsanitize=address"
+        LDFLAGS="-O0 -g3 -fsanitize=address"
+        ;;
+    gcov)
+        CXX=g++
+        CXXFLAGS="-O0 -g3 --coverage"
+        LDFLAGS="-O0 -g3 --coverage"
         ;;
     clang-dev)
         CXX=clang++

@@ -19,7 +19,7 @@
 
 
 WidgetNodeGrowth::WidgetNodeGrowth(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeGrowth, false, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeGrowth>(), false, true),
     _node_growth(dynamic_cast<fmsynth::NodeGrowth *>(GetNode())),
     _ui_node_growth(new Ui::NodeGrowth)
 {

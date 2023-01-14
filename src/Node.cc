@@ -41,12 +41,10 @@ Node::Node(const std::string & type)
 Node::~Node()
 {
   for(auto channel : AllChannels)
-    for(auto n : GetInput(channel)->GetInputNodes())
-      RemoveInputNode(channel, n);
+    GetInput(channel)->RemoveAllInputNodes();
 
   for(auto channel : AllChannels)
-    for(auto n : GetOutput(channel)->GetOutputNodes())
-      RemoveOutputNode(channel, n);
+    GetOutput(channel)->RemoveAllOutputNodes();
 }
 
 

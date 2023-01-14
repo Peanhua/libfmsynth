@@ -42,7 +42,7 @@ namespace fmsynth
       };
     static constexpr std::array AllChannels { Channel::Amplitude, Channel::Form, Channel::Aux };
 
-    static Node * Create(const json11::Json & json);
+    static std::shared_ptr<Node> Create(const json11::Json & json);
     
 
     static std::string ChannelToString(Channel channel)

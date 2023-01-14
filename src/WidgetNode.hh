@@ -27,7 +27,7 @@ class WidgetConnector;
 class WidgetNode : public QWidget
 {
 public:
-  WidgetNode(QWidget * parent, fmsynth::Node * node, bool takes_input, bool has_output);
+  WidgetNode(QWidget * parent, std::shared_ptr<fmsynth::Node> node, bool takes_input, bool has_output);
   virtual ~WidgetNode();
 
   bool eventFilter(QObject * object, QEvent * event) override;
@@ -36,6 +36,7 @@ public:
   bool                 DependsOn(const WidgetNode * node) const;
 
   fmsynth::Node *      GetNode()     const;
+  std::shared_ptr<fmsynth::Node> GetSharedNode() const;
   const std::string &  GetNodeType() const;
   const std::string &  GetNodeId()   const;
   void                 SetNodeId(const std::string & id);
@@ -60,7 +61,6 @@ public:
 
 protected:
   Ui::Node *      _ui_node;
-  fmsynth::Node * _node;
   bool            _click_to_raise;
   bool            _selecting_selects_contents;
   QWidget *       _stack_under;
@@ -74,6 +74,7 @@ protected:
   void ListenWidgetChanges(const std::vector<QWidget *> widgets);
   
 private:
+  std::shared_ptr<fmsynth::Node> _node;
   std::string _node_type;
   std::string _editor_only_node_id;
   QPoint _drag_last_pos;

@@ -20,7 +20,7 @@
 
 
 WidgetNodeOscillator::WidgetNodeOscillator(QWidget * parent, fmsynth::NodeOscillator::Type type)
-  : WidgetNode(parent, new fmsynth::NodeOscillator, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeOscillator>(), true, true),
     _type(type),
     _node_oscillator(dynamic_cast<fmsynth::NodeOscillator *>(GetNode())),
     _ui_node_oscillator(new Ui::NodeOscillator)

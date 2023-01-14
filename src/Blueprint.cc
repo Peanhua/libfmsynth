@@ -33,18 +33,20 @@ Blueprint::Blueprint()
 
 Blueprint::~Blueprint()
 {
+  delete _root;
 }
 
 
-void Blueprint::AddNode(Node * node)
+void Blueprint::AddNode(std::shared_ptr<Node> node)
 {
   if(!node)
     return;
   
-  if(dynamic_cast<NodeConstant *>(node) || dynamic_cast<NodeGrowth *>(node))
-    ConnectNodes(Node::Channel::Form, _root, Node::Channel::Form, node);
-  
-  _nodes.push_back(node);
+  if(dynamic_cast<NodeConstant *>(node.get()) || dynamic_cast<NodeGrowth *>(node.get()))
+    ConnectNodes(Node::Channel::Form, _root, Node::Channel::Form, node.get());
+
+  _shared_nodes.push_back(node);
+  _nodes.push_back(node.get());
   node->SetSamplesPerSecond(_samples_per_second);
 }
 
@@ -54,6 +56,11 @@ void Blueprint::RemoveNode(Node * node)
   auto it = std::find(_nodes.cbegin(), _nodes.cend(), node);
   if(it != _nodes.cend())
     _nodes.erase(it);
+
+  for(unsigned int i = 0; i < _shared_nodes.size(); i++)
+    if(_shared_nodes[i])
+      if(_shared_nodes[i].get() == node)
+        _shared_nodes[i].reset();
 
   ResetExecutionOrder();
 }

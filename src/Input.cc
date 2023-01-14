@@ -79,6 +79,12 @@ void Input::RemoveInputNode(Node * node)
 }
 
 
+void Input::RemoveAllInputNodes()
+{
+  _input_nodes.clear();
+}
+
+
 void Input::InputAdd(Node * source, double value)
 {
   assert(std::find(_input_nodes.cbegin(), _input_nodes.cend(), source) != _input_nodes.cend());

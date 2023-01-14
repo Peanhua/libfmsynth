@@ -21,7 +21,7 @@
 
 
 WidgetNodeRangeConvert::WidgetNodeRangeConvert(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeRangeConvert, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeRangeConvert>(), true, true),
     _node_rangeconvert(dynamic_cast<fmsynth::NodeRangeConvert *>(GetNode())),
     _ui_node_rangeconvert(new Ui::NodeRangeConvert)
 {

@@ -19,7 +19,7 @@
 
 
 WidgetNodeAverage::WidgetNodeAverage(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeAverage, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeAverage>(), true, true),
     _node_average(dynamic_cast<fmsynth::NodeAverage *>(GetNode())),
     _ui_node_average(new Ui::NodeAverage)
 {

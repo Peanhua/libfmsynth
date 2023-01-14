@@ -81,6 +81,10 @@ src/Ui[A-Z]*.hh
 *.trs
 *.pc
 
+# gcov
+*.gcno
+*.gcda
+
 # Other
 .bash_history
 src/images

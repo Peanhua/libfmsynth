@@ -24,6 +24,7 @@ namespace fmsynth
   public:
     void AddOutputNode(Node * node);
     void RemoveOutputNode(Node * node);
+    void RemoveAllOutputNodes();
     
     const std::vector<Node *> & GetOutputNodes() const;
 

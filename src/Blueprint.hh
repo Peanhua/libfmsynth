@@ -30,7 +30,7 @@ namespace fmsynth
     void Clear();
     bool Load(const json11::Json & json);
     
-    void AddNode(Node * node);
+    void AddNode(std::shared_ptr<Node> node);
     void RemoveNode(Node * node);
 
     void ConnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node);
@@ -55,6 +55,7 @@ namespace fmsynth
 
   private:
     NodeConstant *      _root;
+    std::vector<std::shared_ptr<Node>> _shared_nodes; // Both _nodes and _shared_nodes contain the same pointers.
     std::vector<Node *> _nodes;
     std::vector<Node *> _exec_nodes;
     bool                _nodes_sorted;

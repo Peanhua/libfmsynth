@@ -29,7 +29,7 @@ public:
   }
   
 protected:
-  double ProcessInput([[maybe_unused]] double time, double form)
+  double ProcessInput([[maybe_unused]] double time, double form) override
   {
     return form;
   }

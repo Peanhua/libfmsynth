@@ -24,7 +24,7 @@
 
 
 WidgetNodeViewWaveform::WidgetNodeViewWaveform(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeMemoryBuffer, true, false),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeMemoryBuffer>(), true, false),
     _node_memorybuffer(dynamic_cast<fmsynth::NodeMemoryBuffer *>(GetNode())),
     _ui_node_view_waveform(new Ui::NodeViewWaveform)
 {

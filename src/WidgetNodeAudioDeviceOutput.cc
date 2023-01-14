@@ -19,7 +19,7 @@
 
 
 WidgetNodeAudioDeviceOutput::WidgetNodeAudioDeviceOutput(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeAudioDeviceOutput, true, false),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeAudioDeviceOutput>(), true, false),
     _node_audio_device_output(dynamic_cast<fmsynth::NodeAudioDeviceOutput *>(GetNode())),
     _ui_node_audio_device_output(new Ui::NodeAudioDeviceOutput)
 {

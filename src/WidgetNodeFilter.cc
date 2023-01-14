@@ -26,7 +26,7 @@ WidgetNodeFilter::WidgetNodeFilter(QWidget * parent)
 
 
 WidgetNodeFilter::WidgetNodeFilter(QWidget * parent, fmsynth::NodeFilter::Type type)
-  : WidgetNode(parent, new fmsynth::NodeFilter, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeFilter>(), true, true),
     _type(type),
     _node_filter(dynamic_cast<fmsynth::NodeFilter *>(GetNode())),
     _ui_node_filter(new Ui::NodeFilter)

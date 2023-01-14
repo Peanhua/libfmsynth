@@ -19,7 +19,7 @@
 
 
 WidgetNodeMultiply::WidgetNodeMultiply(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeMultiply, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeMultiply>(), true, true),
     _node_multiply(dynamic_cast<fmsynth::NodeMultiply *>(GetNode())),
     _ui_node_multiply(new Ui::NodeMultiply)
 {

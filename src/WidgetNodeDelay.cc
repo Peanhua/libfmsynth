@@ -19,7 +19,7 @@
 
 
 WidgetNodeDelay::WidgetNodeDelay(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeDelay, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeDelay>(), true, true),
     _node_delay(dynamic_cast<fmsynth::NodeDelay *>(GetNode())),
     _ui_node_delay(new Ui::NodeDelay)
 {

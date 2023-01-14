@@ -27,8 +27,15 @@ void Output::AddOutputNode(Node * node)
 void Output::RemoveOutputNode(Node * node)
 {
   auto it = std::find(_output_nodes.cbegin(), _output_nodes.cend(), node);
+  assert(it != _output_nodes.cend());
   if(it != _output_nodes.cend())
     _output_nodes.erase(it);
+}
+
+
+void Output::RemoveAllOutputNodes()
+{
+  _output_nodes.clear();
 }
 
 

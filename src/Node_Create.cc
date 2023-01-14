@@ -30,42 +30,42 @@
 using namespace fmsynth;
 
 
-Node * Node::Create(const json11::Json & json)
+std::shared_ptr<Node> Node::Create(const json11::Json & json)
 {
   assert(json["node_type"].is_string());
   auto type = json["node_type"].string_value();
 
-  Node * node = nullptr;
+  std::shared_ptr<Node> node;
   if(type == "Constant")
-    node = new NodeConstant();
+    node = std::make_shared<NodeConstant>();
   else if(type == "Growth")
-    node = new NodeGrowth();
+    node = std::make_shared<NodeGrowth>();
   else if(type == "FileOutput")
-    node = new NodeFileOutput();
+    node = std::make_shared<NodeFileOutput>();
   else if(type == "AudioDeviceOutput")
-    node = new NodeAudioDeviceOutput();
+    node = std::make_shared<NodeAudioDeviceOutput>();
   else if(type == "Oscillator" || type == "Sine" || type == "Pulse" || type == "Triangle" || type == "Sawtooth" || type == "Noise")
-    node = new NodeOscillator();
+    node = std::make_shared<NodeOscillator>();
   else if(type == "ADHSR")
-    node = new NodeADHSR();
+    node = std::make_shared<NodeADHSR>();
   else if(type == "Add")
-    node = new NodeAdd();
+    node = std::make_shared<NodeAdd>();
   else if(type == "Multiply")
-    node = new NodeMultiply();
+    node = std::make_shared<NodeMultiply>();
   else if(type == "Average")
-    node = new NodeAverage();
+    node = std::make_shared<NodeAverage>();
   else if(type == "Filter" || type == "LowPass" || type == "HighPass")
-    node = new NodeFilter();
+    node = std::make_shared<NodeFilter>();
   else if(type == "RangeConvert")
-    node = new NodeRangeConvert();
+    node = std::make_shared<NodeRangeConvert>();
   else if(type == "Clamp")
-    node = new NodeClamp();
+    node = std::make_shared<NodeClamp>();
   else if(type == "Reciprocal")
-    node = new NodeReciprocal();
+    node = std::make_shared<NodeReciprocal>();
   else if(type == "Delay")
-    node = new NodeDelay();
+    node = std::make_shared<NodeDelay>();
   else if(type == "Inverse")
-    node = new NodeInverse();
+    node = std::make_shared<NodeInverse>();
   else if(type == "Comment" || type == "ViewWaveform")
     ;
   else

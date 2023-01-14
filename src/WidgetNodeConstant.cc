@@ -19,7 +19,7 @@
 
 
 WidgetNodeConstant::WidgetNodeConstant(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeConstant, false, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeConstant>(), false, true),
     _node_constant(dynamic_cast<fmsynth::NodeConstant *>(GetNode())),
     _ui_node_constant(new Ui::NodeConstant)
 {

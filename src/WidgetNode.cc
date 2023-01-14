@@ -29,13 +29,13 @@
 #include "QtIncludeEnd.hh"
 
 
-WidgetNode::WidgetNode(QWidget * parent, fmsynth::Node * node, bool takes_input, bool has_output)
+WidgetNode::WidgetNode(QWidget * parent, std::shared_ptr<fmsynth::Node> node, bool takes_input, bool has_output)
   : QWidget(parent),
     _ui_node(new Ui::Node),
-    _node(node),
     _click_to_raise(true),
     _selecting_selects_contents(false),
     _stack_under(nullptr),
+    _node(node),
     _node_type("Unknown"),
     _editor_only_node_id(std::to_string(reinterpret_cast<intptr_t>(this))),
     _multi_input_amplitude(false),
@@ -94,6 +94,12 @@ WidgetNode::~WidgetNode()
 
 
 fmsynth::Node * WidgetNode::GetNode() const
+{
+  return _node.get();
+}
+
+
+std::shared_ptr<fmsynth::Node> WidgetNode::GetSharedNode() const
 {
   return _node;
 }

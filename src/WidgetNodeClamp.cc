@@ -20,7 +20,7 @@
 
 
 WidgetNodeClamp::WidgetNodeClamp(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeClamp, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeClamp>(), true, true),
     _node_clamp(dynamic_cast<fmsynth::NodeClamp *>(GetNode())),
     _ui_node_clamp(new Ui::NodeClamp)
 {

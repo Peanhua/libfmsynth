@@ -77,7 +77,11 @@ static void Test()
     o2.AddInputNode(fmsynth::Node::Channel::Form, &o1);
     testAssert("After connecting two nodes, the node can be seen in the other node as output node.", o1.GetAllOutputNodes().contains(&o2));
     o1.RemoveOutputNode(fmsynth::Node::Channel::Form, &o2);
-    o2.RemoveOutputNode(fmsynth::Node::Channel::Form, &o1);
+    o2.RemoveInputNode(fmsynth::Node::Channel::Form, &o1);
     testAssert("After disconnecting two nodes, the node can no longer be seen in the other node as output node.", !o1.GetAllOutputNodes().contains(&o2));
   }
+
+  for(auto [node, type] : nodes)
+    delete node;
+  delete root;
 }

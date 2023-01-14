@@ -35,24 +35,24 @@ static void Test()
 
   {
     fmsynth::Blueprint bp;
-    fmsynth::NodeConstant node1;
+    auto node1 = std::make_shared<fmsynth::NodeConstant>();
     {
-      bp.AddNode(&node1);
-      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node1.GetType()).size() > 0);
+      bp.AddNode(node1);
+      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node1->GetType()).size() > 0);
     }
-    fmsynth::NodeInverse node2;
+    auto node2 = std::make_shared<fmsynth::NodeInverse>();
     {
-      bp.AddNode(&node2);
-      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node2.GetType()).size() > 0);
+      bp.AddNode(node2);
+      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node2->GetType()).size() > 0);
     }
   }
 
   {
     fmsynth::Blueprint bp;
-    fmsynth::NodeConstant node;
-    node.SetId("owerowir");
-    bp.AddNode(&node);
-    testAssert("GetNode() returns added node.", bp.GetNode(node.GetId()));
+    auto node = std::make_shared<fmsynth::NodeConstant>();
+    node->SetId("owerowir");
+    bp.AddNode(node);
+    testAssert("GetNode() returns added node.", bp.GetNode(node->GetId()));
   }
 
   {
@@ -243,6 +243,7 @@ static void Test()
           else
             testSkip(testname, "No test data defined.");
         }
+        delete json;
       }
   }
 }

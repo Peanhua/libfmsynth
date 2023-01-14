@@ -19,7 +19,7 @@
 
 
 WidgetNodeInverse::WidgetNodeInverse(QWidget * parent)
-  : WidgetNode(parent, new fmsynth::NodeInverse, true, true),
+  : WidgetNode(parent, std::make_shared<fmsynth::NodeInverse>(), true, true),
     _node_inverse(dynamic_cast<fmsynth::NodeInverse *>(GetNode())),
     _ui_node_inverse(new Ui::NodeInverse)
 {
