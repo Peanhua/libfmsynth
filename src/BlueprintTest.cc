@@ -35,15 +35,15 @@ static void Test()
 
   {
     fmsynth::Blueprint bp;
+    fmsynth::NodeConstant node1;
     {
-      fmsynth::NodeConstant node;
-      bp.AddNode(&node);
-      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node.GetType()).size() > 0);
+      bp.AddNode(&node1);
+      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node1.GetType()).size() > 0);
     }
+    fmsynth::NodeInverse node2;
     {
-      fmsynth::NodeInverse node;
-      bp.AddNode(&node);
-      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node.GetType()).size() > 0);
+      bp.AddNode(&node2);
+      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node2.GetType()).size() > 0);
     }
   }
 
