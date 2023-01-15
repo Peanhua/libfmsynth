@@ -69,6 +69,8 @@ BUILT_SOURCES =
 
 CLEANFILES = 
 
+MOSTLYCLEANFILES = *.gcda *.gcno *.gcov
+
 
 # libfmsynth:
 libfmsynth_la_SOURCES =			\
