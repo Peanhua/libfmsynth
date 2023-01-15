@@ -139,7 +139,7 @@ void Settings::Set(const std::string & name, int value)
 
 void Settings::Set(const std::string & name, double value)
 {
-  if(_doubles[name] != value)
+  if(std::abs(_doubles[name] - value) > 0.0001)
     _dirty = true;
   _doubles[name] = value;
 }
