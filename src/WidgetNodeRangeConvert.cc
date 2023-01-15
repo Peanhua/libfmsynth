@@ -97,7 +97,7 @@ void WidgetNodeRangeConvert::NodeToWidget()
 void WidgetNodeRangeConvert::WidgetToNode()
 {
   WidgetNode::WidgetToNode();
-  auto GetRange = [this](QWidget * widget, QLineEdit * wmin, QLineEdit * wmax)
+  auto GetRange = [](QWidget * widget, QLineEdit * wmin, QLineEdit * wmax)
   {
     double min = 0, max = 0;
     auto w = dynamic_cast<QComboBox *>(widget);

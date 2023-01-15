@@ -323,7 +323,7 @@ void WidgetBlueprint::DeleteLink(std::function<bool(const Link *)> match_callbac
 
 void WidgetBlueprint::DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel)
 {
-  DeleteLink([this, node, channel](const Link * link)
+  DeleteLink([node, channel](const Link * link)
   {
     return
       node    == link->GetToNode() &&
@@ -334,7 +334,7 @@ void WidgetBlueprint::DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel 
 
 void WidgetBlueprint::DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel, WidgetNode * other)
 {
-  DeleteLink([this, node, channel, other](const Link * link)
+  DeleteLink([node, channel, other](const Link * link)
   {
     return
       node    == link->GetToNode() &&
@@ -348,7 +348,7 @@ void WidgetBlueprint::DeleteOutputLink(WidgetNode * node, fmsynth::Node::Channel
 {
   assert(channel == fmsynth::Node::Channel::Form);
 
-  DeleteLink([this, node, channel](const Link * link)
+  DeleteLink([node, channel](const Link * link)
   {
     return
       node    == link->GetFromNode() &&
