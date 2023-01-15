@@ -53,8 +53,13 @@ case ${PROFILE} in
         ;;
     address-sanitizer)
         CXX=g++
-        CXXFLAGS="-O0 -g3 -fsanitize=address"
-        LDFLAGS="-O0 -g3 -fsanitize=address"
+        CXXFLAGS="-O0 -g3 -fsanitize=address -fno-sanitize-recover=all"
+        LDFLAGS="-O0 -g3 -fsanitize=address -fno-sanitize-recover=all"
+        ;;
+    undefined-sanitizer)
+        CXX=g++
+        CXXFLAGS="-O0 -g3 -fsanitize=undefined -fno-sanitize-recover=all"
+        LDFLAGS="-O0 -g3 -fsanitize=undefined -fno-sanitize-recover=all"
         ;;
     gcov)
         CXX=g++

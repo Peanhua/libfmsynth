@@ -57,4 +57,7 @@ int main()
   return 0;
 }
 
+
+#define FloatEqual(a, b, tolerance) (std::abs(a - b) <= tolerance)
+
 #endif

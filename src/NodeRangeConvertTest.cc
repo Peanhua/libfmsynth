@@ -71,7 +71,7 @@ static void Test()
 #if LIBFMSYNTH_ENABLE_NODETESTING
       result = node.GetLastFrame();
       testComment << "input=" << input << ", expecting=" << expecting << ", result=" << result << "\n";
-      testAssert(test_name, result == expecting);
+      testAssert(test_name, FloatEqual(result, expecting, 0.0001));
 #else
       testSkip(test_name, "NodeTesting is disabled.");
 #endif

@@ -35,7 +35,7 @@ struct Configuration
   AudioFile<double> * output_file   = nullptr;
 };
 
-std::optional<Configuration> ParseCommandline(int argc, char * argv[])
+static std::optional<Configuration> ParseCommandline(int argc, char * argv[])
 {
   Configuration rv;
   

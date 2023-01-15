@@ -25,6 +25,7 @@
 # pragma GCC diagnostic ignored "-Wfloat-conversion"
 # pragma GCC diagnostic ignored "-Wclass-memaccess"
 # pragma GCC diagnostic ignored "-Wdeprecated-copy"
+# pragma GCC diagnostic ignored "-Wpadded"
 # if __GNUC__ >= 11
 #  pragma GCC diagnostic ignored "-Wdeprecated-enum-enum-conversion"
 # endif
