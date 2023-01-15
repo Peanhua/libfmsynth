@@ -20,12 +20,13 @@ namespace fmsynth
   {
   public:
     Range(double min, double max);
-    double ConvertTo(double value, const Range & to);
 
-    double GetMin() const;
-    double GetMax() const;
+    [[nodiscard]] double ConvertTo(double value, const Range & to);
 
-    void Set(double min, double max);
+    [[nodiscard]] double GetMin() const;
+    [[nodiscard]] double GetMax() const;
+
+    void                 Set(double min, double max);
   
   private:
     double _min;
@@ -38,18 +39,18 @@ namespace fmsynth
   public:
     NodeRangeConvert();
 
-    const Range & GetFrom() const; // todo: Add the "Range" word to these method names: "GetRangeFrom()" etc.
-    const Range & GetTo()   const;
-    void          SetFrom(const Range & range);
-    void          SetTo(const Range & range);
+    [[nodiscard]] const Range & GetFrom() const; // todo: Add the "Range" word to these method names: "GetRangeFrom()" etc.
+    [[nodiscard]] const Range & GetTo()   const;
+    void                        SetFrom(const Range & range);
+    void                        SetTo(const Range & range);
 
-    Input::Range GetFormOutputRange() const override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const override;
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form)       override;
+    [[nodiscard]] double ProcessInput(double time, double form)       override;
   
   private:
     Range _from;

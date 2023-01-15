@@ -42,10 +42,10 @@ namespace fmsynth
       };
     static constexpr std::array AllChannels { Channel::Amplitude, Channel::Form, Channel::Aux };
 
-    static std::shared_ptr<Node> Create(const json11::Json & json);
+    [[nodiscard]] static std::shared_ptr<Node> Create(const json11::Json & json);
     
 
-    static std::string ChannelToString(Channel channel)
+    [[nodiscard]] static std::string ChannelToString(Channel channel)
     {
       switch(channel)
         {
@@ -56,7 +56,7 @@ namespace fmsynth
       assert(false);
       return "FATAL ERROR, ILLEGAL CHANNEL ENUM";
     }
-    static Channel StringToChannel(const std::string & string)
+    [[nodiscard]] static Channel StringToChannel(const std::string & string)
     {
       if(string == "Amplitude") return Channel::Amplitude;
       else if(string == "Form") return Channel::Form;
@@ -69,38 +69,38 @@ namespace fmsynth
     Node(const std::string & type);
     virtual ~Node();
 
-    const std::string & GetType() const;
-    const std::string & GetId()   const;
-    void                SetId(const std::string & id);
+    [[nodiscard]] const std::string & GetType() const;
+    [[nodiscard]] const std::string & GetId()   const;
+    void                              SetId(const std::string & id);
 
-    virtual Input::Range GetInputRange(Channel channel) const;
-    virtual Input::Range GetFormOutputRange()     const;
+    [[nodiscard]] virtual Input::Range GetInputRange(Channel channel) const;
+    [[nodiscard]] virtual Input::Range GetFormOutputRange()     const;
 
-    void         SetSamplesPerSecond(unsigned int samples_per_second);
-    unsigned int GetSamplesPerSecond() const;
+    void                       SetSamplesPerSecond(unsigned int samples_per_second);
+    [[nodiscard]] unsigned int GetSamplesPerSecond() const;
 
     void    PushInput(Node * pusher, Channel channel, double value);
     void    FinishFrame(long time_index);
 
 #if LIBFMSYNTH_ENABLE_NODETESTING
-    double  GetLastFrame() const;
+    [[nodiscard]] double  GetLastFrame() const;
 #endif
     
-    bool    IsEnabled() const;
-    void    SetEnabled(const Node * root, bool enabled);
+    [[nodiscard]] bool    IsEnabled() const;
+    void                  SetEnabled(const Node * root, bool enabled);
 
-    bool    IsFinished() const;
-    void    SetIsFinished();
+    [[nodiscard]] bool    IsFinished() const;
+    void                  SetIsFinished();
 
-    std::set<Node *> GetAllOutputNodes() const;
-    virtual void     ResetTime();
+    [[nodiscard]] std::set<Node *> GetAllOutputNodes() const;
+    virtual void                   ResetTime();
 
-    virtual json11::Json to_json() const;
-    virtual void         SetFromJson(const json11::Json & json);
+    [[nodiscard]] virtual json11::Json to_json() const;
+    virtual void                       SetFromJson(const json11::Json & json);
   
-    const Input * GetInput(Channel channel) const;
-    Input *       GetInput(Channel channel);
-    Output *      GetOutput(Channel channel);
+    [[nodiscard]] const Input * GetInput(Channel channel) const;
+    [[nodiscard]] Input *       GetInput(Channel channel);
+    [[nodiscard]] Output *      GetOutput(Channel channel);
 
     void AddInputNode(Channel from_channel, Node * from_node);
     void AddOutputNode(Channel to_channel, Node * to_node);

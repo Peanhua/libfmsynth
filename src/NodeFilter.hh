@@ -27,19 +27,19 @@ namespace fmsynth
 
     NodeFilter();
 
-    Type   GetType() const;
-    double GetFilterValue() const;
-    void   SetType(Type type);
-    void   SetFilterValue(double value);
+    [[nodiscard]] Type   GetType() const;
+    [[nodiscard]] double GetFilterValue() const;
+    void                 SetType(Type type);
+    void                 SetFilterValue(double value);
 
-    Input::Range GetInputRange(Channel channel) const override;
-    Input::Range GetFormOutputRange() const override;
+    [[nodiscard]] Input::Range GetInputRange(Channel channel) const override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const override;
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
 
   private:
     Type   _type;
@@ -50,8 +50,8 @@ namespace fmsynth
     double _highpass_previous_input;
     double _highpass_previous_filtered;
 
-    double LowPass(double filter, double input);
-    double HighPass(double filter, double input);
+    [[nodiscard]] double LowPass(double filter, double input);
+    [[nodiscard]] double HighPass(double filter, double input);
   };
 }
 

@@ -35,10 +35,10 @@ public:
   void Start();
   void Stop();
 
-  void                SetAudioDevice(int device_id);
-  const AudioDevice * GetAudioDevice() const;
-  bool IsPlaying() const;
-  void SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program);
+  void                              SetAudioDevice(int device_id);
+  [[nodiscard]] const AudioDevice * GetAudioDevice() const;
+  [[nodiscard]] bool                IsPlaying() const;
+  void                              SetNextProgram(std::shared_ptr<fmsynth::Blueprint> program);
 
 private:
   // Caller thread data:

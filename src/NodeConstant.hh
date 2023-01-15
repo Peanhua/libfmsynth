@@ -23,16 +23,16 @@ namespace fmsynth
   public:
     NodeConstant();
 
-    ConstantValue &       GetValue();
-    const ConstantValue & GetValue() const;
+    [[nodiscard]] ConstantValue &       GetValue();
+    [[nodiscard]] const ConstantValue & GetValue() const;
 
-    Input::Range GetFormOutputRange() const             override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const             override;
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    [[         ]] void         SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form)       override;
+    [[nodiscard]] double ProcessInput(double time, double form)       override;
   
   private:
     ConstantValue _value;

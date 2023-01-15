@@ -30,11 +30,11 @@ public:
   void SetOwner(WidgetBlueprint * blueprint, WidgetNode * node);
   void SetRangeFilename(const std::string & range_filename);
   
-  bool IsOptional() const;
-  void SetIsOptional();
+  [[nodiscard]] bool IsOptional() const;
+  void               SetIsOptional();
 
-  bool IsConnected() const;
-  void SetIsConnected(bool is_connected);
+  [[nodiscard]] bool IsConnected() const;
+  void               SetIsConnected(bool is_connected);
 
   void UpdateVisuals();
   

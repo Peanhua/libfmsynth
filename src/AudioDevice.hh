@@ -39,13 +39,13 @@ public:
   void Play(std::shared_ptr<fmsynth::Blueprint> blueprint);
   void Stop();
 
-  const std::string                                   GetDeviceName()      const;
-  const std::vector<std::string> &                    GetDeviceNames()     const;
-  unsigned int                                        GetDefaultDeviceId() const;
-  const std::vector<unsigned int> &                   GetSampleRates()     const;
-  std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
-  const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()       const;
-  const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()      const;
+  [[nodiscard]] const std::string                                   GetDeviceName()      const;
+  [[nodiscard]] const std::vector<std::string> &                    GetDeviceNames()     const;
+  [[nodiscard]] unsigned int                                        GetDefaultDeviceId() const;
+  [[nodiscard]] const std::vector<unsigned int> &                   GetSampleRates()     const;
+  [[nodiscard]] std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
+  [[nodiscard]] const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()       const;
+  [[nodiscard]] const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()      const;
 
 private:
   RtAudio *                 _dac;

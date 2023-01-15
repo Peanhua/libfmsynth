@@ -31,10 +31,10 @@ public:
   void Set(const std::string & name, double value);
   void Set(const std::string & name, const std::string & value);
 
-  bool                GetBool(const std::string & name)   const;
-  int                 GetInt(const std::string & name)    const;
-  double              GetDouble(const std::string & name) const;
-  const std::string & GetString(const std::string & name) const;
+  [[nodiscard]] bool                GetBool(const std::string & name)   const;
+  [[nodiscard]] int                 GetInt(const std::string & name)    const;
+  [[nodiscard]] double              GetDouble(const std::string & name) const;
+  [[nodiscard]] const std::string & GetString(const std::string & name) const;
   
 private:
   std::string                        _filename;

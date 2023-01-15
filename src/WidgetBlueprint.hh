@@ -42,8 +42,8 @@ public:
   void dragLeaveEvent(QDragLeaveEvent *event)        override;
   bool eventFilter(QObject * object, QEvent * event) override;
 
-  WidgetMainWindow * GetMainWindow() const;
-  QScrollArea *      GetScrollArea() const;
+  [[nodiscard]] WidgetMainWindow * GetMainWindow() const;
+  [[nodiscard]] QScrollArea *      GetScrollArea() const;
   
   void SetFilename(const std::string & filename);
   void Save();
@@ -52,36 +52,36 @@ public:
   void Load(const std::string & filename);
   void Load(const json11::Json & json);
   void Reset();
-  const std::string & GetFilename() const;
+  [[nodiscard]] const std::string & GetFilename() const;
   
-  std::shared_ptr<fmsynth::Blueprint> GetBlueprint() const;
-  WidgetNode *         AddNode(int x, int y, const std::string & node_type);
-  void                 AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel);
-  void                 DeleteNode(WidgetNode * node);
-  void                 DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel);
-  void                 DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel, WidgetNode * other);
-  void                 DeleteOutputLink(WidgetNode * node, fmsynth::Node::Channel channel);
-  unsigned int         CountInputLinks(WidgetNode * to_node, fmsynth::Node::Channel to_channel)          const;
-  unsigned int         CountOutputLinks(WidgetNode * from_node, fmsynth::Node::Channel from_channel)     const;
-  std::vector<Link *>  GetInputLinks(const WidgetNode * to_node, fmsynth::Node::Channel to_channel)      const;
-  std::vector<Link *>  GetOutputLinks(const WidgetNode * from_node, fmsynth::Node::Channel from_channel) const;
-  void                 UpdateLinks(const WidgetNode * node);
-  bool                 CanRun() const;
-  std::shared_ptr<fmsynth::Blueprint> Build() const;
-  bool                 IsDirty() const;
-  void                 SetDirty(bool dirty);
-  void                 UpdateWindowTitle();
+  [[nodiscard]] std::shared_ptr<fmsynth::Blueprint> GetBlueprint() const;
+  [[nodiscard]] WidgetNode *                        AddNode(int x, int y, const std::string & node_type);
+  void                               AddLink(WidgetNode * from_node, WidgetNode * to_node, fmsynth::Node::Channel to_channel);
+  void                               DeleteNode(WidgetNode * node);
+  void                               DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel);
+  void                               DeleteInputLink(WidgetNode * node, fmsynth::Node::Channel channel, WidgetNode * other);
+  void                               DeleteOutputLink(WidgetNode * node, fmsynth::Node::Channel channel);
+  [[nodiscard]] unsigned int         CountInputLinks(WidgetNode * to_node, fmsynth::Node::Channel to_channel)          const;
+  [[nodiscard]] unsigned int         CountOutputLinks(WidgetNode * from_node, fmsynth::Node::Channel from_channel)     const;
+  [[nodiscard]] std::vector<Link *>  GetInputLinks(const WidgetNode * to_node, fmsynth::Node::Channel to_channel)      const;
+  [[nodiscard]] std::vector<Link *>  GetOutputLinks(const WidgetNode * from_node, fmsynth::Node::Channel from_channel) const;
+  void                               UpdateLinks(const WidgetNode * node);
+  [[nodiscard]] bool                 CanRun() const;
+  [[nodiscard]] std::shared_ptr<fmsynth::Blueprint> Build() const;
+  [[nodiscard]] bool                 IsDirty() const;
+  void                               SetDirty(bool dirty);
+  void                               UpdateWindowTitle();
 
   void PostEdit();
   void PostEdit(QWidget * edited_node);
   void PostEdit(const std::set<QWidget *> & edited_nodes);
   
-  void Undo();
-  void Redo();
-  bool CanUndo() const;
-  bool CanRedo() const;
+  void               Undo();
+  void               Redo();
+  [[nodiscard]] bool CanUndo() const;
+  [[nodiscard]] bool CanRedo() const;
 
-  unsigned int GetSelectedNodesCount() const;
+  [[nodiscard]] unsigned int GetSelectedNodesCount() const;
 
   void NodeSelectionAll();
   void NodeSelectionAdd(WidgetNode * node);
@@ -93,9 +93,9 @@ public:
 
   void SetSnapToGrid(bool snap_to_grid);
 
-  std::vector<WidgetNode *> GetOverlappingNodes(const WidgetNode * for_node) const;
+  [[nodiscard]] std::vector<WidgetNode *> GetOverlappingNodes(const WidgetNode * for_node) const;
   
-  json11::Json to_json();
+  [[nodiscard]] json11::Json to_json();
   
 private:
   std::string                         _filename;

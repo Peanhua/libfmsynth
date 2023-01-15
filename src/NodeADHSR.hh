@@ -29,21 +29,21 @@ namespace fmsynth
     NodeADHSR();
 
     void      Set(double attack_time, double decay_time, double hold_time, double sustain_level, double release_time, EndAction end_action);
-    double    GetAttackTime()   const;
-    double    GetDecayTime()    const;
-    double    GetHoldTime()     const;
-    double    GetSustainLevel() const;
-    double    GetReleaseTime()  const;
-    EndAction GetEndAction()    const;
+    [[nodiscard]] double    GetAttackTime()   const;
+    [[nodiscard]] double    GetDecayTime()    const;
+    [[nodiscard]] double    GetHoldTime()     const;
+    [[nodiscard]] double    GetSustainLevel() const;
+    [[nodiscard]] double    GetReleaseTime()  const;
+    [[nodiscard]] EndAction GetEndAction()    const;
 
-    void         ResetTime()                override;
-    Input::Range GetFormOutputRange() const override;
+    void                       ResetTime()                override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const override;
   
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
 
   private:
     double    _attack_time;
@@ -54,11 +54,11 @@ namespace fmsynth
     EndAction _end_action;
     double    _timeshift;
 
-    double Attack(double time);
-    double Decay(double time);
-    double Sustain(double time);
-    double Release(double time);
-    double End(double time);
+    [[nodiscard]] double Attack(double time);
+    [[nodiscard]] double Decay(double time);
+    [[nodiscard]] double Sustain(double time);
+    [[nodiscard]] double Release(double time);
+    [[nodiscard]] double End(double time);
   };
 }
 

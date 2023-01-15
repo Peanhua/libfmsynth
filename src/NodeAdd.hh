@@ -22,14 +22,14 @@ namespace fmsynth
   public:
     NodeAdd();
 
-    double GetValue() const;
-    void   SetValue(double value);
+    [[nodiscard]] double GetValue() const;
+    void                 SetValue(double value);
   
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form)       override;
+    [[nodiscard]] double ProcessInput(double time, double form)       override;
   
   private:
     double _value;

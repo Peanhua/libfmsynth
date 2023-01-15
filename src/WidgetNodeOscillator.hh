@@ -31,9 +31,9 @@ private:
   fmsynth::NodeOscillator *     _node_oscillator;
   Ui::NodeOscillator *          _ui_node_oscillator;
 
-  std::string                   OscillatorTypeString(fmsynth::NodeOscillator::Type type) const;
-  fmsynth::NodeOscillator::Type OscillatorTypeFromString(const std::string & string) const;
-  void                          UpdateOscillatorType();
+  [[nodiscard]] std::string                   OscillatorTypeString(fmsynth::NodeOscillator::Type type) const;
+  [[nodiscard]] fmsynth::NodeOscillator::Type OscillatorTypeFromString(const std::string & string) const;
+  void                                        UpdateOscillatorType();
 };
 
 

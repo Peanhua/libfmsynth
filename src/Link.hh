@@ -31,11 +31,11 @@ public:
 
   void Update(const WidgetNode * node);
 
-  WidgetNode *           GetFromNode()  const;
-  WidgetNode *           GetToNode()    const;
-  fmsynth::Node::Channel GetToChannel() const;
+  [[nodiscard]] WidgetNode *           GetFromNode()  const;
+  [[nodiscard]] WidgetNode *           GetToNode()    const;
+  [[nodiscard]] fmsynth::Node::Channel GetToChannel() const;
   
-  json11::Json to_json() const;
+  [[nodiscard]] json11::Json to_json() const;
   
 private:
   WidgetBlueprint *      _blueprint;
@@ -44,8 +44,8 @@ private:
   fmsynth::Node::Channel _to_channel;
   WidgetLine *           _line;
 
-  QPoint              GetFromPosition() const;
-  QPoint              GetToPosition()   const;
+  [[nodiscard]] QPoint              GetFromPosition() const;
+  [[nodiscard]] QPoint              GetToPosition()   const;
 };
 
 #endif

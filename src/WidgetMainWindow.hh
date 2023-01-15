@@ -31,7 +31,7 @@ public:
 
   void UpdateToolbarButtonStates();
 
-  QWidget * GetCommentBorderWidget();
+  [[nodiscard]] QWidget * GetCommentBorderWidget();
   
   void closeEvent(QCloseEvent * event) override;
 
@@ -41,14 +41,14 @@ private:
   std::vector<std::string> _recent_files;
   std::vector<QAction *>   _recent_files_actions;
   
-  void BuildAndPlay();
-  void ThemeDefault();
-  void ThemeDark();
-  void ToggleCategoryLayout(const std::string & category);
-  void ToggleCategoryExpand(const std::string & category);
-  void HelpAbout();
-  bool AskUserConfirmation();
-  void SaveWindowSettings();
+  void               BuildAndPlay();
+  void               ThemeDefault();
+  void               ThemeDark();
+  void               ToggleCategoryLayout(const std::string & category);
+  void               ToggleCategoryExpand(const std::string & category);
+  void               HelpAbout();
+  [[nodiscard]] bool AskUserConfirmation();
+  void               SaveWindowSettings();
 };
 
 #endif

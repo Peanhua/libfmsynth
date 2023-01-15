@@ -32,8 +32,8 @@ public:
   void         NodeToWidget() override;
   void         WidgetToNode() override;
   
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+  [[nodiscard]] json11::Json to_json() const                        override;
+  void                       SetFromJson(const json11::Json & json) override;
 
 private:
   fmsynth::NodeADHSR * _node_adhsr;

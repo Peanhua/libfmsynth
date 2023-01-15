@@ -103,7 +103,7 @@ const std::vector<unsigned int> & AudioDevice::GetSampleRates() const
 
 void AudioDevice::Playback(double * output_buffer, unsigned int frame_count)
 {
-  if(!_blueprint || _nodes.size() == 0)
+  if(!_blueprint || _nodes.empty())
     return;
   
   std::lock_guard lock(_blueprint->GetLockMutex());

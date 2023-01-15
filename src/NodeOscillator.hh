@@ -31,18 +31,18 @@ namespace fmsynth
   
     NodeOscillator();
 
-    Type        GetType()                                 const;
-    std::string TypeToName(Type type)                     const;
-    Type        NameToType(const std::string & type_name) const;
-    double      GetPulseDutyCycle()                       const;
-    void        SetType(Type type);
-    void        SetPulseDutyCycle(double pulse_duty_cycle);
+    [[nodiscard]] Type        GetType()                                 const;
+    [[nodiscard]] std::string TypeToName(Type type)                     const;
+    [[nodiscard]] Type        NameToType(const std::string & type_name) const;
+    [[nodiscard]] double      GetPulseDutyCycle()                       const;
+    void                      SetType(Type type);
+    void                      SetPulseDutyCycle(double pulse_duty_cycle);
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
 
   private:
     Type   _type;

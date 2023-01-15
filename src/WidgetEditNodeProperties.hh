@@ -29,8 +29,8 @@ private:
   Ui::EditNodeProperties * _ui;
   WidgetNode *             _nodewidget;
   
-  void ApplyChanges();
-  std::vector<std::string> GetExistingIds() const;
+  void                                   ApplyChanges();
+  [[nodiscard]] std::vector<std::string> GetExistingIds() const;
 };
 
 #endif

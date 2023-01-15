@@ -22,17 +22,17 @@ namespace fmsynth
   public:
     NodeDelay();
 
-    double GetDelayTime()            const;
-    void   SetDelayTime(double time);
+    [[nodiscard]] double GetDelayTime()            const;
+    void                 SetDelayTime(double time);
 
-    void         ResetTime()                            override;
-    Input::Range GetFormOutputRange() const             override;
+    void                       ResetTime()                            override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const             override;
   
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form)       override;
+    [[nodiscard]] double ProcessInput(double time, double form)       override;
   
   private:
     double             _delay_time;

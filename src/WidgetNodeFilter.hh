@@ -33,9 +33,9 @@ private:
   fmsynth::NodeFilter *     _node_filter;
   Ui::NodeFilter *          _ui_node_filter;
 
-  std::string               FilterTypeString(fmsynth::NodeFilter::Type type) const;
-  fmsynth::NodeFilter::Type FilterTypeFromString(const std::string & string) const;
-  void                      UpdateFilterType();
+  [[nodiscard]] std::string               FilterTypeString(fmsynth::NodeFilter::Type type) const;
+  [[nodiscard]] fmsynth::NodeFilter::Type FilterTypeFromString(const std::string & string) const;
+  void                                    UpdateFilterType();
 };
 
 

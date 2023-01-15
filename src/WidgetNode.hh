@@ -30,34 +30,34 @@ public:
   WidgetNode(QWidget * parent, std::shared_ptr<fmsynth::Node> node, bool takes_input, bool has_output);
   virtual ~WidgetNode();
 
-  bool eventFilter(QObject * object, QEvent * event) override;
-  void resizeEvent(QResizeEvent * event)             override;
+  [[nodiscard]] bool eventFilter(QObject * object, QEvent * event) override;
+  void               resizeEvent(QResizeEvent * event)             override;
 
-  bool                 DependsOn(const WidgetNode * node) const;
+  [[nodiscard]] bool                 DependsOn(const WidgetNode * node) const;
 
-  fmsynth::Node *      GetNode()     const;
-  std::shared_ptr<fmsynth::Node> GetSharedNode() const;
-  const std::string &  GetNodeType() const;
-  const std::string &  GetNodeId()   const;
-  void                 SetNodeId(const std::string & id);
-  void                 UpdateNodeId();
-  WidgetBlueprint *    GetWidgetBlueprint() const;
-  bool                 IsMultiInput(fmsynth::Node::Channel channel);
-  WidgetConnector *    GetInputWidgetConnector(fmsynth::Node::Channel channel);
-  WidgetConnector *    GetOutputWidgetConnector(fmsynth::Node::Channel channel);
+  [[nodiscard]] fmsynth::Node *      GetNode()     const;
+  [[nodiscard]] std::shared_ptr<fmsynth::Node> GetSharedNode() const;
+  [[nodiscard]] const std::string &  GetNodeType() const;
+  [[nodiscard]] const std::string &  GetNodeId()   const;
+  void                               SetNodeId(const std::string & id);
+  void                               UpdateNodeId();
+  [[nodiscard]] WidgetBlueprint *    GetWidgetBlueprint() const;
+  [[nodiscard]] bool                 IsMultiInput(fmsynth::Node::Channel channel);
+  [[nodiscard]] WidgetConnector *    GetInputWidgetConnector(fmsynth::Node::Channel channel);
+  [[nodiscard]] WidgetConnector *    GetOutputWidgetConnector(fmsynth::Node::Channel channel);
 
-  void                 SetSelectedVisuals(bool is_selected);
+  void                               SetSelectedVisuals(bool is_selected);
   
-  virtual bool         GetErrorStatus() const;
-  void                 UpdateErrorStatus();
+  [[nodiscard]] virtual bool         GetErrorStatus() const;
+  void                               UpdateErrorStatus();
 
-  virtual void         UpdateConnectorStates();
+  virtual void                       UpdateConnectorStates();
 
-  virtual void         NodeToWidget();
-  virtual void         WidgetToNode();
+  virtual void                       NodeToWidget();
+  virtual void                       WidgetToNode();
 
-  virtual json11::Json to_json() const;
-  virtual void         SetFromJson(const json11::Json & json);
+  [[nodiscard]] virtual json11::Json to_json() const;
+  virtual void                       SetFromJson(const json11::Json & json);
 
 protected:
   Ui::Node *      _ui_node;

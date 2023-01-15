@@ -26,7 +26,7 @@ namespace fmsynth
     void RemoveOutputNode(Node * node);
     void RemoveAllOutputNodes();
     
-    const std::vector<Node *> & GetOutputNodes() const;
+    [[nodiscard]] const std::vector<Node *> & GetOutputNodes() const;
 
   private:
     std::vector<Node *> _output_nodes;

@@ -25,10 +25,10 @@ class WidgetInputConstant : public QWidget
 public:
   WidgetInputConstant(QWidget * parent);
 
-  const std::vector<QWidget *> & GetControlWidgets() const;
+  [[nodiscard]] const std::vector<QWidget *> & GetControlWidgets() const;
 
-  void                         SetConstantValue(const fmsynth::ConstantValue & value);
-  const fmsynth::ConstantValue GetConstantValue() const;
+  void                                       SetConstantValue(const fmsynth::ConstantValue & value);
+  [[nodiscard]] const fmsynth::ConstantValue GetConstantValue() const;
   
 private:
   QDoubleSpinBox *       _value;

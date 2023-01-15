@@ -31,12 +31,12 @@ namespace fmsynth
     ConstantValue();
     ConstantValue(double value, Unit unit);
   
-    double GetValue()     const; // The "raw" value, used internally.
-    double GetUnitValue() const; // The value visible in API, UI and .sbp files.
-    Unit   GetUnit()      const;
+    [[nodiscard]] double GetValue()     const; // The "raw" value, used internally.
+    [[nodiscard]] double GetUnitValue() const; // The value visible in API, UI and .sbp files.
+    [[nodiscard]] Unit   GetUnit()      const;
 
-    json11::Json to_json() const;
-    void         SetFromJson(const json11::Json & json);
+    [[nodiscard]] json11::Json to_json() const;
+    void                       SetFromJson(const json11::Json & json);
 
   private:
     double _value = 1;

@@ -24,20 +24,20 @@ namespace fmsynth
   public:
     NodeMemoryBuffer();
 
-    void                      SetMaxLength(double seconds);
-    void                      Clear();
-    const std::vector<double> GetData() const;
-    std::mutex &              GetLockMutex();
+    void                                    SetMaxLength(double seconds);
+    void                                    Clear();
+    [[nodiscard]] const std::vector<double> GetData() const;
+    [[nodiscard]] std::mutex &              GetLockMutex();
 
-    void                      ResetTime() override;
-    Input::Range              GetFormOutputRange() const override;
+    void                                    ResetTime() override;
+    [[nodiscard]] Input::Range              GetFormOutputRange() const override;
 
   protected:
     unsigned int        _max_samples;
     std::vector<double> _buffer;
     std::mutex          _mutex;
   
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
   
   private:
   };

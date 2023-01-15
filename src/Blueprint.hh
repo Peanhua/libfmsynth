@@ -28,7 +28,7 @@ namespace fmsynth
     ~Blueprint();
     
     void Clear();
-    bool Load(const json11::Json & json);
+    [[nodiscard]] bool Load(const json11::Json & json);
     
     void AddNode(std::shared_ptr<Node> node);
     void RemoveNode(Node * node);
@@ -39,16 +39,16 @@ namespace fmsynth
     void ResetTime();
     void Tick(long samples);
     void SetIsFinished();
-    bool IsFinished() const;
+    [[nodiscard]] bool IsFinished() const;
     
-    void         SetSamplesPerSecond(unsigned int samples_per_second);
-    unsigned int GetSamplesPerSecond() const;
+    void                       SetSamplesPerSecond(unsigned int samples_per_second);
+    [[nodiscard]] unsigned int GetSamplesPerSecond() const;
     
-    std::mutex & GetLockMutex();
-    Node *       GetRoot() const;
-    Node *       GetNode(const std::string & id) const;
-    std::vector<Node *> GetAllNodes() const;
-    std::vector<Node *> GetNodesByType(const std::string & type) const;
+    [[nodiscard]] std::mutex & GetLockMutex();
+    [[nodiscard]] Node *       GetRoot() const;
+    [[nodiscard]] Node *       GetNode(const std::string & id) const;
+    [[nodiscard]] std::vector<Node *> GetAllNodes() const;
+    [[nodiscard]] std::vector<Node *> GetNodesByType(const std::string & type) const;
     
   protected:
     void SortNodesToExecutionOrder();

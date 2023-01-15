@@ -22,10 +22,10 @@ namespace fmsynth
   public:
     NodeAverage();
 
-    Input::Range GetFormOutputRange() const       override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const       override;
   
   protected:
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
   };
 }
 

@@ -27,19 +27,19 @@ namespace fmsynth
 
     void   SetOnPlaySample(on_play_sample_t callback);
 
-    bool   IsMuted() const;
-    void   SetMuted(bool muted);
+    [[nodiscard]] bool   IsMuted() const;
+    void                 SetMuted(bool muted);
 
-    double GetVolume() const;
-    void   SetVolume(double volume);
+    [[nodiscard]] double GetVolume() const;
+    void                 SetVolume(double volume);
   
-    int16_t SampleToInt(double sample);
+    [[nodiscard]] int16_t SampleToInt(double sample);
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form) override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
   
   private:
     double           _amplitude;

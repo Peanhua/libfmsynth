@@ -38,12 +38,12 @@ namespace fmsynth
 
     void   InputAdd(Node * source, double value);
     void   InputMultiply(Node * source, double value);
-    double GetValueAndReset();
-    double GetValue()       const;
-    Range  GetInputRange()  const;
+    [[nodiscard]] double GetValueAndReset();
+    [[nodiscard]] double GetValue()       const;
+    [[nodiscard]] Range  GetInputRange()  const;
     void   Reset();
 
-    const std::vector<Node *> & GetInputNodes()  const;
+    [[nodiscard]] const std::vector<Node *> & GetInputNodes()  const;
 
   private:
     std::vector<Node *> _input_nodes;
@@ -52,8 +52,8 @@ namespace fmsynth
     unsigned int _input_count   = 0;
     Range        _input_range   = Range::Inf_Inf;
  
-    double NormalizeInputValue(const Node * source, double value) const;
-    bool   IsReady()                                              const;
+    [[nodiscard]] double NormalizeInputValue(const Node * source, double value) const;
+    [[nodiscard]] bool   IsReady()                                              const;
   };
 }
 

@@ -22,18 +22,18 @@ namespace fmsynth
   public:
     NodeClamp();
 
-    double GetMin() const;
-    double GetMax() const;
-    void   SetMin(double min);
-    void   SetMax(double max);
+    [[nodiscard]] double GetMin() const;
+    [[nodiscard]] double GetMax() const;
+    void                 SetMin(double min);
+    void                 SetMax(double max);
 
-    Input::Range GetFormOutputRange() const             override;
+    [[nodiscard]] Input::Range GetFormOutputRange() const             override;
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form)       override;
+    [[nodiscard]] double ProcessInput(double time, double form)       override;
   
   private:
     double _min;

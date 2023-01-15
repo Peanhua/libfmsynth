@@ -24,15 +24,15 @@ namespace fmsynth
     NodeFileOutput();
     ~NodeFileOutput();
 
-    const std::string & GetFilename() const;
-    void                SetFilename(const std::string & filename);
+    [[nodiscard]] const std::string & GetFilename() const;
+    void                              SetFilename(const std::string & filename);
 
-    json11::Json to_json() const                        override;
-    void         SetFromJson(const json11::Json & json) override;
+    [[nodiscard]] json11::Json to_json() const                        override;
+    void                       SetFromJson(const json11::Json & json) override;
   
   protected:
-    double ProcessInput(double time, double form) override;
-    void   OnEOF() override;
+    [[nodiscard]] double ProcessInput(double time, double form) override;
+    void                 OnEOF() override;
 
   private:
     AudioFile<double> * _file;

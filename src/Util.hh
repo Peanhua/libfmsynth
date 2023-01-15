@@ -18,9 +18,9 @@
 
 namespace fmsynth::util
 {
-  extern std::tuple<bool, std::string> LoadText(const std::string & filename); // Returned string contains error message upon failure.
-  extern std::tuple<json11::Json *, std::string> LoadJson(const std::string & json_string);
-  extern std::tuple<json11::Json *, std::string> LoadJsonFile(const std::string & filename);
+  [[nodiscard]] extern std::tuple<bool, std::string>           LoadText(const std::string & filename); // Returned string contains error message upon failure.
+  [[nodiscard]] extern std::tuple<json11::Json *, std::string> LoadJson(const std::string & json_string);
+  [[nodiscard]] extern std::tuple<json11::Json *, std::string> LoadJsonFile(const std::string & filename);
 };
 
 

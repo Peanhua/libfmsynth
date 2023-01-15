@@ -42,7 +42,7 @@ private:
   bool                  _force_redraw;
   std::vector<double>   _waveform;
 
-  double Normalize(double value) const;
+  [[nodiscard]] double Normalize(double value) const;
 };
 
 #endif

@@ -32,8 +32,8 @@ public:
   void mousePressEvent(QMouseEvent * event)   override;
 
 private:
-  WidgetBlueprint * GetBlueprint()                const;
-  WidgetNode *      GetNode(QWidget * for_widget) const;
+  [[nodiscard]] WidgetBlueprint * GetBlueprint()                const;
+  [[nodiscard]] WidgetNode *      GetNode(QWidget * for_widget) const;
 };
 
 #endif

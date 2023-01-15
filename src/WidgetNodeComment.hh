@@ -21,13 +21,13 @@ class WidgetNodeComment : public WidgetNode
 public:
   WidgetNodeComment(QWidget * parent, QWidget * stack_under);
 
-  bool         eventFilter(QObject * object, QEvent * event) override;
-  void         resizeEvent(QResizeEvent * event)             override;
+  [[nodiscard]] bool         eventFilter(QObject * object, QEvent * event) override;
+  void                       resizeEvent(QResizeEvent * event)             override;
   
-  void         NodeToWidget()                         override;
+  void                       NodeToWidget()                         override;
 
-  json11::Json to_json() const                        override;
-  void         SetFromJson(const json11::Json & json) override;
+  [[nodiscard]] json11::Json to_json() const                        override;
+  void                       SetFromJson(const json11::Json & json) override;
   
 private:
   Ui::NodeComment * _ui_node_comment;
