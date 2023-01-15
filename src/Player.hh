@@ -20,9 +20,9 @@
 #include <thread>
 #include <vector>
 
+class AudioDevice;
 namespace fmsynth
 {
-  class AudioDevice;
   class Blueprint;
 }
 
