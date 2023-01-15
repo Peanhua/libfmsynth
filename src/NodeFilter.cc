@@ -21,7 +21,10 @@ NodeFilter::NodeFilter()
   : Node("Filter"),
     _type(Type::LOW_PASS),
     _filter(0.5),
-    _first(true)
+    _first(true),
+    _lowpass_previous(0),
+    _highpass_previous_input(0),
+    _highpass_previous_filtered(0)
 {
 }
 

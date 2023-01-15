@@ -71,7 +71,7 @@ protected:
   void SetConnectorsRanges();
   void SetConnectorsRangesRecursively();
 
-  void ListenWidgetChanges(const std::vector<QWidget *> widgets);
+  void ListenWidgetChanges(const std::vector<QWidget *> & widgets);
   
 private:
   std::shared_ptr<fmsynth::Node> _node;

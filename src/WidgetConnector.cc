@@ -20,7 +20,8 @@ WidgetConnector::WidgetConnector(QWidget * parent)
     _is_input(false),
     _blueprint(nullptr),
     _node(nullptr),
-    _is_optional(false)
+    _is_optional(false),
+    _connected(false)
 {
   setFlat(true);
 }

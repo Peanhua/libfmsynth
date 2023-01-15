@@ -25,7 +25,7 @@
 class IdValidator : public QValidator
 {
 public:
-  IdValidator(QObject * parent, std::vector<std::string> existing_ids)
+  IdValidator(QObject * parent, const std::vector<std::string> & existing_ids)
     : QValidator(parent),
       _existing_ids(existing_ids)
   {

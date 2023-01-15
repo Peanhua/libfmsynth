@@ -394,7 +394,7 @@ WidgetConnector * WidgetNode::GetOutputWidgetConnector(fmsynth::Node::Channel ch
 
 
 
-void WidgetNode::ListenWidgetChanges(const std::vector<QWidget *> widgets)
+void WidgetNode::ListenWidgetChanges(const std::vector<QWidget *> & widgets)
 {
   auto Listen = [this](QWidget * widget) -> void
   {
