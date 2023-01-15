@@ -17,6 +17,7 @@
 # pragma GCC diagnostic ignored "-Wold-style-cast"
 # pragma GCC diagnostic ignored "-Wdeprecated-copy"
 # pragma GCC diagnostic ignored "-Wconversion"
+# pragma GCC diagnostic ignored "-Wpadded"
 #endif
 #include <RtAudio.h>
 #ifdef __GNUC__
