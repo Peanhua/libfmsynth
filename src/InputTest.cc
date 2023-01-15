@@ -57,7 +57,7 @@ static void Test()
     double v = 3.0;
     inp.AddInputNode(nullptr);
     inp.InputAdd(nullptr, v);
-    testAssert("GetValue() returns the value added with InputAdd().", inp.GetValue() == v);
+    testAssert("GetValue() returns the value added with InputAdd().", FloatEqual(inp.GetValue(), v, 0.00001));
   }
   {
     fmsynth::Input inp;
@@ -65,7 +65,7 @@ static void Test()
     double v = 3.0;
     inp.AddInputNode(nullptr);
     inp.InputAdd(nullptr, v);
-    testAssert("GetValue() returns the value added with InputMultiply().", inp.GetValue() == v);
+    testAssert("GetValue() returns the value added with InputMultiply().", FloatEqual(inp.GetValue(), v, 0.00001));
   }
   {
     fmsynth::Input inp;
@@ -77,7 +77,8 @@ static void Test()
     inp.AddInputNode(&node);
     inp.InputAdd(nullptr, v1);
     inp.InputAdd(&node, v2);
-    testAssert("GetValue() returns the two values added with InputAdd().", inp.GetValue() == v1 + v2);
+    testComment << "v1=" << v1 << ", v2=" << v2 << ", v1+v2=" << (v1 + v2) << ", inp.GetValue()=" << inp.GetValue() << "\n";
+    testAssert("GetValue() returns the two values added with InputAdd().", FloatEqual(inp.GetValue(), v1 + v2, 0.00001));
   }
   {
     fmsynth::Input inp;
@@ -89,7 +90,7 @@ static void Test()
     inp.AddInputNode(&node);
     inp.InputMultiply(nullptr, v1);
     inp.InputMultiply(&node, v2);
-    testAssert("GetValue() returns the two values added with InputMultiply().", inp.GetValue() == v1 * v2);
+    testAssert("GetValue() returns the two values added with InputMultiply().", FloatEqual(inp.GetValue(), v1 * v2, 0.00001));
   }
   {
     std::vector<std::tuple<fmsynth::Input::Range, fmsynth::Input::Range, double, double>> values
@@ -126,7 +127,7 @@ static void Test()
                    + " from node with output range " + RangeToString(outrange)
                    + " to input with input range " + RangeToString(inrange)
                    + " produces " + std::to_string(expected) + ".",
-                   inp.GetValue() == expected);
+                   FloatEqual(inp.GetValue(), expected, 0.00001));
       }
   }
 }

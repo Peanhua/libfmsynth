@@ -42,11 +42,12 @@ void Blueprint::AddNode(std::shared_ptr<Node> node)
   if(!node)
     return;
   
+  _shared_nodes.push_back(node);
+  _nodes.push_back(node.get());
+
   if(dynamic_cast<NodeConstant *>(node.get()) || dynamic_cast<NodeGrowth *>(node.get()))
     ConnectNodes(Node::Channel::Form, _root, Node::Channel::Form, node.get());
 
-  _shared_nodes.push_back(node);
-  _nodes.push_back(node.get());
   node->SetSamplesPerSecond(_samples_per_second);
 }
 
@@ -273,6 +274,11 @@ void Blueprint::SortNodesToExecutionOrder()
 void Blueprint::ConnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
 {
   assert(from_channel == Node::Channel::Form);
+  if(from_node && from_node != _root)
+    assert(std::find(_nodes.cbegin(), _nodes.cend(), from_node) != _nodes.cend());
+  if(to_node != _root)
+    assert(std::find(_nodes.cbegin(), _nodes.cend(), to_node) != _nodes.cend());
+
   to_node->AddInputNode(to_channel, from_node);
   if(from_node)
     from_node->AddOutputNode(to_channel, to_node);
@@ -284,6 +290,11 @@ void Blueprint::ConnectNodes(Node::Channel from_channel, Node * from_node, Node:
 void Blueprint::DisconnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
 {
   assert(from_channel == Node::Channel::Form);
+  if(from_node && from_node != _root)
+    assert(std::find(_nodes.cbegin(), _nodes.cend(), from_node) != _nodes.cend());
+  if(to_node != _root)
+    assert(std::find(_nodes.cbegin(), _nodes.cend(), to_node) != _nodes.cend());
+
   to_node->RemoveInputNode(to_channel, from_node);
   if(from_node)
     from_node->RemoveOutputNode(to_channel, to_node);

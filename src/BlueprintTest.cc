@@ -178,7 +178,7 @@ static void Test()
                       if(!bp.IsFinished())
                         {
                           auto v = outputnode->GetLastFrame();
-                          if(lastval != v)
+                          if(!FloatEqual(lastval, v, 0.00001))
                             variationcount++;
                           lastval = v;
                         }

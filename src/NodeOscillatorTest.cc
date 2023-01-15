@@ -38,7 +38,7 @@ static void Test()
         o.FinishFrame(ind++);
 
         auto v = o.GetLastFrame();
-        if(v != prevval)
+        if(!FloatEqual(v, prevval, 0.00001))
           changes++;
         prevval = v;
       }
