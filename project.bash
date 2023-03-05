@@ -51,10 +51,10 @@ case ${PROFILE} in
         CXXFLAGS="-O0 -g3"
         LDFLAGS="-O0 -g3"
         ;;
-    address-sanitizer)
+    asan)
         CXX=g++
-        CXXFLAGS="-O0 -g3 -fsanitize=address -fno-sanitize-recover=all"
-        LDFLAGS="-O0 -g3 -fsanitize=address -fno-sanitize-recover=all"
+        CXXFLAGS="-O0 -g3 -fsanitize=address" # -fno-sanitize-recover=all"
+        LDFLAGS="-O0 -g3 -fsanitize=address" # -fno-sanitize-recover=all"
         ;;
     undefined-sanitizer)
         CXX=g++
@@ -85,8 +85,8 @@ case ${PROFILE} in
         ;;
     valgrind)
         CXX=g++
-        CXXFLAGS="-O3 -g3 -DNDEBUG -Wno-unused"
-        LDFLAGS="-g3 -O3 -DNDEBUG"
+        CXXFLAGS="-O1 -g3 -DNDEBUG -Wno-unused"
+        LDFLAGS="-g3 -O1 -DNDEBUG"
         CONFIGUREFLAGS="--with-valgrind"
         ;;
     clang-valgrind)
@@ -139,4 +139,6 @@ if [ ${profileok} -ne 0 ]; then
     autoreconf --install
     ./configure --prefix=$(pwd) --disable-shared ${CONFIGUREFLAGS}
     #./configure ${CONFIGUREFLAGS}
+
+    export QT_FATAL_WARNINGS=1
 fi

@@ -88,8 +88,10 @@ WidgetNode::WidgetNode(QWidget * parent, std::shared_ptr<fmsynth::Node> node, bo
 WidgetNode::~WidgetNode()
 {
   delete _ui_node;
-  delete _error_widget;
-  delete _selected_widget;
+  if(_error_widget)
+    _error_widget->deleteLater();
+  if(_selected_widget)
+    _selected_widget->deleteLater();
 }
 
 
@@ -472,8 +474,9 @@ bool WidgetNode::GetErrorStatus() const
 void WidgetNode::UpdateErrorStatus()
 {
   _error_status = GetErrorStatus();
-  
-  delete _error_widget;
+
+  if(_error_widget)
+    _error_widget->deleteLater();
   _error_widget = nullptr;
   if(_error_status)
     {
@@ -526,7 +529,8 @@ bool WidgetNode::DependsOn(const WidgetNode * node) const
 
 void WidgetNode::SetSelectedVisuals(bool is_selected)
 {
-  delete _selected_widget;
+  if(_selected_widget)
+    _selected_widget->deleteLater();
   _selected_widget = nullptr;
   
   if(is_selected)

@@ -42,8 +42,8 @@ Link::~Link()
 {
   _blueprint->GetBlueprint()->DisconnectNodes(fmsynth::Node::Channel::Form, _from_node->GetNode(),
                                               _to_channel,                  _to_node->GetNode()   );
-  
-  delete _line;
+  if(_line)
+    _line->deleteLater();
 }
 
 
@@ -51,8 +51,9 @@ void Link::Update(const WidgetNode * node)
 {
   if(node != _from_node && node != _to_node)
     return;
-  
-  delete _line;
+
+  if(_line)
+    _line->deleteLater();
 
   _line = new WidgetLine(_blueprint, GetFromPosition(), GetToPosition());
   _line->show();

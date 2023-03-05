@@ -18,18 +18,18 @@
 #define testAssert(NAME, CONDITION) do {                                \
     testid++;                                                           \
     if(CONDITION)                                                       \
-      std::cout << "ok " << testid << " " << NAME << std::endl;         \
+      std::cout << "ok " << testid << " " << (NAME) << std::endl;       \
     else                                                                \
     {                                                                   \
-      std::cout << "not ok " << testid << " " << NAME << std::endl;     \
+      std::cout << "not ok " << testid << " " << (NAME) << std::endl;   \
       std::cout << "  failed condition: " << #CONDITION << std::endl;   \
     }                                                                   \
   } while(0)
 
 #define testSkip(NAME, DESCRIPTION) do {                                \
     testid++;                                                           \
-    std::cout << "ok " << testid << " " << NAME                         \
-              << " # SKIP " << DESCRIPTION << std::endl;                \
+    std::cout << "ok " << testid << " " << (NAME)                       \
+              << " # SKIP " << (DESCRIPTION) << std::endl;              \
   } while(0)
 
 #define testComment std::cout << "# "

@@ -506,8 +506,9 @@ void WidgetMainWindow::ToggleCategoryLayout(const std::string & category)
   auto layoutbutton = _ui->_addnodes->findChild<QPushButton *>(QString::fromStdString("_category_layout_" + category), Qt::FindChildrenRecursively);
   assert(layoutbutton);
   layoutbutton->setIcon(icon);
-  
-  delete root->layout();
+
+  if(root->layout())
+    root->layout()->deleteLater();
   root->setLayout(newlayout);
 }
 

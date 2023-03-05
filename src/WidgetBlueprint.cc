@@ -68,7 +68,8 @@ WidgetBlueprint::~WidgetBlueprint()
   for(auto l : _links)
     delete l;
   for(auto n : _nodes)
-    delete n;
+    if(n)
+      n->deleteLater();
 }
 
 QScrollArea * WidgetBlueprint::GetScrollArea() const
@@ -285,8 +286,9 @@ void WidgetBlueprint::DeleteNode(WidgetNode * node)
     for(unsigned int i = 0; i < _nodes.size(); i++)
       if(_nodes[i] == node)
         _nodes[i] = nullptr;
-    
-    delete node;
+
+    if(node)
+      node->deleteLater();
     
     PostEdit();
   }
@@ -410,24 +412,25 @@ void WidgetBlueprint::Reset()
         _undobuffer.clear();
       }
 
-    _blueprint.reset(new fmsynth::Blueprint);
-
     for(auto l : _links)
       delete l;
     _links.clear();
 
     for(auto n : _nodes)
-      delete n;
+      if(n)
+        n->deleteLater();
     _nodes.clear();
-
-    SetDirty(false);
-
-    if(!_loading)
-      {
-        _post_edit_save = to_json();
-        GetMainWindow()->UpdateToolbarButtonStates();
-      }
   }
+
+  _blueprint.reset(new fmsynth::Blueprint);
+
+  SetDirty(false);
+
+  if(!_loading)
+    {
+      _post_edit_save = to_json();
+      GetMainWindow()->UpdateToolbarButtonStates();
+    }
 }
 
 
