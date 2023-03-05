@@ -13,6 +13,7 @@
 #include "Blueprint.hh"
 #include "Util.hh"
 #include <optional>
+#include <iostream>
 #include <cxxopts.hpp>
 
 
