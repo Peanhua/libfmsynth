@@ -63,7 +63,7 @@ pkginclude_HEADERS =			\
 
 lib_LTLIBRARIES = libfmsynth.la
 
-bin_PROGRAMS = fmsplay fmsbench
+bin_PROGRAMS = fmsplay fmsbench fmswrite
 
 BUILT_SOURCES = 
 
@@ -299,6 +299,18 @@ fmsbench_LDADD =	\
 
 fmsbench_SOURCES =	\
 	fmsbench.cc			
+
+
+# fmswrite:
+fmswrite_CXXFLAGS = 	\
+	$(AM_CXXFLAGS)			
+
+fmswrite_LDADD =	\
+	libfmsynth.la	\
+	$(JSON_LIBS)	
+
+fmswrite_SOURCES =	\
+	fmswrite.cc			
 
 
 # Uninstall:
