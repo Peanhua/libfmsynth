@@ -31,7 +31,7 @@
 #include <iostream>
 
 
-WidgetMainWindow::WidgetMainWindow(QWidget * parent, const char * file_to_open)
+WidgetMainWindow::WidgetMainWindow(QWidget * parent, const std::string & file_to_open)
   : QMainWindow(parent),
     _ui(new Ui::MainWindow)
 {
@@ -258,8 +258,8 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent, const char * file_to_open)
 
   _ui->_scrollArea_Blueprint->ensureVisible(2048, 2048);
 
-  if(file_to_open)
-    _ui->_blueprint->Load(std::string(file_to_open));
+  if(!file_to_open.empty())
+    _ui->_blueprint->Load(file_to_open);
 }
 
 

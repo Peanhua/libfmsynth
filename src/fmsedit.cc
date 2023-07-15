@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
   auto cwd = std::filesystem::current_path();
   
   try {
-    std::filesystem::current_path(DATADIR);
+    std::filesystem::current_path(LIBFMSYNTH_DATADIR);
   } catch([[maybe_unused]] const std::exception & e)
     {
-      std::cout << argv[0] << ": Warning, installation directory '" << DATADIR << "' is not accessible, running from current directory." << std::endl;
+      std::cout << argv[0] << ": Warning, installation directory '" << LIBFMSYNTH_DATADIR << "' is not accessible, running from current directory." << std::endl;
     }
   
   cxxopts::Options options(argv[0], "Edit .sbp files.");
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
   p.SetAudioDevice(UserSettings->GetInt("playback_device"));
   
   QApplication app(argc, argv);
-  WidgetMainWindow ui(nullptr, path_to_open.empty() ? nullptr : path_to_open.c_str());
+  WidgetMainWindow ui(nullptr, path_to_open.string());
   ui.show();
   auto rv = app.exec();
   p.Stop();

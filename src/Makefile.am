@@ -28,7 +28,7 @@ UiNodeViewWaveform.hh		: UiNodeViewWaveform.ui
 
 
 AM_CXXFLAGS =				\
-	-DDATADIR='"$(pkgdatadir)"'	\
+	-DLIBFMSYNTH_DATADIR='"$(pkgdatadir)"'	\
 	-DLIBFMSYNTH_ENABLE_NODETESTING=$(ENABLE_NODETESTING)	\
 	$(JSON_CFLAGS)			\
 	$(PTHREAD_CFLAGS)		\
