@@ -22,8 +22,8 @@ namespace fmsynth
   public:
     NodeSmooth();
 
-    [[nodiscard]] unsigned int GetWindowSize()            const;
-    void                       SetWindowSize(unsigned int size);
+    [[nodiscard]] int          GetWindowSize()      const;
+    void                       SetWindowSize(int size);
 
     void                       ResetTime()                            override;
     [[nodiscard]] Input::Range GetFormOutputRange() const             override;
@@ -36,8 +36,8 @@ namespace fmsynth
 
   private:
     std::vector<double> _window;
-    unsigned int        _position;
-    unsigned int        _datasize;
+    int                 _position;
+    int                 _datasize;
     double              _lastsum;
   };
 }

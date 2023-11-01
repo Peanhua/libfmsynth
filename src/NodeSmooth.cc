@@ -23,15 +23,16 @@ NodeSmooth::NodeSmooth()
 }
 
 
-unsigned int NodeSmooth::GetWindowSize() const
+int NodeSmooth::GetWindowSize() const
 {
-  return static_cast<unsigned int>(_window.size());
+  return static_cast<int>(_window.size());
 }
 
 
-void NodeSmooth::SetWindowSize(unsigned int size)
+void NodeSmooth::SetWindowSize(int size)
 {
-  _window.resize(size);
+  assert(size > 0);
+  _window.resize(static_cast<unsigned int>(size));
 }
 
 
@@ -47,17 +48,22 @@ void NodeSmooth::ResetTime()
 double NodeSmooth::ProcessInput([[maybe_unused]] double time, double form)
 {
   // Remove the oldest data from the sum:
-  if(_position != _datasize)
-    _lastsum -= _window[_position];
+  if(_datasize > 1)
+    {
+      int oldestpos = _position - _datasize;
+      if(oldestpos < 0)
+        oldestpos += static_cast<int>(_window.size());
+      _lastsum -= _window[static_cast<unsigned int>(oldestpos)];
+    }
   // Add the new data to sum:
   _lastsum += form;
   
   // Append the data:
-  _window[_position] = form;
+  _window[static_cast<unsigned int>(_position)] = form;
   _position++;
-  if(_position >= _window.size())
+  if(_position >= static_cast<int>(_window.size()))
     _position = 0;
-  if(_datasize < _window.size())
+  if(_datasize < static_cast<int>(_window.size()))
     _datasize++;
   
   return _lastsum / static_cast<double>(_datasize);
