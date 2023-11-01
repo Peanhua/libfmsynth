@@ -47,6 +47,7 @@ imagefiles_DATA = 			\
 	NodeOscillatorTriangle.png	\
 	NodeRangeConvert.png		\
 	NodeReciprocal.png		\
+	NodeSmooth.png			\
 	NodeViewWaveform.png		
 
 

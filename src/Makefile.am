@@ -23,6 +23,7 @@ UiNodeMultiply.hh		: UiNodeMultiply.ui
 UiNodeOscillator.hh		: UiNodeOscillator.ui
 UiNodeRangeConvert.hh		: UiNodeRangeConvert.ui
 UiNodeReciprocal.hh		: UiNodeReciprocal.ui
+UiNodeSmooth.hh			: UiNodeSmooth.ui
 UiNodeViewWaveform.hh		: UiNodeViewWaveform.ui
 
 
@@ -56,6 +57,7 @@ pkginclude_HEADERS =			\
 	NodeOscillator.hh		\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.hh		\
+	NodeSmooth.hh			\
 	Output.hh			\
 	Util.hh
 
@@ -115,6 +117,8 @@ libfmsynth_la_SOURCES =			\
 	NodeRangeConvert.hh		\
 	NodeReciprocal.cc		\
 	NodeReciprocal.hh		\
+	NodeSmooth.cc			\
+	NodeSmooth.hh			\
 	Output.cc			\
 	Output.hh			\
 	RtAudio.hh			\
@@ -152,6 +156,7 @@ BUILT_SOURCES += 			\
 	UiNodeOscillator.hh		\
 	UiNodeRangeConvert.hh		\
 	UiNodeReciprocal.hh		\
+	UiNodeSmooth.hh			\
 	UiNodeViewWaveform.hh		
 
 bin_PROGRAMS += fmsedit
@@ -204,6 +209,7 @@ fmsedit_SOURCES =			\
 	UiNodeOscillator.ui		\
 	UiNodeRangeConvert.ui		\
 	UiNodeReciprocal.ui		\
+	UiNodeSmooth.ui			\
 	UiNodeViewWaveform.ui		\
 	WidgetAddNode.cc		\
 	WidgetAddNode.hh		\
@@ -263,6 +269,8 @@ fmsedit_SOURCES =			\
 	WidgetNodeRangeConvert.hh	\
 	WidgetNodeReciprocal.cc		\
 	WidgetNodeReciprocal.hh		\
+	WidgetNodeSmooth.cc		\
+	WidgetNodeSmooth.hh		\
 	WidgetNodeViewWaveform.cc	\
 	WidgetNodeViewWaveform.hh	\
 	WidgetRectangle.cc		\

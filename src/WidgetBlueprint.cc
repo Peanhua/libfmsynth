@@ -34,6 +34,7 @@
 #include "WidgetNodeOscillator.hh"
 #include "WidgetNodeRangeConvert.hh"
 #include "WidgetNodeReciprocal.hh"
+#include "WidgetNodeSmooth.hh"
 #include "WidgetNodeViewWaveform.hh"
 #include <cassert>
 #include <filesystem>
@@ -211,6 +212,8 @@ WidgetNode * WidgetBlueprint::AddNode(int x, int y, const std::string & node_typ
     nodewidget = new WidgetNodeReciprocal(this);
   else if(node_type == "Delay")
     nodewidget = new WidgetNodeDelay(this);
+  else if(node_type == "Smooth")
+    nodewidget = new WidgetNodeSmooth(this);
   else if(node_type == "Comment")
     nodewidget = new WidgetNodeComment(this, GetMainWindow()->GetCommentBorderWidget());
   else if(node_type == "ViewWaveform")

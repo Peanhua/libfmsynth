@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>628</height>
+    <width>1114</width>
+    <height>1025</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,8 +41,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>164</width>
-         <height>829</height>
+         <width>178</width>
+         <height>925</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1551,6 +1551,23 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="WidgetAddNode" name="_misc_Smooth">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Smooth</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeSmooth.png</normaloff>images/NodeSmooth.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">Smooth</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1881,8 +1898,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>734</width>
-     <height>22</height>
+     <width>1114</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -34,6 +34,7 @@ namespace Ui
   class NodeMultiply;
   class NodeRangeConvert;
   class NodeReciprocal;
+  class NodeSmooth;
   class NodeViewWaveform;
 }
 
