@@ -48,7 +48,7 @@ void NodeSmooth::ResetTime()
 double NodeSmooth::ProcessInput([[maybe_unused]] double time, double form)
 {
   // Remove the oldest data from the sum:
-  if(_datasize > 1)
+  if(_datasize == static_cast<int>(_window.size()))
     {
       int oldestpos = _position - _datasize;
       if(oldestpos < 0)
