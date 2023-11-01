@@ -54,6 +54,31 @@ void Blueprint::AddNode(std::shared_ptr<Node> node)
 
 void Blueprint::RemoveNode(Node * node)
 {
+  {
+    std::vector<Node::Channel> channels
+      {
+        Node::Channel::Amplitude,
+        Node::Channel::Form,
+        Node::Channel::Aux
+      };
+    for(auto channel : channels)
+      {
+        auto inp = node->GetInput(channel);
+        if(inp)
+          for(auto n : inp->GetInputNodes())
+            if(n)
+              for(auto nc : channels)
+                DisconnectNodes(nc, n, channel, node);
+        auto out = node->GetOutput(channel);
+        if(out)
+          for(auto n : out->GetOutputNodes())
+            if(n)
+              for(auto nc : channels)
+                DisconnectNodes(channel, node, nc, n);
+      }
+  }
+  
+  
   auto it = std::find(_nodes.cbegin(), _nodes.cend(), node);
   if(it != _nodes.cend())
     _nodes.erase(it);
@@ -289,7 +314,7 @@ void Blueprint::ConnectNodes(Node::Channel from_channel, Node * from_node, Node:
 
 void Blueprint::DisconnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
 {
-  assert(from_channel == Node::Channel::Form);
+  //  assert(from_channel == Node::Channel::Form);
   if(from_node && from_node != _root)
     assert(std::find(_nodes.cbegin(), _nodes.cend(), from_node) != _nodes.cend());
   if(to_node != _root)

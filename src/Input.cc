@@ -73,7 +73,7 @@ void Input::AddInputNode(Node * node)
 void Input::RemoveInputNode(Node * node)
 {
   auto it = std::find(_input_nodes.cbegin(), _input_nodes.cend(), node);
-  assert(it != _input_nodes.cend());
+  //  assert(it != _input_nodes.cend());
   if(it != _input_nodes.cend())
     _input_nodes.erase(it);
 }
