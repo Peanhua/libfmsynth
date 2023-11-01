@@ -534,6 +534,8 @@ WidgetMainWindow * WidgetBlueprint::GetMainWindow() const
 
 void WidgetBlueprint::Load(const std::string & filename)
 {
+  assert(filename.empty() == false);
+  
   SetFilename(filename);
 
   GetMainWindow()->statusBar()->showMessage(QString::fromStdString("Loading '" + _filename + "'..."));

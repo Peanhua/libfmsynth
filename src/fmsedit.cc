@@ -67,8 +67,12 @@ int main(int argc, char *argv[])
   p.SetAudioDevice(UserSettings->GetInt("playback_device"));
   
   QApplication app(argc, argv);
-  WidgetMainWindow ui(nullptr, path_to_open.string());
+  WidgetMainWindow ui(nullptr);
   ui.show();
+
+  if(!path_to_open.empty())
+    ui.LoadFile(path_to_open);
+
   auto rv = app.exec();
   p.Stop();
   

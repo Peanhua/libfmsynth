@@ -23,9 +23,11 @@
 class WidgetMainWindow : public QMainWindow
 {
 public:
-  WidgetMainWindow(QWidget * parent, const std::string & file_to_open);
+  WidgetMainWindow(QWidget * parent);
   ~WidgetMainWindow();
 
+  void LoadFile(const std::string & filename);
+  
   void AddToRecentFiles(const std::string & filename);
   void ClearRecentFiles();
 
