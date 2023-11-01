@@ -1,4 +1,4 @@
-AC_INIT([libfmsynth], [0.2b])
+AC_INIT([libfmsynth], [0.3b])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_PREREQ([2.69])
 AC_CANONICAL_TARGET
