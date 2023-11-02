@@ -1568,6 +1568,23 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="WidgetAddNode" name="_misc_TimeScale">
+                <property name="toolTip">
+                 <string>Drag to blueprint to add </string>
+                </property>
+                <property name="text">
+                 <string>Time scale</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>images/NodeTimeScale.png</normaloff>images/NodeTimeScale.png</iconset>
+                </property>
+                <property name="NodeType" stdset="0">
+                 <string notr="true">TimeScale</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>

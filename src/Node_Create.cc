@@ -26,6 +26,7 @@
 #include "NodeRangeConvert.hh"
 #include "NodeReciprocal.hh"
 #include "NodeSmooth.hh"
+#include "NodeTimeScale.hh"
 #include <cassert>
 
 using namespace fmsynth;
@@ -69,6 +70,8 @@ std::shared_ptr<Node> Node::Create(const json11::Json & json)
     node = std::make_shared<NodeInverse>();
   else if(type == "Smooth")
     node = std::make_shared<NodeSmooth>();
+  else if(type == "TimeScale")
+    node = std::make_shared<NodeTimeScale>();
   else if(type == "Comment" || type == "ViewWaveform")
     ;
   else
