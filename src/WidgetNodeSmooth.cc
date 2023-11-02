@@ -47,5 +47,5 @@ void WidgetNodeSmooth::NodeToWidget()
 void WidgetNodeSmooth::WidgetToNode()
 {
   WidgetNode::WidgetToNode();
-  _node_smooth->SetWindowSize(static_cast<unsigned int>(_ui_node_smooth->_windowsize->value()));
+  _node_smooth->SetWindowSize(static_cast<int>(_ui_node_smooth->_windowsize->value()));
 }

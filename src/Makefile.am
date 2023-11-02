@@ -286,10 +286,12 @@ endif
 # fmsplay:
 fmsplay_CXXFLAGS = 		\
 	$(AM_CXXFLAGS)		\
-	$(RTAUDIO_CFLAGS)		
+	$(FMT_CFLAGS)		\
+	$(RTAUDIO_CFLAGS)	
 
 fmsplay_LDADD =		\
 	libfmsynth.la	\
+	$(FMT_LIBS)	\
 	$(JSON_LIBS)	\
 	$(PTHREAD_LIBS)	\
 	$(RTAUDIO_LIBS)	
@@ -297,12 +299,17 @@ fmsplay_LDADD =		\
 fmsplay_SOURCES =	\
 	AudioDevice.cc	\
 	AudioDevice.hh	\
-	fmsplay.cc			
+	fmsplay.cc	
 
 
 # fmsbench:
+fmsbench_CXXFLAGS =	\
+	$(AM_CXXFLAGS)	\
+	$(FMT_CFLAGS)
+
 fmsbench_LDADD =	\
 	libfmsynth.la	\
+	$(FMT_LIBS)	\
 	$(JSON_LIBS)	
 
 fmsbench_SOURCES =	\
@@ -311,10 +318,12 @@ fmsbench_SOURCES =	\
 
 # fmswrite:
 fmswrite_CXXFLAGS = 	\
-	$(AM_CXXFLAGS)			
+	$(AM_CXXFLAGS)	\
+	$(FMT_CFLAGS)
 
 fmswrite_LDADD =	\
 	libfmsynth.la	\
+	$(FMT_LIBS)	\
 	$(JSON_LIBS)	
 
 fmswrite_SOURCES =	\
@@ -328,7 +337,7 @@ uninstall-hook:
 
 
 # Testing:
-check_PROGRAMS = BlueprintTest InputTest NodeTest NodeAddTest NodeDelayTest NodeGrowthTest NodeOscillatorTest NodeRangeConvertTest
+check_PROGRAMS = BlueprintTest InputTest NodeTest NodeAddTest NodeDelayTest NodeGrowthTest NodeOscillatorTest NodeRangeConvertTest NodeSmoothTest
 
 TESTS = $(check_PROGRAMS)
 
@@ -357,6 +366,9 @@ NodeOscillatorTest_SOURCES = NodeOscillatorTest.cc Test.hh
 
 NodeRangeConvertTest_LDADD = $(NodeTest_LDADD)
 NodeRangeConvertTest_SOURCES = NodeRangeConvertTest.cc Test.hh
+
+NodeSmoothTest_LDADD = $(NodeTest_LDADD)
+NodeSmoothTest_SOURCES = NodeSmoothTest.cc Test.hh
 
 # Testing TAP setup:
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) $(top_srcdir)/build-aux/tap-driver.sh

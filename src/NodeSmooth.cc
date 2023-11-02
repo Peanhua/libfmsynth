@@ -53,6 +53,8 @@ double NodeSmooth::ProcessInput([[maybe_unused]] double time, double form)
       int oldestpos = _position - _datasize;
       if(oldestpos < 0)
         oldestpos += static_cast<int>(_window.size());
+      assert(oldestpos >= 0);
+      assert(oldestpos < static_cast<int>(_window.size()));
       _lastsum -= _window[static_cast<unsigned int>(oldestpos)];
     }
   // Add the new data to sum:

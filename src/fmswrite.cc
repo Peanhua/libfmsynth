@@ -12,6 +12,7 @@
 
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
+#include "StdFormat.hh"
 #include "Util.hh"
 #include <algorithm>
 #include <cassert>
@@ -35,7 +36,7 @@ static std::optional<Configuration> ParseCommandline(int argc, char * argv[])
 {
   Configuration rv;
   
-  cxxopts::Options options(argv[0], "Write .sbp file to .wav file.");
+  cxxopts::Options options(argv[0], format("fmswrite v{}\nWrite .sbp file to .wav file.", PACKAGE_VERSION));
   options.custom_help("[OPTION...] <filename>");
   options.add_options()
     ("v,verbose",            "Verbose mode.",           cxxopts::value<bool>()->default_value("false"))

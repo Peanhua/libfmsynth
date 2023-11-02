@@ -14,6 +14,7 @@
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
 #include "RtAudio.hh"
+#include "StdFormat.hh"
 #include "Util.hh"
 #include <algorithm>
 #include <cassert>
@@ -39,7 +40,7 @@ static std::optional<Configuration> ParseCommandline(int argc, char * argv[])
 {
   Configuration rv;
   
-  cxxopts::Options options(argv[0], "Play .sbp files.");
+  cxxopts::Options options(argv[0], format("fmsplay v{}\nPlay .sbp files.", PACKAGE_VERSION));
   options.custom_help("[OPTION...] <filename>");
   options.add_options()
     ("v,verbose",            "Verbose mode.",                                              cxxopts::value<bool>()->default_value("false"))

@@ -312,7 +312,7 @@ void Blueprint::ConnectNodes(Node::Channel from_channel, Node * from_node, Node:
 }
 
 
-void Blueprint::DisconnectNodes(Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
+void Blueprint::DisconnectNodes([[maybe_unused]] Node::Channel from_channel, Node * from_node, Node::Channel to_channel, Node * to_node)
 {
   //  assert(from_channel == Node::Channel::Form);
   if(from_node && from_node != _root)

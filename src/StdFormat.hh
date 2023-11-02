@@ -17,6 +17,7 @@
 # include <fmt/core.h>
   using fmt::format;
 #else
+# include <version>
 # if __cpp_lib_format >= 201907L
 #  include <format>
    using std::format;

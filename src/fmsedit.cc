@@ -16,6 +16,7 @@
 #include "NodeOscillator.hh"
 #include "Player.hh"
 #include "Settings.hh"
+#include "StdFormat.hh"
 #include "WidgetMainWindow.hh"
 #include "QtIncludeBegin.hh"
 #include <QtWidgets/QApplication>
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
       std::cout << argv[0] << ": Warning, installation directory '" << LIBFMSYNTH_DATADIR << "' is not accessible, running from current directory." << std::endl;
     }
   
-  cxxopts::Options options(argv[0], "Edit .sbp files.");
+  cxxopts::Options options(argv[0], format("fmsedit v{}\nEdit .sbp files.", PACKAGE_VERSION));
   options.custom_help("[OPTION...] [filename]");
   options.add_options()
     ("h,help", "Print help (this text).")

@@ -11,6 +11,7 @@
 */
 
 #include "Blueprint.hh"
+#include "StdFormat.hh"
 #include "Util.hh"
 #include <optional>
 #include <iostream>
@@ -29,7 +30,7 @@ static std::optional<Configuration> ParseCommandline(int argc, char * argv[])
 {
   Configuration rv;
   
-  cxxopts::Options options(argv[0], "Benchmark .sbp files.");
+  cxxopts::Options options(argv[0], format("fmsbench v{}\nBenchmark .sbp files.", PACKAGE_VERSION));
   options.custom_help("[OPTION...] <filename>");
   options.add_options()
     ("h,help",               "Print help (this text).")
