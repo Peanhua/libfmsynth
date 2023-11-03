@@ -22,7 +22,12 @@ namespace fmsynth
   {
   public:
     NodeFileOutput();
+    NodeFileOutput(const NodeFileOutput & src)             = delete;
+    NodeFileOutput(NodeFileOutput && src)                  = delete;
     ~NodeFileOutput();
+
+    NodeFileOutput & operator=(const NodeFileOutput & rhs) = delete;
+    NodeFileOutput & operator=(NodeFileOutput && rhs)      = delete;
 
     [[nodiscard]] const std::string & GetFilename() const;
     void                              SetFilename(const std::string & filename);

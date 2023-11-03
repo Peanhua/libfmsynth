@@ -48,7 +48,7 @@ Node::~Node()
 }
 
 
-const std::string & Node::GetType() const
+const std::string & Node::GetNodeType() const
 {
   return _type;
 }

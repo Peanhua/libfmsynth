@@ -69,7 +69,7 @@ namespace fmsynth
     Node(const std::string & type);
     virtual ~Node();
 
-    [[nodiscard]] const std::string & GetType() const;
+    [[nodiscard]] const std::string & GetNodeType() const;
     [[nodiscard]] const std::string & GetId()   const;
     void                              SetId(const std::string & id);
 

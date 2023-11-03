@@ -27,9 +27,9 @@ namespace fmsynth
 
     NodeFilter();
 
-    [[nodiscard]] Type   GetType() const;
+    [[nodiscard]] Type   GetFilterType()  const;
     [[nodiscard]] double GetFilterValue() const;
-    void                 SetType(Type type);
+    void                 SetFilterType(Type type);
     void                 SetFilterValue(double value);
 
     [[nodiscard]] Input::Range GetInputRange(Channel channel) const override;

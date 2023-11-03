@@ -54,7 +54,7 @@ static void Test()
     {
       testAssert("Node '" + type + "' was created.",                node);
       
-      testAssert("Node '" + type + "' returns the correct type.",   node->GetType() == type);
+      testAssert("Node '" + type + "' returns the correct type.",   node->GetNodeType() == type);
       
       testAssert("Node '" + type + "' is initially not finished.",  node->IsFinished() == false);
       

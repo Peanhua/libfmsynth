@@ -38,12 +38,12 @@ static void Test()
     auto node1 = std::make_shared<fmsynth::NodeConstant>();
     {
       bp.AddNode(node1);
-      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node1->GetType()).size() > 0);
+      testAssert("GetNodesByType() returns the added NodeConstant.", bp.GetNodesByType(node1->GetNodeType()).size() > 0);
     }
     auto node2 = std::make_shared<fmsynth::NodeInverse>();
     {
       bp.AddNode(node2);
-      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node2->GetType()).size() > 0);
+      testAssert("GetNodesByType() returns the added NodeInverse.", bp.GetNodesByType(node2->GetNodeType()).size() > 0);
     }
   }
 

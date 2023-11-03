@@ -33,8 +33,6 @@ namespace fmsynth
     [[nodiscard]] double GetVolume() const;
     void                 SetVolume(double volume);
   
-    [[nodiscard]] int16_t SampleToInt(double sample);
-
     [[nodiscard]] json11::Json to_json() const                        override;
     void                       SetFromJson(const json11::Json & json) override;
   

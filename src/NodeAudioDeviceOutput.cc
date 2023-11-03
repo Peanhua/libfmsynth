@@ -67,18 +67,6 @@ double NodeAudioDeviceOutput::ProcessInput([[maybe_unused]] double time, double 
 }
 
 
-int16_t NodeAudioDeviceOutput::SampleToInt(double sample)
-{
-  sample = std::clamp(sample, -1.0, 1.0);
-  if(sample < 0)
-    sample *= static_cast<double>(std::abs(INT16_MIN));
-  else
-    sample *= static_cast<double>(INT16_MAX);
-  
-  return static_cast<int16_t>(sample);
-}
-
-
 json11::Json NodeAudioDeviceOutput::to_json() const
 {
   auto rv = Node::to_json().object_items();

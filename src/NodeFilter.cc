@@ -29,7 +29,7 @@ NodeFilter::NodeFilter()
 }
 
 
-NodeFilter::Type NodeFilter::GetType() const
+NodeFilter::Type NodeFilter::GetFilterType() const
 {
   return _type;
 }
@@ -41,7 +41,7 @@ double NodeFilter::GetFilterValue() const
 }
 
 
-void NodeFilter::SetType(Type type)
+void NodeFilter::SetFilterType(Type type)
 {
   _type = type;
 }

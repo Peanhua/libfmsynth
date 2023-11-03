@@ -25,7 +25,12 @@ namespace fmsynth
   {
   public:
     Blueprint();
+    Blueprint(const Blueprint & src)             = delete;
+    Blueprint(Blueprint && src)                  = delete;
     ~Blueprint();
+
+    Blueprint & operator=(const Blueprint & rhs) = delete;
+    Blueprint & operator=(Blueprint && rhs)      = delete;
     
     void Clear();
     [[nodiscard]] bool Load(const json11::Json & json);

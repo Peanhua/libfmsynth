@@ -67,6 +67,7 @@ static RtAudio * GetSystemDAC()
 
 AudioDevice::AudioDevice(int device_id)
   : _on_post_tick(nullptr),
+    _current_sample(0),
     _blueprint(nullptr)    
 {
   _dac = GetSystemDAC();
@@ -155,7 +156,7 @@ void AudioDevice::Play(std::shared_ptr<fmsynth::Blueprint> blueprint)
 
   try
     {
-      static std::function<int(double *, unsigned int)> callback = [this](double * output_buffer, unsigned int frame_count) -> int
+      std::function<int(double *, unsigned int)> callback = [this](double * output_buffer, unsigned int frame_count) -> int
       { // The purpose of this lambda (extra redirection) is to be able to use the private method (Playback) on this object.
         Playback(output_buffer, frame_count);
         if(_blueprint->IsFinished())

@@ -24,6 +24,7 @@ Player * ProgramPlayer = nullptr;
 
 Player::Player()
   : _thread(nullptr),
+    _is_playing(false),
     _device(-1),
     _next_program(std::nullopt)
 {

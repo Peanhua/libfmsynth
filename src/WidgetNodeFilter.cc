@@ -63,7 +63,7 @@ WidgetNodeFilter::WidgetNodeFilter(QWidget * parent, fmsynth::NodeFilter::Type t
 void WidgetNodeFilter::NodeToWidget()
 {
   WidgetNode::NodeToWidget();
-  _type = _node_filter->GetType();
+  _type = _node_filter->GetFilterType();
   _ui_node_filter->_value->setValue(_node_filter->GetFilterValue());
   UpdateFilterType();
 }
@@ -72,7 +72,7 @@ void WidgetNodeFilter::NodeToWidget()
 void WidgetNodeFilter::WidgetToNode()
 {
   WidgetNode::WidgetToNode();
-  _node_filter->SetType(_type);
+  _node_filter->SetFilterType(_type);
   _node_filter->SetFilterValue(_ui_node_filter->_value->value());
 }
 

@@ -348,11 +348,17 @@ void WidgetNode::WidgetToNode()
 
 void WidgetNode::SetFromJson(const json11::Json & json)
 {
+  auto cs = Qt::Unchecked;
+  
   auto node = GetNode();
   if(node)
-    node->SetFromJson(json);
+    {
+      node->SetFromJson(json);
+
+      if(node->IsEnabled())
+        cs = Qt::Checked;
+    }
   
-  auto cs = GetNode()->IsEnabled() ? Qt::Checked : Qt::Unchecked;
   _ui_node->_enabled->setCheckState(cs);
 
   NodeToWidget();
