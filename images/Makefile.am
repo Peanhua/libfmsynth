@@ -48,6 +48,7 @@ imagefiles_DATA = 			\
 	NodeRangeConvert.png		\
 	NodeReciprocal.png		\
 	NodeSmooth.png			\
+	NodeTimeScale.png		\
 	NodeViewWaveform.png		
 
 

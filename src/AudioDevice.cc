@@ -156,14 +156,6 @@ void AudioDevice::Play(std::shared_ptr<fmsynth::Blueprint> blueprint)
 
   try
     {
-      std::function<int(double *, unsigned int)> callback = [this](double * output_buffer, unsigned int frame_count) -> int
-      { // The purpose of this lambda (extra redirection) is to be able to use the private method (Playback) on this object.
-        Playback(output_buffer, frame_count);
-        if(_blueprint->IsFinished())
-          return 1;
-        return 0;
-      };
-      
       unsigned int bframes = 1024;
       _dac->openStream(&parameters, nullptr, RTAUDIO_FLOAT64, _blueprint->GetSamplesPerSecond(), &bframes,
                        [](void *                  outputBuffer,
@@ -175,10 +167,14 @@ void AudioDevice::Play(std::shared_ptr<fmsynth::Blueprint> blueprint)
                        {
                          if(status)
                            return 1;
-                         auto c = static_cast<std::function<int(double *, unsigned int)> *>(userData);
-                         return (*c)(static_cast<double *>(outputBuffer), nBufferFrames);
+
+                         auto * self = reinterpret_cast<AudioDevice *>(userData);
+                         self->Playback(static_cast<double *>(outputBuffer), nBufferFrames);
+                         if(self->GetBlueprint()->IsFinished())
+                           return 1;
+                         return 0;
                        },
-                       &callback);
+                       this);
       _dac->startStream();
     }
   catch(RtAudioError & e)

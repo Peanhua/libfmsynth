@@ -46,7 +46,9 @@ public:
   [[nodiscard]] std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
   [[nodiscard]] const std::shared_ptr<fmsynth::Blueprint>           GetBlueprint()       const;
   [[nodiscard]] const std::vector<fmsynth::NodeAudioDeviceOutput *> GetInputNodes()      const;
-
+ 
+  void Playback(double * output_buffer, unsigned int frame_count);
+ 
 private:
   RtAudio *                 _dac;
   unsigned int              _device_id;
@@ -59,7 +61,6 @@ private:
 
   void UpdateInputNodes();
   void UpdateDeviceNames();
-  void Playback(double * output_buffer, unsigned int frame_count);
 };
 
 #endif

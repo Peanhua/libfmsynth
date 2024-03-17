@@ -272,6 +272,9 @@
         <property name="suffix">
          <string>s</string>
         </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
         <property name="maximum">
          <double>100.000000000000000</double>
         </property>
@@ -290,6 +293,9 @@
         </property>
         <property name="suffix">
          <string>s</string>
+        </property>
+        <property name="decimals">
+         <number>3</number>
         </property>
         <property name="maximum">
          <double>100.000000000000000</double>
@@ -310,6 +316,9 @@
         <property name="suffix">
          <string>s</string>
         </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
         <property name="maximum">
          <double>100.000000000000000</double>
         </property>
@@ -325,6 +334,9 @@
        <widget class="QDoubleSpinBox" name="_sustain">
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="decimals">
+         <number>3</number>
         </property>
         <property name="maximum">
          <double>1.000000000000000</double>
@@ -394,6 +406,9 @@
         </property>
         <property name="suffix">
          <string>s</string>
+        </property>
+        <property name="decimals">
+         <number>3</number>
         </property>
         <property name="maximum">
          <double>100.000000000000000</double>
