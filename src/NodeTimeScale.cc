@@ -50,14 +50,18 @@ double NodeTimeScale::ProcessInput([[maybe_unused]] double time, double form)
     }
   else if(_scale < 1.0)
     { // Extend the input to longer output.
+      double current_time = time * _scale;
+      if(current_time <= _timebuffer[0])
+        { // Time has moved backwards, reset:
+          ResetTime();
+        }
+
       _samplebuffer.push_back(form);
       _timebuffer.push_back(time);
 
       if(time <= 0.0)
         return _samplebuffer[0];
       
-      double current_time = time * _scale;
-      assert(current_time > _timebuffer[0]);
       double time_per_sample = 1.0 / GetSamplesPerSecond();
       double alpha = (current_time - _timebuffer[0]) / time_per_sample;
       if(alpha > 1.0)
