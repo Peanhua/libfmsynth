@@ -1,6 +1,6 @@
 /*
   libfmsynth
-  Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+  Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
   
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -61,30 +61,35 @@ WidgetMainWindow::WidgetMainWindow(QWidget * parent)
     ag->setExclusive(true);
   }
   {
-    const auto & names = ProgramPlayer->GetAudioDevice()->GetDeviceNames();
-    auto default_id = ProgramPlayer->GetAudioDevice()->GetDefaultDeviceId();
-
-    std::vector<std::string> devices;
-    devices.push_back(format("DEFAULT: {}", names[default_id]));
-    for(auto d : names)
-      devices.push_back(d);
+    unsigned int current_id;
+    {
+      int us = UserSettings->GetInt("playback_device");
+      if(us < 0)
+        current_id = ProgramPlayer->GetAudioDevice()->GetDefaultDeviceId();
+      else
+        current_id = static_cast<unsigned int>(us);
+    }
     
     auto ag = new QActionGroup(_ui->_menu_settings_playback_device);
-    int id = -1;
-    for(auto name : devices)
+    for(auto id : ProgramPlayer->GetAudioDevice()->GetDeviceIds())
       {
-        if(!name.empty())
+        std::string name;
+        if(id == ProgramPlayer->GetAudioDevice()->GetDefaultDeviceId())
+          name = format("DEFAULT: {}", ProgramPlayer->GetAudioDevice()->GetDeviceName(id));
+        else
+          name = ProgramPlayer->GetAudioDevice()->GetDeviceName(id);
+        
+        if(not name.empty())
           {
             auto action = new QAction(this);
-            action->setObjectName(QString::fromStdString(std::string("actionPlaybackDevice") + std::to_string(id)));
+            action->setObjectName(QString::fromStdString(format("actionPlaybackDevice{}", id)));
             action->setCheckable(true);
-            if(id == UserSettings->GetInt("playback_device"))
+            if(id == current_id)
               action->setChecked(true);
             action->setText(QCoreApplication::translate("MainWindow", name.c_str(), nullptr));
             _ui->_menu_settings_playback_device->addAction(action);
             ag->addAction(action);
           }
-        id++;
       }
     ag->setExclusive(true);
   }

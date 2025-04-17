@@ -1,6 +1,6 @@
 /*
   libfmsynth
-  Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+  Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
   
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -51,10 +51,12 @@ double NodeTimeScale::ProcessInput([[maybe_unused]] double time, double form)
   else if(_scale < 1.0)
     { // Extend the input to longer output.
       double current_time = time * _scale;
-      if(current_time <= _timebuffer[0])
-        { // Time has moved backwards, reset:
-          ResetTime();
-        }
+      if(not _timebuffer.empty())
+        if(current_time <= _timebuffer[0])
+          { // Time has moved backwards, reset:
+            _samplebuffer.clear();
+            _timebuffer.clear();
+          }
 
       _samplebuffer.push_back(form);
       _timebuffer.push_back(time);

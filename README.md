@@ -1,5 +1,5 @@
 # libfmsynth
-This is a C++ library to generate audio using frequency modulation synthesis (https://en.wikipedia.org/wiki/Frequency_modulation_synthesis). Node based architecture is used, where each node presents some operation performed. Each node can have zero or more input signals, and zero or one output signal. Some nodes are editor-only, for example the comment node.
+This is an editor and a set of tools (and maybe in future a C++ library) to generate audio using frequency modulation synthesis (https://en.wikipedia.org/wiki/Frequency_modulation_synthesis). Node based architecture is used, where each node presents some operation performed. Each node can have zero or more input signals, and zero or one output signal. Some nodes are editor-only, for example the comment node.
 
 In addition to the library, some supporting executable programs are provided:
 * fmsedit  - Editor, uses QT. <img align="right" src="images/screenshot1.png" width="200px">
@@ -11,7 +11,7 @@ The files used are named "*.sbp" (short from SynthBluePrint), and their contents
 
 
 ## License
-Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

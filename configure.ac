@@ -12,7 +12,7 @@ AC_PROG_SED
 AC_PROG_GREP
 
 AC_PROG_CXX
-AX_CXX_COMPILE_STDCXX([20], [noext], [mandatory])
+AX_CXX_COMPILE_STDCXX([23], [noext], [mandatory])
 
 AX_PTHREAD
 
@@ -39,7 +39,7 @@ AC_CHECK_HEADER([cxxopts.hpp], [], [AC_MSG_ERROR([Unable to find header for cxxo
 AC_LANG_POP
 
 PKG_CHECK_MODULES([JSON],    [json11])
-PKG_CHECK_MODULES([RTAUDIO], [rtaudio])
+PKG_CHECK_MODULES([RTAUDIO], [rtaudio >= 6.0])
 
 AS_IF([test "x$fmsedit" = "xtrue"], [
   PRE512QT=0

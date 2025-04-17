@@ -1,6 +1,6 @@
 /*
   libfmsynth
-  Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+  Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
   
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,51 +14,18 @@
 #include "Blueprint.hh"
 #include "NodeAudioDeviceOutput.hh"
 #include "RtAudio.hh"
+#include <print>
 
 
 static RtAudio * GetSystemDAC()
 {
-  auto getit = [](RtAudio::Api api) -> RtAudio *
-  {
-    try
-      {
-        RtAudio * rv;
-        if(api == RtAudio::Api::UNSPECIFIED)
-          rv = new RtAudio();
-        else
-          rv = new RtAudio(api);
-        if(rv)
-          {
-            if((api == RtAudio::Api::UNSPECIFIED || api == rv->getCurrentApi()) && rv->getDeviceCount() > 0)
-              return rv;
-            else
-              delete rv;
-          }
-      }
-    catch(RtAudioError & e)
-      {
-      }
-
-    return nullptr;
-  };
-
-  
-  std::vector<RtAudio::Api> apis
-    {
+  RtAudio::Api api;
 #ifdef __linux__
-      RtAudio::Api::LINUX_PULSE,
+  api = RtAudio::Api::LINUX_PULSE;
 #endif
-      RtAudio::Api::UNSPECIFIED
-    };
-  for(auto api : apis)
-    {
-      auto rv = getit(api);
-      if(rv)
-        return rv;
-    }
+  api = RtAudio::Api::UNSPECIFIED;
 
-  assert(false);
-  return nullptr;
+  return new RtAudio(api);
 }
 
 
@@ -154,47 +121,39 @@ void AudioDevice::Play(std::shared_ptr<fmsynth::Blueprint> blueprint)
   parameters.firstChannel = 0;
   parameters.deviceId     = _device_id;
 
-  try
-    {
-      unsigned int bframes = 1024;
-      _dac->openStream(&parameters, nullptr, RTAUDIO_FLOAT64, _blueprint->GetSamplesPerSecond(), &bframes,
-                       [](void *                  outputBuffer,
-                          [[maybe_unused]] void * inputBuffer,
-                          unsigned int            nBufferFrames,
-                          [[maybe_unused]] double streamTime,
-                          RtAudioStreamStatus     status,
-                          void *                  userData) -> int
-                       {
-                         if(status)
-                           return 1;
+  unsigned int bframes = 1024;
+  auto rc = _dac->openStream(&parameters, nullptr, RTAUDIO_FLOAT64, _blueprint->GetSamplesPerSecond(), &bframes,
+                             [](void *                  outputBuffer,
+                                [[maybe_unused]] void * inputBuffer,
+                                unsigned int            nBufferFrames,
+                                [[maybe_unused]] double streamTime,
+                                RtAudioStreamStatus     status,
+                                void *                  userData) -> int
+                             {
+                               if(status)
+                                 return 1;
 
-                         auto * self = reinterpret_cast<AudioDevice *>(userData);
-                         self->Playback(static_cast<double *>(outputBuffer), nBufferFrames);
-                         if(self->GetBlueprint()->IsFinished())
-                           return 1;
-                         return 0;
-                       },
-                       this);
-      _dac->startStream();
-    }
-  catch(RtAudioError & e)
-    {
-      e.printMessage();
-    }
-}      
+                               auto * self = reinterpret_cast<AudioDevice *>(userData);
+                               self->Playback(static_cast<double *>(outputBuffer), nBufferFrames);
+                               if(self->GetBlueprint()->IsFinished())
+                                 return 1;
+                               return 0;
+                             },
+                             this);
+  if(rc == RTAUDIO_NO_ERROR)
+    rc = _dac->startStream();
+
+  if(rc != RTAUDIO_NO_ERROR) 
+    std::println(std::cerr, "{}", _dac->getErrorText());
+}
 
 
 
 
 void AudioDevice::Stop()
 {
-  try
-    {
-      _dac->closeStream();
-    }
-  catch(RtAudioError & e)
-    {
-    }
+  if(_dac->isStreamOpen())
+    _dac->closeStream();
 }
 
 
@@ -219,9 +178,15 @@ void AudioDevice::UpdateInputNodes()
 }
 
 
-const std::string AudioDevice::GetDeviceName() const
+std::string AudioDevice::GetDeviceName() const
 {
-  auto info = _dac->getDeviceInfo(_device_id);
+  return GetDeviceName(_device_id);
+}
+
+
+std::string AudioDevice::GetDeviceName(unsigned int device_id) const
+{
+  auto info = _dac->getDeviceInfo(device_id);
   return info.name;
 }
 
@@ -232,23 +197,15 @@ const std::vector<fmsynth::NodeAudioDeviceOutput *> AudioDevice::GetInputNodes()
 }
 
 
-const std::vector<std::string> & AudioDevice::GetDeviceNames() const
+const std::vector<unsigned int> & AudioDevice::GetDeviceIds() const
 {
-  return _device_names;
+  return _device_ids;
 }
 
 
 void AudioDevice::UpdateDeviceNames()
 {
-  _device_names.clear();
-  for(unsigned int i = 0; i < _dac->getDeviceCount(); i++)
-    {
-      auto info = _dac->getDeviceInfo(i);
-      if(info.probed)
-        _device_names.push_back(info.name);
-      else
-        _device_names.push_back("");
-    }
+  _device_ids = _dac->getDeviceIds();
 }
 
 

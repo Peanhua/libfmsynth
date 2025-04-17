@@ -2,7 +2,7 @@
 #define AUDIODEVICE_HH_
 /*
   libfmsynth
-  Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+  Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
   
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -39,8 +39,9 @@ public:
   void Play(std::shared_ptr<fmsynth::Blueprint> blueprint);
   void Stop();
 
-  [[nodiscard]] const std::string                                   GetDeviceName()      const;
-  [[nodiscard]] const std::vector<std::string> &                    GetDeviceNames()     const;
+  [[nodiscard]] std::string                                         GetDeviceName()      const;
+  [[nodiscard]] std::string                                         GetDeviceName(unsigned int device_id) const;
+  [[nodiscard]] const std::vector<unsigned int> &                   GetDeviceIds()       const;
   [[nodiscard]] unsigned int                                        GetDefaultDeviceId() const;
   [[nodiscard]] const std::vector<unsigned int> &                   GetSampleRates()     const;
   [[nodiscard]] std::shared_ptr<fmsynth::Blueprint>                 GetBlueprint();
@@ -52,7 +53,7 @@ public:
 private:
   RtAudio *                 _dac;
   unsigned int              _device_id;
-  std::vector<std::string>  _device_names;
+  std::vector<unsigned int> _device_ids;
   std::vector<unsigned int> _sample_rates;
   on_post_tick_t            _on_post_tick;
   double                    _current_sample;

@@ -1,6 +1,6 @@
 /*
   libfmsynth
-  Copyright (C) 2021-2023  Steve Joni Yrjänä <joniyrjana@gmail.com>
+  Copyright (C) 2021-2025  Steve Joni Yrjänä <joniyrjana@gmail.com>
   
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -104,17 +104,16 @@ int main(int argc, char * argv[])
       if(config.verbose)
         std::cout << "Id | Name\n";
       AudioDevice adev {config.output_device};
-      const auto & names = adev.GetDeviceNames();
-      for(unsigned int i = 0; i < names.size(); i++)
+      for(auto id : adev.GetDeviceIds())
         {
-          auto name = names[i];
+          auto name = adev.GetDeviceName(id);
           if(!name.empty())
             {
-              if(i == adev.GetDefaultDeviceId())
+              if(id == adev.GetDefaultDeviceId())
                 std::cout << "*";
               else
                 std::cout << " ";
-              std::cout << i;
+              std::cout << id;
               std::cout << " | " << name;
               std::cout << "\n";
             }
